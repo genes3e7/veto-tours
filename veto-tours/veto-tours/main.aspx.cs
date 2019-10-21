@@ -26,7 +26,7 @@ namespace vetoTours
 
                 conn.Open();
 
-                string query = "SELECT * FROM books";
+                string query = "SELECT * FROM tours";
 
                 cmd = new SqlCommand(query, conn);
                 reader = cmd.ExecuteReader();
