@@ -75,13 +75,13 @@
                 <div id="accordion">
                     <h3>How to Filter</h3>
                     <div>
-                        <p> You can choose to sort the way the book catalogue is presented to you based on the following presets:</p>
-                        <p>Genre:</p>
-                        <p>Sorts the tables based on Genre in alphabatical order.</p>
-                        <p>Price:</p>
-                        <p>Sorts the tables based on lowest price to highest price.</p>
-                        <p>Author:</p>
-                        <p>Sorts the tables based on Author's name.</p>
+                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
+                        <p>Category A:</p>
+                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+                        <p>Category B:</p>
+                        <p>xcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p>Category C:</p>
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
 
 
                     </div>
@@ -104,21 +104,21 @@
 
                 <div id="tabs">
                   <ul>
-                    <li><a href="#tabs-1">Add a new Book</a></li>
-                    <li><a href="#tabs-2">Edit a Book</a></li>
+                    <li><a href="#tabs-1">Add a new Tour</a></li>
+                    <li><a href="#tabs-2">Edit a Tour</a></li>
                   </ul>
                   <div id="tabs-1">
-                    <h1>Add a new Book</h1>
-                    <asp:Label ID="Label1" runat="server" Text="Book ID    "></asp:Label>
+                    <h1>Add a new tour</h1>
+                    <asp:Label ID="Label1" runat="server" Text="tour ID    "></asp:Label>
                     <asp:TextBox ID="add_bookID" runat="server"></asp:TextBox>
                     <br />
-                    <asp:Label ID="Label2" runat="server" Text="Book Name  "></asp:Label>
+                    <asp:Label ID="Label2" runat="server" Text="tour Name  "></asp:Label>
                     <asp:TextBox ID="add_bookName" runat="server"></asp:TextBox>
                     <br />
-                    <asp:Label ID="Label3" runat="server" Text="Book Genre "></asp:Label>
+                    <asp:Label ID="Label3" runat="server" Text="Country "></asp:Label>
                     <asp:TextBox ID="add_bookGenre" runat="server"></asp:TextBox>
                     <br />
-                    <asp:Label ID="Label5" runat="server" Text="Book Author"></asp:Label>
+                    <asp:Label ID="Label5" runat="server" Text="Location "></asp:Label>
                     <asp:TextBox ID="add_bookAuthor" runat="server"></asp:TextBox>
                     <br />
                     <p>
@@ -127,7 +127,7 @@
                     </p>
                     <br />
                     <br />
-                    <asp:Button ID="btnAddBook" runat="server" Text="Add new Book" OnClick="btnAddBook_Click"/>
+                    <asp:Button ID="btnAddBook" runat="server" Text="Add new Tour" OnClick="btnAddBook_Click"/>
                     <br />
                     <br />
                   </div>
