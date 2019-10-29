@@ -20,6 +20,11 @@
             <asp:Label ID="Label2" runat="server" Text="Password"></asp:Label>
             <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
             <br />
+           <!-- <asp:DropDownList runat="server" ID="userType">
+                <asp:ListItem Text="User" Value="1" Selected="true" />
+                <asp:ListItem Text="Admin" Value="2"/>
+            </asp:DropDownList>
+            <br /> -->
             <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click"/>
             <br />
             <asp:Label ID="lblStatus" runat="server" Text=""></asp:Label>

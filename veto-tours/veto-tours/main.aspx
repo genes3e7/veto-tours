@@ -68,6 +68,16 @@
                 <div id="dialog" title="Authentication">
                   <p>You have successfully logged into the server! Feel free to browse.</p>
                 </div>
+            
+                
+                 <% if(Session["accountType"] == "admin")
+                    {%>
+             
+            
+                     <%}
+                 %>
+                
+
 
                 <br />
                 <br />

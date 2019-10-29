@@ -37,6 +37,8 @@ namespace vetoTours
                 {
                     lblStatus.Text = "Logged in successfully! ";
                     Session["loggedIn"] = "true";
+                    Session["userID"] = uid;
+                    Session["accountType"] = "admin";
                     Response.Redirect("main.aspx");
                 }
                 else
