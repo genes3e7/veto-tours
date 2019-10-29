@@ -29,17 +29,38 @@ namespace vetoTours
             {
                 string uid = txtUserName.Text;
                 string pass = txtPassword.Text;
-                con.Open();
-                string query = "SELECT * from users where userID='" + uid + "' and password='" + pass + "'";
-                SqlCommand cmd = new SqlCommand(query, con);
-                SqlDataReader sdr = cmd.ExecuteReader();
+				SqlDataReader sdr;
+
+				con.Open();
+
+				// If userType is regular user
+				if (userType.SelectedValue == "admin")
+				{
+					string query = "SELECT * from admins where userID='" + uid + "' and password='" + pass + "'";
+					SqlCommand cmd = new SqlCommand(query, con);
+					sdr = cmd.ExecuteReader();
+
+				}
+
+				else
+				{
+					string query = "SELECT * from users where userID='" + uid + "' and password='" + pass + "'";
+					SqlCommand cmd = new SqlCommand(query, con);
+					sdr = cmd.ExecuteReader();
+				}
+
                 if (sdr.Read())
                 {
                     lblStatus.Text = "Logged in successfully! ";
                     Session["loggedIn"] = "true";
                     Session["userID"] = uid;
-                    Session["accountType"] = "admin";
-                    Response.Redirect("main.aspx");
+
+					if (userType.SelectedValue == "admin")
+						Session["userType"] = "admin";
+					else
+						Session["userType"] = "user";
+
+					Response.Redirect("main.aspx");
                 }
                 else
                 {
@@ -55,6 +76,40 @@ namespace vetoTours
             }
         }
 
-    }
+		protected void btnRegister_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				string uid = regUserName.Text;
+				string pass = regPassword.Text;
+				string name = regRealName.Text;
+				string email = regEmail.Text;
+				int phone = int.Parse(regPhone.Text);
+				string desc = regDescription.Text;
+				string accountType = "";
+				int status = 0;
+
+				SqlCommand cmd = null;
+				SqlDataReader reader = null;
+				con.Open();
+
+				string query = "INSERT INTO users VALUES('" + uid + "', '" + pass + "', '" + name + "', '" + email + "', '" + phone + "', '" + accountType + "', '" + desc + "', '" + status + "')";
+
+				cmd = new SqlCommand(query, con);
+				reader = cmd.ExecuteReader();
+
+				regStatus.Text = "Successfully Registered!";
+
+			}
+
+			catch (Exception ex)
+			{
+				Response.Write(ex.Message);
+			}
+
+		}
+
+	}
+
 
 }

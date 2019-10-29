@@ -1,6 +1,4 @@
-﻿<!-- Nicholas Leung Jun Yen-->
-<!-- UOW ID: 5987325-->
-
+﻿
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="vetoTours._default" %>
 
 <!DOCTYPE html>
@@ -20,18 +18,47 @@
             <asp:Label ID="Label2" runat="server" Text="Password"></asp:Label>
             <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
             <br />
-           <!-- <asp:DropDownList runat="server" ID="userType">
-                <asp:ListItem Text="User" Value="1" Selected="true" />
-                <asp:ListItem Text="Admin" Value="2"/>
+			<asp:Label ID="Label3" runat="server" Text="Login as"></asp:Label>
+           <asp:DropDownList runat="server" ID="userType">
+                <asp:ListItem Text="User" Value="user" Selected="true" />
+                <asp:ListItem Text="Admin" Value="admin"/>
             </asp:DropDownList>
-            <br /> -->
+            <br />
             <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click"/>
             <br />
             <asp:Label ID="lblStatus" runat="server" Text=""></asp:Label>
         </div>
-    </form>
+    
     <br />
-    <h3>Please use user1 as the Username and password1 as the password in order to login</h3>
+
+	<br />
+	<br />
+
+        <div>
+			<h2>Registration Form</h2>
+            <asp:Label ID="regName" runat="server" Text="UserName"></asp:Label>
+            <asp:TextBox ID="regUserName" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="regPw" runat="server" Text="Password"></asp:Label>
+            <asp:TextBox ID="regPassword" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="regRn" runat="server" Text="Real Name"></asp:Label>
+            <asp:TextBox ID="regRealName" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="regEm" runat="server" Text="Email"></asp:Label>
+            <asp:TextBox ID="regEmail" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="regPh" runat="server" Text="Phone Number"></asp:Label>
+            <asp:TextBox ID="regPhone" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="regDesc" runat="server" Text="Description"></asp:Label>
+            <asp:TextBox ID="regDescription" runat="server"></asp:TextBox>
+            <br />
+            <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="btnRegister_Click"/>
+            <br />
+            <asp:Label ID="regStatus" runat="server" Text=""></asp:Label>
+        </div>
+	</form>
 
 </body>
 </html>

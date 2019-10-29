@@ -59,12 +59,13 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <asp:GridView ID="GridView1" runat="server"></asp:GridView>
 
-        </div>
-        <% if(Session["loggedIn"] == "true")
+        <% if(Session["loggedIn"] == "true" && Session["userType"] == "user")
             {%>
+		        <div>
+					 <asp:GridView ID="GridView1" runat="server"></asp:GridView>
+				</div>
+
                 <div id="dialog" title="Authentication">
                   <p>You have successfully logged into the server! Feel free to browse.</p>
                 </div>
@@ -171,6 +172,12 @@
             <%}
         %>
 
+		<% else if(Session["loggedIn"] == "true" && Session["userType"] == "admin")
+            {%>
+				<h1> ADMIN PAGE COMING SOON </h1>
+
+		    <%}
+        %>
 
 
     </form>
