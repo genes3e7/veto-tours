@@ -15,76 +15,65 @@ import lorem
 
 ACCNUM = 500
 
-# Functions for name
-def rand():
-    return random.randint(0, 2000)
-def single_name_get():
-    return single_name.get(rand())
+class User:
+    emailExtension = ["@hotmail.com", "@gmail.com", "@yahoo.com"]
+    def __init__(self, firstName, lastName):
+        self.firstName = (str)(firstName)
+        self.lastName = (str)(lastName)
+        self.accType = "user"
+        self.userID = self.userIDGen()
+        self.email = self.emailGen()
+        self.phoneNumber = self.phoneNumberGen()
+        self.password = self.passwordGen()
+        self.descript = lorem.sentence()
+        self.status = "0"
 
-# Functions of password
-def randLetter():
-    ascii_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    return random.choice(ascii_letters)
-def randPW():
-    return random.randint(0, 9)
-def create_password():
-    pw = str(randLetter()).upper()
-    for i in range(0, 6):
-        pw += str(randLetter()).lower()
-    pw += str(randPW())
-    return pw
+    def emailGen(self):
+        return self.userID + random.choice(self.emailExtension)
+    def passwordGen(self):
+        ascii_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        specialSymbols = "@%+/!#$^?:.{([~-_.])}"
+        password = ""
+        for i in range(0, 6):
+            password += str(random.choice(ascii_letters))
+        password += str(random.randint(0, 9))
+        password += str(random.choice(specialSymbols))
 
-# Stored
-emailExtension = ["@hotmail.com", "@gmail.com", "@yahoo.com"]
-userID = []
-full_name = []
-passwords = []
-email = []
+        return ''.join(random.sample(password, len(password)))
+    def userIDGen(self):
+        return self.firstName + (str)(random.randint(1, 999))
+    def phoneNumberGen(self):
+        return random.choice("987") + (str)(random.randint(1,9999999))
 
-# Get single names
+    def insert_statement(self):
+        string = "INSERT INTO [dbo].[users] ([userID], [password], [name], [email], [phoneNumber], [accountType], [description], [status]) VALUES ("
+        string += "N\'" + self.userID + "\', "
+        string += "N\'" + self.password + "\', "
+        string += "N\'" + self.firstName + " " + self.lastName + "\', "
+        string += "N\'" + self.email + "\', "
+        string += self.phoneNumber + ", "
+        string += "N\'" + self.accType + "\', "
+        string += "N\'" + self.descript + "\', "
+        string += self.status + ");"
+        return string
+        
+count = 0
 single_name = {}
-with open("singleName.txt") as f:
-    count = 0
-    for line in f:
-        single_name[count] = line.strip()
-        count += 1
+user_accounts = []
 
-# Make full name
-for i in range(0, ACCNUM):
-    full_name.append((single_name_get(), single_name_get()))
-    userID.append((str)(full_name[i][0]) + (str)(random.randint(1, 999)))
-    email.append(userID[i] + random.choice(emailExtension))
+def single_name_get(count):
+    return single_name.get(random.randint(0, count))
 
-# print(full_name[i][0])
-# Aaaaaa0 
-for i in range(0, ACCNUM):
-    passwords.append(create_password())
+if __name__== '__main__':
+    with open("singleName.txt") as f:
+        for line in f:
+            single_name[count] = line.strip()
+            count += 1
 
-# Form insert Statement
-insert_statement = []
-# 0
-insert_statement.append("INSERT INTO [dbo].[users] ([userID], [password], [name], [email], [phoneNumber], [accountType], [description], [status]) VALUES (")
-# 1
-insert_statement.append("N\'")
-# 2
-insert_statement.append("\', ")
-# 3
-insert_statement.append(", ")
-# 4
-insert_statement.append("\', 0)")
-
-# N'test-user', N'password1', N'Johnny', N'johnny@email.com', 98765432, N'user', N'I am looking for tours in SG'
-f = open("userAccSQLGen.txt","w+")
-for i in range(0, ACCNUM):
-    string = insert_statement[0]
-    string += insert_statement[1] + userID[i] + insert_statement[2]
-    string += insert_statement[1] + passwords[i] + insert_statement[2]
-    string += insert_statement[1] + (str)(full_name[i][0]) + " " + (str)(full_name[i][1]) + insert_statement[2]
-    string += insert_statement[1] + email[i] + insert_statement[2]
-    string += "9" + (str)(random.randint(1,8999999)) + insert_statement[3]
-    string += insert_statement[1] + "user" + insert_statement[2]
-    string += insert_statement[1] + lorem.sentence() + insert_statement[4]
-    string += "\n"
-    f.write(string)
-    print(string)
-f.close()
+    # Make Account
+    f = open("userAccSQLGen.txt","w+")
+    for i in range(0, ACCNUM):
+        user_accounts.append(User(single_name_get(count), single_name_get(count)))
+        f.write(user_accounts[i].insert_statement() + "\n")
+        print(user_accounts[i].insert_statement() + "\n")
+    f.close()
