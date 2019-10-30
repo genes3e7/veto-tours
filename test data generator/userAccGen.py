@@ -9,7 +9,8 @@
 
 import math
 import random
-#pip install lorem
+#pip install lorem --user
+#python -m pip install lorem --user
 import lorem
 
 ACCNUM = 500
