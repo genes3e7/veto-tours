@@ -14,8 +14,11 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
       $( function() {
-        $( "#tabs" ).tabs();
+          $("#tabs").tabs();
+          $("#touristTabs").tabs();
+          $("#tourGuideTabs").tabs();
       });
+
 
       $(function () {
           $("#spinner").spinner({
@@ -70,19 +73,12 @@
                   <p>You have successfully logged into the server! Feel free to browse.</p>
                 </div>
             
-                
-                 <% if(Session["accountType"] == "admin")
-                    {%>
-             
-            
-                     <%}
-                 %>
-                
-
+                                
 
                 <br />
                 <br />
 
+                 <!--
                 <div id="accordion">
                     <h3>How to Filter</h3>
                     <div>
@@ -109,10 +105,95 @@
 
                     </div>
                 </div>
+                 -->
                 
                 <br />
                 <br />
+                <h1>Tour Guide View</h1>
+                <div id ="tourGuideTabs">
+                    <ul>
+                        <li><a href="#createdTours">My Created Tours</a></li>
+                        <li><a href="#createTour">Create a Tour</a></li>
+                        <li><a href="#editTour">Modify existing Tour</a></li>
+                    </ul>
+                    <div id ="createdTours">
+                        <h2>My Created Tours</h2>
+                        <asp:GridView ID="createdToursView" runat="server"></asp:GridView>
+                    </div>
 
+                    <div id ="createTour">
+                        <h2>Create a Tour</h2>
+                        <asp:Label ID="cTName" runat="server" Text="Tour Name"></asp:Label>
+                        <asp:TextBox ID="createTourName" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="cTCapacity" runat="server" Text="Capacity"></asp:Label>
+                        <asp:TextBox ID="createCapacity" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="cTLocation" runat="server" Text="Location"></asp:Label>
+                        <asp:TextBox ID="createLocation" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="cTDescription" runat="server" Text="Description"></asp:Label>
+                        <asp:TextBox ID="createDescription" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="cTStartDate" runat="server" Text="Start Date (YYYY-MM-DD)"></asp:Label>
+                        <asp:TextBox ID="createStartDate" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="cTEndDate" runat="server" Text="End Date (YYYY-MM-DD)"></asp:Label>
+                        <asp:TextBox ID="createEndDate" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="cTDuration" runat="server" Text="Duration (HH:MM:SS)"></asp:Label>
+                        <asp:TextBox ID="createDuration" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="cTPrice" runat="server" Text="Price (eg. 14.50)"></asp:Label>
+                        <asp:TextBox ID="createPrice" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="cTStatus" runat="server" Text="Status (open/closed)"></asp:Label>
+                        <asp:TextBox ID="createStatus" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Button ID="createTourButton" runat="server" Text="Create Tour" OnClick="createTour_Click"/>
+                    </div>
+
+                    <div id ="editTour">
+                        <h2>Edit a Tour</h2>
+                        <asp:Label ID="eDID" runat="server" Text="ID of Tour to Edit"></asp:Label>
+                        <asp:TextBox ID="editID" runat="server"></asp:TextBox>
+                        <br />
+                        <h2>Editable Details:</h2>
+                        <asp:Label ID="eDName" runat="server" Text="Tour Name"></asp:Label>
+                        <asp:TextBox ID="editName" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDCapacity" runat="server" Text="Capacity"></asp:Label>
+                        <asp:TextBox ID="editCapacity" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDLocation" runat="server" Text="Location"></asp:Label>
+                        <asp:TextBox ID="editLocation" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDDescription" runat="server" Text="Description"></asp:Label>
+                        <asp:TextBox ID="editDescription" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDStartDate" runat="server" Text="Start Date (YYYY-MM-DD)"></asp:Label>
+                        <asp:TextBox ID="editStartDate" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDEndDate" runat="server" Text="End Date (YYYY-MM-DD)"></asp:Label>
+                        <asp:TextBox ID="editEndDate" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDDuration" runat="server" Text="Duration (HH:MM:SS)"></asp:Label>
+                        <asp:TextBox ID="editDuration" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDPrice" runat="server" Text="Price (eg. 14.50)"></asp:Label>
+                        <asp:TextBox ID="editPrice" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDStatus" runat="server" Text="Status (open/closed)"></asp:Label>
+                        <asp:TextBox ID="editStatus" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Button ID="editTourButton" runat="server" Text="Edit Tour" OnClick="editTour_Click"/>
+                        <br />
+                        <asp:Label ID="outcome" runat="server" Text=""></asp:Label>
+
+                    </div>
+                </div>
+
+                <!--
                 <div id="tabs">
                   <ul>
                     <li><a href="#tabs-1">Add a new Tour</a></li>
@@ -167,7 +248,7 @@
                   </div>
 
                 </div>
-
+                -->
 
             <%}
         %>
