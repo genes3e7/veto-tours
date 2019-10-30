@@ -31,12 +31,13 @@ class User:
     def emailGen(self):
         return self.userID + random.choice(self.emailExtension)
     def passwordGen(self):
+        pwlen = random.randint(8,20)
         ascii_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         specialSymbols = "@%+/!#$^?:.{([~-_.])}"
         password = ""
-        for i in range(0, 6):
+        for i in range(0, pwlen - 2):
             password += str(random.choice(ascii_letters))
-        password += str(random.randint(0, 9))
+        password += str(random.randint(0, 99))
         password += str(random.choice(specialSymbols))
 
         return ''.join(random.sample(password, len(password)))
