@@ -26,24 +26,53 @@ namespace vetoTours
 
                 conn.Open();
 
-                /*
-                string query = "SELECT * FROM tours";
-
-                cmd = new SqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
-                GridView1.DataSource = reader;
-                GridView1.DataBind();
-                reader.Close();
-                */
-
-                string query = "SELECT tourID AS 'Tour ID', userID AS 'User ID', tourName AS 'Tour Guide Name', capacity AS Capacity, location AS Location, description AS Description, " +
+                // Pull Tour Guides Created Tours
+                string query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
                     "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE userID='" + Session["userID"].ToString() + "';";
 
                 cmd = new SqlCommand(query, conn);
                 reader = cmd.ExecuteReader();
                 createdToursView.DataSource = reader;
                 createdToursView.DataBind();
+                reader.Close();
 
+                // Pull all Available tours that are ahead of current system time
+                query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
+                    "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE startDate >= GETDATE();";
+                cmd = new SqlCommand(query, conn);
+                reader = cmd.ExecuteReader();
+                availableToursView.DataSource = reader;
+                availableToursView.DataBind();
+                reader.Close();
+
+
+                // Pull all booked tours that have yet to start
+                query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
+                "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE startDate >= GETDATE() AND " +
+                "tourID IN (SELECT tourID FROM bookings WHERE userID='" + Session["userID"].ToString() + "');";
+                cmd = new SqlCommand(query, conn);
+                reader = cmd.ExecuteReader();
+                bookedToursView.DataSource = reader;
+                bookedToursView.DataBind();
+                reader.Close();
+
+                // Pull booking history where the events have ended
+                query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
+                "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE startDate < GETDATE() AND " +
+                "tourID IN (SELECT tourID FROM bookings WHERE userID='" + Session["userID"].ToString() + "');";
+                cmd = new SqlCommand(query, conn);
+                reader = cmd.ExecuteReader();
+                bookingHistoryView.DataSource = reader;
+                bookingHistoryView.DataBind();
+                reader.Close();
+
+                // Pull User Profile Information
+                query = "SELECT userID AS 'Username', name AS 'Real Name', email AS 'Email', phoneNumber AS 'Phone Number', description AS 'Description' FROM users WHERE userID='" + Session["userID"].ToString() + "';";
+                cmd = new SqlCommand(query, conn);
+                reader = cmd.ExecuteReader();
+                myProfileView.DataSource = reader;
+                myProfileView.DataBind();
+                reader.Close();
 
             }
         }
@@ -123,6 +152,49 @@ namespace vetoTours
 
 
         }
+
+        protected void createBooking_Click(object sender, EventArgs e)
+        {
+            int tourID = int.Parse(createBooking.Text);
+
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "INSERT INTO bookings (userID, tourID) VALUES('" + Session["userID"].ToString() + "', " + tourID + ");";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+
+        }
+
+
+        protected void editProfile_Click(object sender, EventArgs e)
+        {
+            int phone = int.Parse(newPhoneNumber.Text);
+            string description = newDescription.Text;
+
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "UPDATE users SET phoneNumber=" + phone + ", description ='" + description + "' WHERE userID='" + Session["userID"].ToString() + "';";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            reader.Close();
+            Response.Redirect("main.aspx");
+
+        }
+
+
+
 
         protected void filterBooks_Click(object sender, EventArgs e)
         {
@@ -208,7 +280,6 @@ namespace vetoTours
 
                 cmd = new SqlCommand(query, conn);
                 reader = cmd.ExecuteReader();
-                Response.Redirect("main.aspx");
 
         }
 

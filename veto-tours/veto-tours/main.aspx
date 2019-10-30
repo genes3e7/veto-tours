@@ -193,6 +193,55 @@
                     </div>
                 </div>
 
+                        <h1>Tourist View</h1>
+                <div id ="touristTabs">
+                    <ul>
+                        <li><a href="#availableTours">Available Tours</a></li>
+                        <li><a href="#bookedTours">My Upcoming Booked Tours</a></li>
+                        <li><a href="#bookingHistory">My Booking History</a></li>
+                        <li><a href="#makeBooking">Create a Booking</a></li>
+                        <li><a href="#modifyProfile">Modify Profile Details</a></li>
+                    </ul>
+                    <div id ="availableTours">
+                        <h2>Available Tours</h2>
+                        <asp:GridView ID="availableToursView" runat="server"></asp:GridView>
+                    </div>
+
+                    <div id ="bookedTours">
+                        <h2>My Upcoming Booked Tours</h2>
+                        <asp:GridView ID="bookedToursView" runat="server"></asp:GridView>
+                    </div>
+
+                    <div id ="bookingHistory">
+                        <h2>My Booking History</h2>
+                        <asp:GridView ID="bookingHistoryView" runat="server"></asp:GridView>
+                    </div>
+
+                    <div id="makeBooking">
+                        <h2>Create a Booking</h2>
+                        <asp:Label ID="cTBooking" runat="server" Text="ID of Tour"></asp:Label>
+                        <asp:TextBox ID="createBooking" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Button ID="createBookingButton" runat="server" Text="Create Booking" OnClick="createBooking_Click"/>
+
+                    </div>
+
+                    <div id="modifyProfile">
+                        <h2>Current Profile Details</h2>
+                        <asp:GridView ID="myProfileView" runat="server"></asp:GridView>
+                        <br />
+                        <h2>Editable Fields</h2>
+                        <asp:Label ID="eDPhone" runat="server" Text="Phone Number"></asp:Label>
+                        <asp:TextBox ID="newPhoneNumber" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDDesc" runat="server" Text="Description"></asp:Label>
+                        <asp:TextBox ID="newDescription" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Button ID="editProfile" runat="server" Text="Edit Details" OnClick="editProfile_Click"/>
+
+                    </div>
+               </div>
+
                 <!--
                 <div id="tabs">
                   <ul>
