@@ -33,7 +33,7 @@ class User:
     def passwordGen(self):
         pwlen = random.randint(8,20)
         ascii_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        specialSymbols = "@%+/!#$^?:.{([~-_.])}"
+        specialSymbols = "@%+/!#$^?:{([~-_.])}"
         password = ""
         for i in range(0, pwlen - 2):
             password += str(random.choice(ascii_letters))
@@ -66,15 +66,20 @@ def single_name_get(count):
     return single_name.get(random.randint(0, count))
 
 if __name__== '__main__':
-    with open("singleName.txt") as f:
-        for line in f:
+    with open("singleName.txt") as names:
+        for line in names:
             single_name[count] = line.strip()
             count += 1
 
     # Make Account
-    f = open("userAccSQLGen.txt","w+")
+    user_account_SQL = open("userAccSQLGen.sql", "w+")
+    user_account_manual = open("user_pw.csv", "w+")
+
     for i in range(0, ACCNUM):
         user_accounts.append(User(single_name_get(count), single_name_get(count)))
-        f.write(user_accounts[i].insert_statement() + "\n")
+        user_account_SQL.write(user_accounts[i].insert_statement() + "\n")
+        user_account_manual.write(user_accounts[i].userID + ", " + user_accounts[i].password + "\n")
         print(user_accounts[i].insert_statement() + "\n")
-    f.close()
+    
+    user_account_SQL.close()
+    user_account_manual.close()
