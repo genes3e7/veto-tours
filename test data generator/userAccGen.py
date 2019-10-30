@@ -1,23 +1,18 @@
-# User account consists of
-# Keywords
-# userID, password, name, email, phoneNumber, accountType, description, status
+# Test data generation
 
-# userID generation
-# first name
-# password generation take from file
-#
-
+# To install lorem package
+# python -m pip install lorem --user
 import math
 import random
-#pip install lorem --user
-#python -m pip install lorem --user
 import lorem
 
+# Number of accounts generated
 ACCNUM = 500
 
+
 class User:
-    emailExtension = ["@hotmail.com", "@gmail.com", "@yahoo.com"]
     def __init__(self, firstName, lastName):
+        # userID, password, name, email, phoneNumber, accountType, description, status
         self.firstName = (str)(firstName)
         self.lastName = (str)(lastName)
         self.accType = "user"
@@ -26,12 +21,15 @@ class User:
         self.phoneNumber = self.phoneNumberGen()
         self.password = self.passwordGen()
         self.descript = lorem.sentence()
-        self.status = "0"
+        self.status = 0
 
     def emailGen(self):
-        return self.userID + random.choice(self.emailExtension)
+        emailExtension = ["hotmail.com", "gmail.com", "yahoo.com",
+                          "outlook.com", "iCloud.com", "aol.com", "mail.com"]
+        return self.userID + "@{0}".format(random.choice(emailExtension))
+
     def passwordGen(self):
-        pwlen = random.randint(8,20)
+        pwlen = random.randint(8, 20)
         ascii_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         specialSymbols = "@%+/!#$^?:{([~-_.])}"
         password = ""
@@ -41,45 +39,61 @@ class User:
         password += str(random.choice(specialSymbols))
 
         return ''.join(random.sample(password, len(password)))
+
     def userIDGen(self):
         return self.firstName + (str)(random.randint(1, 999))
+
     def phoneNumberGen(self):
-        return random.choice("987") + (str)(random.randint(1,9999999))
+        return (int)(random.choice("987") + (str)(random.randint(1, 9999999)))
 
     def insert_statement(self):
-        string = "INSERT INTO [dbo].[users] ([userID], [password], [name], [email], [phoneNumber], [accountType], [description], [status]) VALUES ("
-        string += "N\'" + self.userID + "\', "
-        string += "N\'" + self.password + "\', "
-        string += "N\'" + self.firstName + " " + self.lastName + "\', "
-        string += "N\'" + self.email + "\', "
-        string += self.phoneNumber + ", "
-        string += "N\'" + self.accType + "\', "
-        string += "N\'" + self.descript + "\', "
-        string += self.status + ");"
+        pattern = ["N\'", "\', "]
+        string = "INSERT INTO [dbo].[users] "
+        string += "([userID], [password], [name], [email], [phoneNumber], [accountType], [description], [status]) "
+        string += "VALUES ("
+        string += "{0[0]}{1}{0[1]}".format(pattern, self.userID)
+        string += "{0[0]}{1}{0[1]}".format(pattern, self.password)
+        string += "{0[0]}{1} {2}{0[1]}".format(pattern,
+                                               self.firstName, self.lastName)
+        string += "{0[0]}{1}{0[1]}".format(pattern, self.email)
+        string += "{0}, ".format(self.phoneNumber)
+        string += "{0[0]}{1}{0[1]}".format(pattern, self.accType)
+        string += "{0[0]}{1}{0[1]}".format(pattern, self.descript)
+        string += "{0});".format(self.status)
+
         return string
-        
+
+
 count = 0
 single_name = {}
 user_accounts = []
 
+
 def single_name_get(count):
     return single_name.get(random.randint(0, count))
 
-if __name__== '__main__':
+
+if __name__ == '__main__':
     with open("singleName.txt") as names:
         for line in names:
             single_name[count] = line.strip()
             count += 1
 
-    # Make Account
+    # Files
     user_account_SQL = open("userAccSQLGen.sql", "w+")
     user_account_manual = open("user_pw.csv", "w+")
 
     for i in range(0, ACCNUM):
-        user_accounts.append(User(single_name_get(count), single_name_get(count)))
+        # Make account and save to list for future code upgrade
+        user_accounts.append(
+            User(single_name_get(count), single_name_get(count)))
+        # Write account into insert statements
         user_account_SQL.write(user_accounts[i].insert_statement() + "\n")
-        user_account_manual.write(user_accounts[i].userID + ", " + user_accounts[i].password + "\n")
-        print(user_accounts[i].insert_statement() + "\n")
-    
+        # Write account into user_pw.csv file
+        user_account_manual.write(
+            "{0.userID}, {0.password}\n".format(user_accounts[i]))
+
     user_account_SQL.close()
     user_account_manual.close()
+
+    print("Program Complete.")
