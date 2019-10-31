@@ -5,6 +5,7 @@
 import math
 import random
 import lorem
+import csv
 
 # Number of accounts generated
 ACCNUM = 500
@@ -44,24 +45,31 @@ class User:
         return self.firstName + (str)(random.randint(1, 999))
 
     def phoneNumberGen(self):
-        return (int)(random.choice("987") + (str)(random.randint(1, 9999999)))
+        return random.choice([9, 8, 7]) * 10000000 + random.randint(1, 9999999)
 
     def insert_statement(self):
-        pattern = ["N\'", "\', "]
         string = "INSERT INTO [dbo].[users] "
         string += "([userID], [password], [name], [email], [phoneNumber], [accountType], [description], [status]) "
         string += "VALUES ("
-        string += "{0[0]}{1}{0[1]}".format(pattern, self.userID)
-        string += "{0[0]}{1}{0[1]}".format(pattern, self.password)
-        string += "{0[0]}{1} {2}{0[1]}".format(pattern,
-                                               self.firstName, self.lastName)
-        string += "{0[0]}{1}{0[1]}".format(pattern, self.email)
+        string += "N\'{0}\', ".format(self.userID)
+        string += "N\'{0}\', ".format(self.password)
+        string += "N\'{0} {1}\', ".format(self.firstName, self.lastName)
+        string += "N\'{0}\', ".format(self.email)
         string += "{0}, ".format(self.phoneNumber)
-        string += "{0[0]}{1}{0[1]}".format(pattern, self.accType)
-        string += "{0[0]}{1}{0[1]}".format(pattern, self.descript)
+        string += "N\'{0}\', ".format(self.accType)
+        string += "N\'{0}\', ".format(self.descript)
         string += "{0});".format(self.status)
 
         return string
+
+    def csv_header(self):
+        return ["userID", "password", "firstName", "lastName", "email", "phoneNumber", "accType", "descript", "status"]
+
+    def csv_content(self):
+        array = [self.userID, self.password, self.firstName, self.lastName,
+                 self.email, self.phoneNumber, self.accType, self.descript, self.status]
+
+        return array
 
 
 count = 0
@@ -79,21 +87,25 @@ if __name__ == '__main__':
             single_name[count] = line.strip()
             count += 1
 
-    # Files
     user_account_SQL = open("userAccSQLGen.sql", "w+")
-    user_account_manual = open("user_pw.csv", "w+")
 
     for i in range(0, ACCNUM):
         # Make account and save to list for future code upgrade
         user_accounts.append(
             User(single_name_get(count), single_name_get(count)))
+
         # Write account into insert statements
         user_account_SQL.write(user_accounts[i].insert_statement() + "\n")
-        # Write account into user_pw.csv file
-        user_account_manual.write(
-            "{0.userID}, {0.password}\n".format(user_accounts[i]))
 
     user_account_SQL.close()
-    user_account_manual.close()
 
+    # keep data
+    with open('userAccData.csv', mode='w+', newline='') as user_account_manual:
+        writer = csv.writer(user_account_manual, delimiter=',',
+                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+        writer.writerow(user_accounts[0].csv_header())
+        for i in user_accounts:
+            writer.writerow(i.csv_content())
+            
     print("Program Complete.")
