@@ -21,7 +21,7 @@ class User:
         self.email = self.emailGen()
         self.phoneNumber = self.phoneNumberGen()
         self.password = self.passwordGen()
-        self.descript = lorem.sentence()
+        self.descript = lorem.paragraph()
         self.status = 0
 
     def emailGen(self):
