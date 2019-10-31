@@ -86,7 +86,7 @@ namespace vetoTours
 				string email = regEmail.Text;
 				int phone = int.Parse(regPhone.Text);
 				string desc = regDescription.Text;
-				string accountType = "";
+				string accountType = "user";
 				int status = 0;
 
 				SqlCommand cmd = null;

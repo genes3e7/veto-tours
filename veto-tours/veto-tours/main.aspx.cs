@@ -16,7 +16,7 @@ namespace vetoTours
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           if (Session["loggedIn"] == "true")
+           if (Session["loggedIn"] == "true" && Session["userType"] == "user")
            {
                 SqlConnection conn = null;
                 SqlCommand cmd = null;
@@ -75,6 +75,22 @@ namespace vetoTours
                 reader.Close();
 
             }
+
+            else if (Session["loggedIn"] == "true" && Session["userType"] == "admin")
+            {
+                SqlConnection conn = null;
+                SqlCommand cmd = null;
+                SqlDataReader reader = null;
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+                conn.Open();
+                string query = "SELECT userID AS 'UserName', password AS 'Password', name AS 'Real Name', email AS 'Email', phoneNumber AS 'Phone Number', accountType AS 'Account Type', Description AS 'Description', status as 'Status' FROM users";
+                cmd = new SqlCommand(query, conn);
+                reader = cmd.ExecuteReader();
+                editUserView.DataSource = reader;
+                editUserView.DataBind();
+                reader.Close();
+            }
+
         }
 
         protected void createTour_Click(object sender, EventArgs e)
@@ -193,7 +209,61 @@ namespace vetoTours
 
         }
 
+        protected void editUser_Click(object sender, EventArgs e)
+        {
+            string userID = editUserID.Text;
+            string password = editPassword.Text;
+            string realName = editRealName.Text;
+            string email = editEmail.Text;
+            int phone = int.Parse(editPhone.Text);
+            string type = editAccountType.Text;
+            string description = editDesc.Text;
+            int status = int.Parse(editStat.Text);
 
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "UPDATE users SET password= '"+ password + "', name='" + realName + "', email ='" + email + "', phoneNumber=" + phone + ", accountType='" + type + "', description ='" + description + "', status=" + status +
+                            " WHERE userID='" + userID + "';";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            reader.Close();
+            Response.Redirect("main.aspx");
+
+        }
+
+        protected void btnCreateUser_Click(object sender, EventArgs e)
+        {
+            string uid = regUserName.Text;
+            string pass = regPassword.Text;
+            string name = regRealName.Text;
+            string email = regEmail.Text;
+            int phone = int.Parse(regPhone.Text);
+            string accountType = regAccountType.Text;
+            string desc = regDescription.Text;
+            int status = int.Parse(regStatus.Text);
+                
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "INSERT INTO users VALUES('" + uid + "', '" + pass + "', '" + name + "', '" + email + "', '" + phone + "', '" + accountType + "', '" + desc + "', '" + status + "')";
+
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            reader.Close();
+            Response.Redirect("main.aspx");
+
+        }
 
 
         protected void filterBooks_Click(object sender, EventArgs e)

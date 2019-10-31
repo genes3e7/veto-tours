@@ -17,6 +17,7 @@
           $("#tabs").tabs();
           $("#touristTabs").tabs();
           $("#tourGuideTabs").tabs();
+          $("#adminTabs").tabs();
       });
 
 
@@ -304,7 +305,78 @@
 
 		<% else if(Session["loggedIn"] == "true" && Session["userType"] == "admin")
             {%>
-				<h1> ADMIN PAGE COMING SOON </h1>
+				<h1> ADMIN PAGE</h1>
+                <div id ="tourGuideTabs">
+                    <ul>
+                        <li><a href="#editUser">Edit User</a></li>
+                        <li><a href="#createUser">Create a User</a></li>
+                        
+                    </ul>
+                    <div id ="editUser">
+                        <asp:GridView ID="editUserView" runat="server"></asp:GridView>
+                        <br />
+                        <h2>Edit a User Profile</h2>
+                        <asp:Label ID="eDUID" runat="server" Text="ID of User to Edit"></asp:Label>
+                        <asp:TextBox ID="editUserID" runat="server"></asp:TextBox>
+                        <br />
+                        <h2>Editable Details:</h2>
+                        <asp:Label ID="eDPW" runat="server" Text="Password"></asp:Label>
+                        <asp:TextBox ID="editPassword" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDRN" runat="server" Text="Real Name"></asp:Label>
+                        <asp:TextBox ID="editRealName" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDEM" runat="server" Text="Email"></asp:Label>
+                        <asp:TextBox ID="editEmail" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDPN" runat="server" Text="Phone Number"></asp:Label>
+                        <asp:TextBox ID="editPhone" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDAT" runat="server" Text="Account Type(Tourist/Tourguide)"></asp:Label>
+                        <asp:TextBox ID="editAccountType" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDDE" runat="server" Text="Description"></asp:Label>
+                        <asp:TextBox ID="editDesc" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDST" runat="server" Text="Status(0/1)"></asp:Label>
+                        <asp:TextBox ID="editStat" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Button ID="editUserButton" runat="server" Text="Edit User Profile" OnClick="editUser_Click"/>
+                        <br />
+                    </div>
+
+                    <div id="createUser">
+                        <h2>Create a New User</h2>
+                        <asp:Label ID="regName" runat="server" Text="UserName"></asp:Label>
+                        <asp:TextBox ID="regUserName" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="regPw" runat="server" Text="Password"></asp:Label>
+                        <asp:TextBox ID="regPassword" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="regRn" runat="server" Text="Real Name"></asp:Label>
+                        <asp:TextBox ID="regRealName" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="regEm" runat="server" Text="Email"></asp:Label>
+                        <asp:TextBox ID="regEmail" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="regPh" runat="server" Text="Phone Number"></asp:Label>
+                        <asp:TextBox ID="regPhone" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="regAT" runat="server" Text="Account Type(Tourist/Tour Guide)"></asp:Label>
+                        <asp:TextBox ID="regAccountType" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="regDesc" runat="server" Text="Description"></asp:Label>
+                        <asp:TextBox ID="regDescription" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="regStat" runat="server" Text="Status(0/1)"></asp:Label>
+                        <asp:TextBox ID="regStatus" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Button ID="btnCreateUser" runat="server" Text="Create New User" OnClick="btnCreateUser_Click"/>
+                        <br />
+                        
+                    </div>
+
+                 </div>
 
 		    <%}
         %>
