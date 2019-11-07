@@ -109,6 +109,21 @@ namespace vetoTours
             this.personalDescription = desc;
             this.status = status;
         }
+        public void setPassword(string password)
+        {
+            this.password = password;
+        }
+
+        public void setName(string name) 
+        {
+            this.name = name;
+        }
+
+        public void setEmail(string email) 
+        {
+            this.email = email;
+        }
+
 
         public void setPhoneNumber(int phoneNumber)
         {
@@ -118,6 +133,11 @@ namespace vetoTours
         public void setPersonalDescription(string personalDescription)
         {
             this.personalDescription = personalDescription;
+        }
+
+        public void setStatus(int status)
+        {
+            this.status = status;
         }
 
         public void setRatingTourist(int rating)
@@ -440,6 +460,113 @@ namespace vetoTours
             con.Close();
 
         }
+    }
+
+    public class booking
+    {
+        private int bookingID;
+        private string userID;
+        private int tourID;
+
+        public booking(string userID, int tourID)
+        {
+            this.userID = userID;
+            this.tourID = tourID;
+        }
+
+        public void setBookingID(int bookingID)
+        {
+            this.bookingID = bookingID;
+        }
+
+        public void setUserID(string userID)
+        {
+            this.userID = userID;
+        }
+
+        public void setTourID(int tourID)
+        {
+            this.tourID = tourID;
+        }
+
+        public int getBookingID()
+        {
+            return bookingID;
+        }
+
+        public string getUserID()
+        {
+            return userID;
+        }
+
+        public int getTourID()
+        {
+            return tourID;
+        }
+
+        public void createBooking()
+        {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "INSERT INTO bookings (userID, tourID) VALUES('" + userID + "', " + tourID + ");";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+        }
+    }
+
+    public class admin
+    {
+        private string adminID;
+        private string password;
+
+        public admin(string adminID, string password)
+        {
+            this.adminID = adminID;
+            this.password = password;
+        }
+        public void createUser(user newUser)
+        {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "INSERT INTO users VALUES('" + newUser.getUserID() + "', '" + newUser.getPassword() + "', '" + newUser.getName() + "', '" + newUser.getEmail() + "', '" + newUser.getPhoneNumber() + "', '" 
+                                + newUser.getPersonalDescription() + "', '" + newUser.getStatus() + "')";
+
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            reader.Close();
+
+        }
+
+        public void editUser(user targetUser)
+        {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "UPDATE users SET password= '" + targetUser.getPassword() + "', name='" + targetUser.getName() + "', email ='" + targetUser.getEmail() + "', phoneNumber=" + targetUser.getPhoneNumber() 
+                            + ", description ='" + targetUser.getPersonalDescription() + "', status=" + targetUser.getStatus() + " WHERE userID='" + targetUser.getUserID() + "';";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            reader.Close();
+
+        }
+
     }
 
 

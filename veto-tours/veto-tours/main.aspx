@@ -81,34 +81,7 @@
                 <br />
                 <br />
 
-                 <!--
-                <div id="accordion">
-                    <h3>How to Filter</h3>
-                    <div>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
-                        <p>Category A:</p>
-                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-                        <p>Category B:</p>
-                        <p>xcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <p>Category C:</p>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
 
-
-                    </div>
-                    <h3>Filter Settings</h3>
-                    <div>
-                        <asp:RadioButtonList ID="rdoFilter" runat="server" RepeatLayout="Flow">
-                            <asp:ListItem Value="Genre">Genre</asp:ListItem>
-                            <asp:ListItem Value="Price">Price</asp:ListItem>
-                            <asp:ListItem Value="Author">Author</asp:ListItem>
-                        </asp:RadioButtonList>
-
-                        <br />
-                        <asp:Button ID="filterButton" runat="server" Text="Filter Books" OnClick="filterBooks_Click"/>
-
-                    </div>
-                </div>
-                 -->
                 
                 <br />
                 <br />
@@ -251,62 +224,7 @@
                    </div>
                 </div>
 
-                <!--
-                <div id="tabs">
-                  <ul>
-                    <li><a href="#tabs-1">Add a new Tour</a></li>
-                    <li><a href="#tabs-2">Edit a Tour</a></li>
-                  </ul>
-                  <div id="tabs-1">
-                    <h1>Add a new tour</h1>
-                    <asp:Label ID="Label1" runat="server" Text="tour ID    "></asp:Label>
-                    <asp:TextBox ID="add_bookID" runat="server"></asp:TextBox>
-                    <br />
-                    <asp:Label ID="Label2" runat="server" Text="tour Name  "></asp:Label>
-                    <asp:TextBox ID="add_bookName" runat="server"></asp:TextBox>
-                    <br />
-                    <asp:Label ID="Label3" runat="server" Text="Country "></asp:Label>
-                    <asp:TextBox ID="add_bookGenre" runat="server"></asp:TextBox>
-                    <br />
-                    <asp:Label ID="Label5" runat="server" Text="Location "></asp:Label>
-                    <asp:TextBox ID="add_bookAuthor" runat="server"></asp:TextBox>
-                    <br />
-                    <p>
-                      <label for="addPrice">Set Price $:</label>
-                      <input id="addPrice" name="value" runat="server"/>
-                    </p>
-                    <br />
-                    <br />
-                    <asp:Button ID="btnAddBook" runat="server" Text="Add new Tour" OnClick="btnAddBook_Click"/>
-                    <br />
-                    <br />
-                  </div>
-                  <div id="tabs-2">
-                    <h2>Edit a book</h2>
-                    <asp:Label ID="Label6" runat="server" Text="Book ID to Update"></asp:Label>
-                    <asp:TextBox ID="target_bookID" runat="server"></asp:TextBox>
-                    <br />
-                    <asp:Label ID="Label7" runat="server" Text="New Book Name"></asp:Label>
-                    <asp:TextBox ID="new_bookName" runat="server"></asp:TextBox>
-                    <br />
-                    <asp:Label ID="Label8" runat="server" Text="New Book Genre"></asp:Label>
-                    <asp:TextBox ID="new_bookGenre" runat="server"></asp:TextBox>
-                    <br />
-                    <asp:Label ID="Label10" runat="server" Text="New Book Author"></asp:Label>
-                    <asp:TextBox ID="new_bookAuthor" runat="server"></asp:TextBox>
-                    <br />
-                    <p>
-                      <label for="spinner">Set New Price $:</label>
-                      <input id="spinner" name="value" runat="server"/>
-                    </p>
-                    <br />
-                    <br />
-                    <asp:Button ID="btnEditBook" runat="server" Text="Edit Book" OnClick="btnEditBook_Click"/>
-                    <br />
-                  </div>
 
-                </div>
-                -->
 
             <%}
         %>
