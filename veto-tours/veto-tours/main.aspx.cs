@@ -14,65 +14,56 @@ namespace vetoTours
 {
     public partial class main : System.Web.UI.Page
     {
+        user currUser;
         protected void Page_Load(object sender, EventArgs e)
         {
            if (Session["loggedIn"] == "true" && Session["userType"] == "user")
            {
+                currUser = fetchUserObject(Session["userID"].ToString());
+                nameLabel.Text = "Hello " + currUser.getName();
                 SqlConnection conn = null;
                 SqlCommand cmd = null;
                 SqlDataReader reader = null;
+
 
                 conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
 
                 conn.Open();
 
                 // Pull Tour Guides Created Tours
-                string query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
-                    "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE userID='" + Session["userID"].ToString() + "';";
+                currUser.getCreatedTours(createdToursView);
+                conn.Close();
 
-                cmd = new SqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
-                createdToursView.DataSource = reader;
-                createdToursView.DataBind();
-                reader.Close();
 
-                // Pull all Available tours that are ahead of current system time
-                query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
-                    "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE startDate >= GETDATE();";
-                cmd = new SqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
-                availableToursView.DataSource = reader;
+                // Fetch available Tours
+                List<tour> availableTours = new List<tour>();
+                availableTours = fetchTours();
+                var _bind = from a in availableTours
+                            select new
+                            {
+                                Tour_ID = a.getTourID(),
+                                Created_By = a.getUserID(),
+                                Tour_Name = a.getTourName(),
+                                Tour_Capacity = a.getCapacity(),
+                                Tour_Location = a.getLocation(),
+                                Tour_Description = a.getTourDescription(),
+                                Start_Date = a.getStartDate().Substring(0,10),
+                                End_Date = a.getEndDate().Substring(0,10),
+                                Duration = a.getDuration(),
+                                Price = a.getPrice(),
+                                Status = a.getStatus()
+                            };
+                availableToursView.DataSource = _bind;
                 availableToursView.DataBind();
-                reader.Close();
-
 
                 // Pull all booked tours that have yet to start
-                query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
-                "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE startDate >= GETDATE() AND " +
-                "tourID IN (SELECT tourID FROM bookings WHERE userID='" + Session["userID"].ToString() + "');";
-                cmd = new SqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
-                bookedToursView.DataSource = reader;
-                bookedToursView.DataBind();
-                reader.Close();
+                currUser.getUpcomingBookings(bookedToursView);
 
                 // Pull booking history where the events have ended
-                query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
-                "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE startDate < GETDATE() AND " +
-                "tourID IN (SELECT tourID FROM bookings WHERE userID='" + Session["userID"].ToString() + "');";
-                cmd = new SqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
-                bookingHistoryView.DataSource = reader;
-                bookingHistoryView.DataBind();
-                reader.Close();
+                currUser.getBookingHistory(bookingHistoryView);
 
                 // Pull User Profile Information
-                query = "SELECT userID AS 'Username', name AS 'Real Name', email AS 'Email', phoneNumber AS 'Phone Number', description AS 'Description' FROM users WHERE userID='" + Session["userID"].ToString() + "';";
-                cmd = new SqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
-                myProfileView.DataSource = reader;
-                myProfileView.DataBind();
-                reader.Close();
+                currUser.getProfileDetails(myProfileView);
 
             }
 
@@ -83,7 +74,7 @@ namespace vetoTours
                 SqlDataReader reader = null;
                 conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
                 conn.Open();
-                string query = "SELECT userID AS 'UserName', password AS 'Password', name AS 'Real Name', email AS 'Email', phoneNumber AS 'Phone Number', accountType AS 'Account Type', Description AS 'Description', status as 'Status' FROM users";
+                string query = "SELECT userID AS 'UserName', password AS 'Password', name AS 'Real Name', email AS 'Email', phoneNumber AS 'Phone Number', Description AS 'Description', status as 'Status' FROM users";
                 cmd = new SqlCommand(query, conn);
                 reader = cmd.ExecuteReader();
                 editUserView.DataSource = reader;
@@ -95,78 +86,36 @@ namespace vetoTours
 
         protected void createTour_Click(object sender, EventArgs e)
         {
-            string tourName = createTourName.Text;
-            int capacity = int.Parse(createCapacity.Text);
-            string location = createLocation.Text;
-            string description = createDescription.Text;
-            string startDate = createStartDate.Text;
-            string endDate = createEndDate.Text;
-            string duration = createDuration.Text;
-            string price = createPrice.Text;
-            string status = createStatus.Text;
 
-            SqlConnection conn = null;
-            SqlCommand cmd = null;
-            SqlDataReader reader = null;
-
-            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
-
-            conn.Open();
-
-            string query = "INSERT INTO tours (userID, tourName, capacity, location, description, startDate, endDate, duration, price, status) VALUES ('" 
-                            + Session["userID"].ToString() + "', '" + tourName + "', '" + capacity + "', '" + location + "', '" + description + "', CAST('" + startDate.ToString() + "' AS date), CAST('" + endDate.ToString() + "' AS date), '" + duration + "', '" + price + "', '" + status + "')";
-
-            cmd = new SqlCommand(query, conn);
-            reader = cmd.ExecuteReader();
+            tour newTour = new tour(currUser.getUserID(), createTourName.Text, int.Parse(createCapacity.Text), createLocation.Text, createDescription.Text, createStartDate.Text, createEndDate.Text, createDuration.Text, double.Parse(createPrice.Text), createStatus.Text);
+            newTour.createTour();
+            
             Response.Redirect("main.aspx");
 
         }
 
         protected void editTour_Click(object sender, EventArgs e)
         {
+            
             int tourID = int.Parse(editID.Text);
-            string tourName = editName.Text;
-            int capacity = int.Parse(editCapacity.Text);
-            string location = editLocation.Text;
-            string description = editDescription.Text;
-            string startDate = editStartDate.Text;
-            string endDate = editEndDate.Text;
-            string duration = editDuration.Text;
-            string price = editPrice.Text;
-            string status = editStatus.Text;
 
-            SqlConnection conn = null;
-            SqlCommand cmd = null;
-            SqlDataReader reader = null;
+            // Query database to pull out tour information based on given tourID into a tour object
+            tour editTour = fetchTourObject(tourID);
 
-            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+            // Tweak Class variables using the mutator
+            editTour.setTourName(editName.Text);
+            editTour.setCapacity(int.Parse(editCapacity.Text));
+            editTour.setLocation(editLocation.Text);
+            editTour.setTourDescription(editDescription.Text);
+            editTour.setStartDate(editStartDate.Text);
+            editTour.setEndDate(editEndDate.Text);
+            editTour.setDuration(editDuration.Text);
+            editTour.setPrice(double.Parse(editPrice.Text));
+            editTour.setStatus(editStatus.Text);
 
-            conn.Open();
-
-            // Check if tour rightfully belongs to user trying to edit
-            string query = "SELECT " + tourID + " FROM tours WHERE userID='" + Session["userID"].ToString() +"';";
-            cmd = new SqlCommand(query, conn);
-            reader = cmd.ExecuteReader();
-
-
-            if (reader.Read())
-            {
-                query = "UPDATE tours SET tourName = '" + tourName + "', capacity = '" + capacity + "', location = '" + location + "', description = '" + description + "', startDate = CAST('" + startDate.ToString() + "' AS date), endDate = CAST('" + startDate.ToString() + "' AS date)," +
-                    "duration = '" + duration + "', price = '" + price + "', status = '" + status + "' WHERE tourID=" + tourID + ";";
-
-                reader.Close();
-                cmd = new SqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
-                Response.Redirect("main.aspx");
-            }
-
-            else
-            {
-                outcome.Text = "COULD NOT FIND A TOUR ID ASSOCIATED WITH THIS USER";
-            }
-
-
-
+            // Execute class function to modify tour
+            editTour.modifyTour();
+            
         }
 
         protected void createBooking_Click(object sender, EventArgs e)
@@ -192,19 +141,7 @@ namespace vetoTours
         {
             int phone = int.Parse(newPhoneNumber.Text);
             string description = newDescription.Text;
-
-            SqlConnection conn = null;
-            SqlCommand cmd = null;
-            SqlDataReader reader = null;
-
-            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
-
-            conn.Open();
-
-            string query = "UPDATE users SET phoneNumber=" + phone + ", description ='" + description + "' WHERE userID='" + Session["userID"].ToString() + "';";
-            cmd = new SqlCommand(query, conn);
-            reader = cmd.ExecuteReader();
-            reader.Close();
+            currUser.modifyAccount(phone, description);
             Response.Redirect("main.aspx");
 
         }
@@ -216,7 +153,6 @@ namespace vetoTours
             string realName = editRealName.Text;
             string email = editEmail.Text;
             int phone = int.Parse(editPhone.Text);
-            string type = editAccountType.Text;
             string description = editDesc.Text;
             int status = int.Parse(editStat.Text);
 
@@ -228,7 +164,7 @@ namespace vetoTours
 
             conn.Open();
 
-            string query = "UPDATE users SET password= '"+ password + "', name='" + realName + "', email ='" + email + "', phoneNumber=" + phone + ", accountType='" + type + "', description ='" + description + "', status=" + status +
+            string query = "UPDATE users SET password= '"+ password + "', name='" + realName + "', email ='" + email + "', phoneNumber=" + phone + ", description ='" + description + "', status=" + status +
                             " WHERE userID='" + userID + "';";
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
@@ -244,7 +180,6 @@ namespace vetoTours
             string name = regRealName.Text;
             string email = regEmail.Text;
             int phone = int.Parse(regPhone.Text);
-            string accountType = regAccountType.Text;
             string desc = regDescription.Text;
             int status = int.Parse(regStatus.Text);
                 
@@ -256,7 +191,7 @@ namespace vetoTours
 
             conn.Open();
 
-            string query = "INSERT INTO users VALUES('" + uid + "', '" + pass + "', '" + name + "', '" + email + "', '" + phone + "', '" + accountType + "', '" + desc + "', '" + status + "')";
+            string query = "INSERT INTO users VALUES('" + uid + "', '" + pass + "', '" + name + "', '" + email + "', '" + phone + "', '" + desc + "', '" + status + "')";
 
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
@@ -265,28 +200,8 @@ namespace vetoTours
 
         }
 
-
-        protected void filterBooks_Click(object sender, EventArgs e)
+        protected user fetchUserObject(string userID)
         {
-            string query;
-            string selected = rdoFilter.SelectedItem.Value.ToString();
-
-            if (selected == "Genre")
-            {
-                query = "SELECT * FROM BOOKS ORDER BY bookGenre";
-            }
-
-            else if (selected == "Price")
-            {
-                query = "SELECT * FROM BOOKS ORDER BY bookPrice";
-            }
-
-            else
-            {
-                query = "SELECT * FROM BOOKS ORDER BY author";
-            }
-
-
             SqlConnection conn = null;
             SqlCommand cmd = null;
             SqlDataReader reader = null;
@@ -295,63 +210,74 @@ namespace vetoTours
 
             conn.Open();
 
+            string query = "SELECT * FROM users WHERE userID='" + userID +"';";
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
-            GridView1.DataSource = reader;
-            GridView1.DataBind();
+            if (reader.Read())
+            {
+                user temp = new user(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetInt32(6));
+                reader.Close();
+                return temp;
+            }
+
+            return null;
+
         }
 
-
-
-        protected void btnAddBook_Click(object sender, EventArgs e)
+        protected tour fetchTourObject(int tourID)
         {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
-                int bookID = int.Parse(add_bookID.Text);
-                string bookName = add_bookName.Text;
-                string bookGenre = add_bookGenre.Text;
-                int bookPrice = int.Parse(addPrice.Value);
-                string author = add_bookAuthor.Text;
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
 
-                SqlConnection conn = null;
-                SqlCommand cmd = null;
-                SqlDataReader reader = null;
+            conn.Open();
 
-                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+            string query = "SELECT * FROM tours WHERE tourID='" + tourID + "';";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                
+                tour temp = new tour(reader.GetInt32(0),reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6).ToString(), reader.GetDateTime(7).ToString(), reader.GetTimeSpan(8).ToString(), (double)reader.GetDecimal(9),
+                                        reader.GetString(10));
+                
+                reader.Close();
+                return temp;
+            }
 
-                conn.Open();
-
-                string query = "INSERT INTO books VALUES('" + bookID + "', '" + bookName + "', '" + bookGenre + "', '" + bookPrice + "', '" + author + "')";
-
-                cmd = new SqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
-                Response.Redirect("main.aspx");
-
+            return null;
         }
 
-
-        protected void btnEditBook_Click(object sender, EventArgs e)
+        protected List<tour> fetchTours()
         {
+            List<tour> availableTours = new List<tour>();
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
-                int bookID = int.Parse(target_bookID.Text);
-                string bookName = new_bookName.Text;
-                string bookGenre = new_bookGenre.Text;
-                string author = new_bookAuthor.Text;
-                int bookPrice = int.Parse(spinner.Value);
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
 
-                SqlConnection conn = null;
-                SqlCommand cmd = null;
-                SqlDataReader reader = null;
+            conn.Open();
 
-                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+            string query = "SELECT *  FROM  tours WHERE startDate >= GETDATE();";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
 
-                conn.Open();
+            while (reader.Read())
+            {
+                tour temp = new tour(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6).ToString(), reader.GetDateTime(7).ToString(), reader.GetTimeSpan(8).ToString(), (double)reader.GetDecimal(9),
+                                        reader.GetString(10));
+                availableTours.Add(temp);
+            }
+            reader.Close();
 
-                string query = "UPDATE books SET bookName = '" + bookName + "', bookGenre = '" + bookGenre + "', bookPrice = " + bookPrice + ", author = '" + author + "' WHERE bookID =" + bookID + ";";
+            return availableTours;
 
-                cmd = new SqlCommand(query, conn);
-                reader = cmd.ExecuteReader();
 
         }
+
 
     }
 }

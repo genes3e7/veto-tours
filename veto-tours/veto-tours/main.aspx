@@ -63,6 +63,7 @@
 
 </head>
 <body>
+    <asp:Label ID="nameLabel" runat="server" Text=""></asp:Label>
     <form id="form1" runat="server">
 
         <% if(Session["loggedIn"] == "true" && Session["userType"] == "user")
@@ -339,9 +340,6 @@
                         <asp:Label ID="eDPN" runat="server" Text="Phone Number"></asp:Label>
                         <asp:TextBox ID="editPhone" runat="server"></asp:TextBox>
                         <br />
-                        <asp:Label ID="eDAT" runat="server" Text="Account Type(Tourist/Tourguide)"></asp:Label>
-                        <asp:TextBox ID="editAccountType" runat="server"></asp:TextBox>
-                        <br />
                         <asp:Label ID="eDDE" runat="server" Text="Description"></asp:Label>
                         <asp:TextBox ID="editDesc" runat="server"></asp:TextBox>
                         <br />
@@ -368,9 +366,6 @@
                         <br />
                         <asp:Label ID="regPh" runat="server" Text="Phone Number"></asp:Label>
                         <asp:TextBox ID="regPhone" runat="server"></asp:TextBox>
-                        <br />
-                        <asp:Label ID="regAT" runat="server" Text="Account Type(Tourist/Tour Guide)"></asp:Label>
-                        <asp:TextBox ID="regAccountType" runat="server"></asp:TextBox>
                         <br />
                         <asp:Label ID="regDesc" runat="server" Text="Description"></asp:Label>
                         <asp:TextBox ID="regDescription" runat="server"></asp:TextBox>

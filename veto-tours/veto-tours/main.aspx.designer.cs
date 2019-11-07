@@ -15,6 +15,15 @@ namespace vetoTours
     {
 
         /// <summary>
+        /// nameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label nameLabel;
+
+        /// <summary>
         /// form1 control.
         /// </summary>
         /// <remarks>
@@ -816,24 +825,6 @@ namespace vetoTours
         protected global::System.Web.UI.WebControls.TextBox editPhone;
 
         /// <summary>
-        /// eDAT control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label eDAT;
-
-        /// <summary>
-        /// editAccountType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox editAccountType;
-
-        /// <summary>
         /// eDDE control.
         /// </summary>
         /// <remarks>
@@ -967,24 +958,6 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regPhone;
-
-        /// <summary>
-        /// regAT control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label regAT;
-
-        /// <summary>
-        /// regAccountType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox regAccountType;
 
         /// <summary>
         /// regDesc control.
