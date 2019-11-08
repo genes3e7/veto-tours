@@ -55,10 +55,17 @@ namespace vetoTours
                     Session["loggedIn"] = "true";
                     Session["userID"] = uid;
 
-					if (userType.SelectedValue == "admin")
-						Session["userType"] = "admin";
-					else
-						Session["userType"] = "user";
+                    if (userType.SelectedValue == "admin")
+                        Session["userType"] = "admin";
+                    else
+                    {
+                        Session["userType"] = "user";
+
+                        if (sdr.GetInt32(6) == 0)
+                            Session["status"] = "normal";
+                        else
+                            Session["status"] = "suspended";
+                    }
 
 					Response.Redirect("main.aspx");
                 }
@@ -567,6 +574,120 @@ namespace vetoTours
 
         }
 
+    }
+
+    public class chat
+    {
+        private int chatID;
+        private string sender;
+        private string recipient;
+        private string subject;
+        private string message;
+        private DateTime dateTime;
+
+        public chat(int chatID, string sender, string recipient, string subject, string message, DateTime dateTime)
+        {
+            this.chatID = chatID;
+            this.sender = sender;
+            this.recipient = recipient;
+            this.subject = subject;
+            this.message = message;
+            this.dateTime = dateTime;
+        }
+
+        public chat(string sender, string recipient, string subject, string message)
+        {
+            this.sender = sender;
+            this.recipient = recipient;
+            this.subject = subject;
+            this.message = message;
+            dateTime = DateTime.Now;
+        }
+
+        public void setChatID(int chatID)
+        {
+            this.chatID = chatID;
+        }
+
+        public void setSender(string sender)
+        {
+            this.sender = sender;
+        }
+
+        public void setRecipient(string recipient)
+        {
+            this.recipient = recipient;
+        }
+
+        public void setSubject(string subject)
+        {
+            this.subject = subject;
+        }
+
+        public void setMessage(string message)
+        {
+            this.message = message;
+        }
+
+        public void setDateTime(DateTime dateTime)
+        {
+            this.dateTime = dateTime;
+        }
+
+        public int getChatID()
+        {
+            return chatID;
+        }
+
+        public string getSender()
+        {
+            return sender;
+        }
+
+        public string getRecipient()
+        {
+            return recipient;
+        }
+
+        public DateTime getDateTime()
+        {
+            return this.dateTime;
+        }
+
+        public string getSubject()
+        {
+            return subject;
+        }
+
+        public string getMessage()
+        {
+            return message;
+        }
+
+        public void sendMessage()
+        {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "INSERT INTO chat (sender, recipient, subject, message, dateTime) VALUES ('"
+                            + sender + "', '" + recipient + "', '" + subject + "', '" + message + "', '"+ dateTime + "');"; ;
+
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            reader.Close();
+
+        }
+
+        public List<chat> viewMessage()
+        {
+            List <chat> allMessages = new List<chat>();
+            return allMessages;
+        }
     }
 
 

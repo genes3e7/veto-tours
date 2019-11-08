@@ -18,7 +18,7 @@ namespace vetoTours
         admin currAdmin;
         protected void Page_Load(object sender, EventArgs e)
         {
-           if (Session["loggedIn"] == "true" && Session["userType"] == "user")
+           if (Session["loggedIn"] == "true" && Session["userType"] == "user" && Session["status"] == "normal")
            {
                 currUser = fetchUserObject(Session["userID"].ToString());
                 nameLabel.Text = "Hello " + currUser.getName();
@@ -66,7 +66,24 @@ namespace vetoTours
                 // Pull User Profile Information
                 currUser.getProfileDetails(myProfileView);
 
+                // Fetch user Inbox
+                List<chat> allMessages = new List<chat>();
+                allMessages = fetchMessages();
+
+                foreach (chat msg in allMessages)
+                {
+                    pmInbox.InnerHtml += ("Sender: " + msg.getSender() + "<br/>" + "Time Sent:" + msg.getDateTime().ToString() +"<br/> Subject: " + msg.getSubject() + "<br/>" + "Message: " + "<br />" + "<textarea rows=\"4\" cols=\"50\" readonly>" + msg.getMessage() + "</textarea>" + "<br/> <hr> <br/>");
+                }
+
+
+
             }
+
+            else if (Session["loggedIn"] == "true" && Session["userType"] == "user" && Session["status"] == "suspended")
+            {
+
+            }
+
 
             else if (Session["loggedIn"] == "true" && Session["userType"] == "admin")
             {
@@ -302,6 +319,66 @@ namespace vetoTours
             reader.Close();
 
             return allUsers;
+        }
+
+        protected List<chat> fetchMessages()
+        {
+            List<chat> allMessages = new List<chat>();
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "SELECT *  FROM  chat WHERE recipient='" + currUser.getUserID() + "';";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                chat temp = new chat(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetDateTime(5));
+                allMessages.Add(temp);
+            }
+            reader.Close();
+
+            return allMessages;
+        }
+
+        protected void sendMsg_Click(object sender, EventArgs e)
+        {
+
+            chat newChat = new chat(currUser.getUserID(),sendTo.Text, msgSubject.Text, msgField.Text);
+            newChat.sendMessage();
+
+            Response.Redirect("main.aspx");
+
+        }
+
+        protected void btnSuspendUser_Click(object sender, EventArgs e)
+        {
+            // Fetch the user object that needs to be suspended
+            user suspendedUser = fetchUserObject(suspendUserField.Text);
+
+            // Change user to suspended status
+            suspendedUser.setStatus(1);
+
+            // Write back the user object to database
+            currAdmin.editUser(suspendedUser);
+
+            // Change all their tours to suspended status
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+            con.Open();
+            string query = "UPDATE tours SET status= 'suspended' WHERE userID='" + suspendedUser.getUserID() + "';"; 
+            cmd = new SqlCommand(query, con);
+            reader = cmd.ExecuteReader();
+            con.Close();
+
+            Response.Redirect("main.aspx");
+
         }
 
 

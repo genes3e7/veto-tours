@@ -13,12 +13,13 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
-      $( function() {
+      $(function () {
+          $("#viewTabs").tabs();
           $("#tabs").tabs();
           $("#touristTabs").tabs();
           $("#tourGuideTabs").tabs();
+          $("#personalMessagesTab").tabs();
           $("#adminTabs").tabs();
-          $("#viewTabs").tabs();
       });
 
 
@@ -52,6 +53,7 @@
 
       $(function () {
           $("#dialog").dialog();
+          $("#dialog_suspended").dialog();
       });
 
       $(function () {
@@ -66,29 +68,20 @@
     <asp:Label ID="nameLabel" runat="server" Text=""></asp:Label>
     <form id="form1" runat="server">
 
-        <% if(Session["loggedIn"] == "true" && Session["userType"] == "user")
+        <% if(Session["loggedIn"] == "true" && Session["userType"] == "user" && Session["status"] == "normal")
             {%>
-		        <div>
-					 <asp:GridView ID="GridView1" runat="server"></asp:GridView>
-				</div>
 
                 <div id="dialog" title="Authentication">
                   <p>You have successfully logged into the server! Feel free to browse.</p>
                 </div>
-            
-                                
-
-                <br />
-                <br />
-
-
-                
+              
                 <br />
                 <br />
                 <div id="viewTabs">
                     <ul>
                         <li><a href="#tourGuideTabs">Tour Guide Mode</a></li>
                         <li><a href="#touristTabs">Tourist Mode</a></li>
+                        <li><a href="#personalMessagesTab">My Inbox</a></li>
                     </ul>
                     <div id ="tourGuideTabs">
                         <h2>Tour Guide Mode</h2>
@@ -221,7 +214,34 @@
                             <asp:Button ID="editProfile" runat="server" Text="Edit Details" OnClick="editProfile_Click"/>
 
                         </div>
-                   </div>
+                    </div>
+
+                    <div id ="personalMessagesTab">
+                        <h2>My Inbox</h2>
+                        <ul>
+                            <li><a href="#pmInbox">My Inbox</a></li>
+                            <li><a href="#createMessage">Compose Message</a></li>
+                        </ul>
+                        <div id ="pmInbox" runat="server">
+                            
+                            
+                        </div>
+
+                        <div id ="createMessage">
+                            <asp:Label ID="labelSendTo" runat="server" Text="To: "></asp:Label>
+                            <asp:TextBox ID="sendTo" runat="server"></asp:TextBox>
+                            <br />
+                            <asp:Label ID="labelSubject" runat="server" Text="Subject: "></asp:Label>
+                            <asp:TextBox ID="msgSubject" runat="server"></asp:TextBox>
+                            <br />
+                            <asp:Label ID="labelMsg" runat="server" Text="Message: "></asp:Label>
+                            <br />
+                            <asp:TextBox ID="msgField" runat="server" TextMode="MultiLine" Width="400px" Height="200px"></asp:TextBox>
+                            <br />
+                            <asp:Button ID="sendMsgBtn" runat="server" Text="Send Message" OnClick="sendMsg_Click"/>
+                        </div>
+                    </div>
+
                 </div>
 
 
@@ -229,13 +249,26 @@
             <%}
         %>
 
+        <% else if(Session["loggedIn"] == "true" && Session["userType"] == "user" && Session["status"] == "suspended")
+                {%>
+                 <div id="dialog_suspended" title="Account Suspended">
+                  <p>Your Account has been suspended, please contact support for more information!</p>
+                </div>
+
+
+                <%}
+        %>
+
+
+
 		<% else if(Session["loggedIn"] == "true" && Session["userType"] == "admin")
             {%>
 				<h1> ADMIN PAGE</h1>
-                <div id ="tourGuideTabs">
+                <div id ="adminTabs">
                     <ul>
                         <li><a href="#editUser">Edit User</a></li>
                         <li><a href="#createUser">Create a User</a></li>
+                        <li><a href="#suspendUser">Suspend a User</a></li>
                         
                     </ul>
                     <div id ="editUser">
@@ -292,8 +325,16 @@
                         <asp:TextBox ID="regStatus" runat="server"></asp:TextBox>
                         <br />
                         <asp:Button ID="btnCreateUser" runat="server" Text="Create New User" OnClick="btnCreateUser_Click"/>
+                        <br />                       
+                    </div>
+
+                    <div id="suspendUser">
+                        <h2>Suspend a User</h2>
+                        <asp:Label ID="suspendUserLabel" runat="server" Text="Enter ID of user to suspend"></asp:Label>
+                        <asp:TextBox ID="suspendUserField" runat="server"></asp:TextBox>
                         <br />
-                        
+                        <asp:Button ID="btnSuspend" runat="server" Text="Suspend User" OnClick="btnSuspendUser_Click"/>
+
                     </div>
 
                  </div>
