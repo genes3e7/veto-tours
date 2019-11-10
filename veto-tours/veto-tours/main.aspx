@@ -24,30 +24,38 @@
 
 
       $(function () {
-          $("#spinner").spinner({
+          $("#setRatingTourist").spinner({
               spin: function (event, ui) {
-                  if (ui.value > 99) {
+                  if (ui.value > 5) {
                       $(this).spinner("value", 0);
                       return false;
                   } else if (ui.value < 0) {
-                      $(this).spinner("value", 99);
+                      $(this).spinner("value", 5);
                       return false;
                   }
               }
           });
+
+          $("#setRatingTourist").bind("keydown", function (event) {
+              event.preventDefault();
+          });
       });
 
       $(function () {
-          $("#addPrice").spinner({
+          $("#setRating").spinner({
               spin: function (event, ui) {
-                  if (ui.value > 99) {
+                  if (ui.value > 5) {
                       $(this).spinner("value", 0);
                       return false;
                   } else if (ui.value < 0) {
-                      $(this).spinner("value", 99);
+                      $(this).spinner("value", 5);
                       return false;
                   }
               }
+          });
+
+          $("#setRating").bind("keydown", function (event) {
+              event.preventDefault();
           });
       });
 
@@ -89,6 +97,7 @@
                             <li><a href="#createdTours">My Created Tours</a></li>
                             <li><a href="#createTour">Create a Tour</a></li>
                             <li><a href="#editTour">Modify existing Tour</a></li>
+                            <li><a href="#rateTourist">Rate a Tourist</a></li>
                         </ul>
                         <div id ="createdTours">
                             <h2>My Created Tours</h2>
@@ -163,8 +172,19 @@
                             <asp:Button ID="editTourButton" runat="server" Text="Edit Tour" OnClick="editTour_Click"/>
                             <br />
                             <asp:Label ID="outcome" runat="server" Text=""></asp:Label>
-
                         </div>
+
+                        <div id="rateTourist">
+                            <h2>Rate a Tourist</h2>
+                            <asp:Label ID="touristlbl" runat="server" Text="Tourist ID"></asp:Label>
+                            <asp:TextBox ID="rateTouristID" runat="server"></asp:TextBox>
+                            <br />
+                            <label for="setRatingTourist">Stars</label>
+                            <input id="setRatingTourist" name="ratingValue" runat="server" />
+                            <br />
+                            <asp:Button ID="btnSetRatingTourist" runat="server" Text="Give Rating" OnClick="giveRatingTourist_Click"/>
+                        </div>
+
                     </div>
 
                     <div id ="touristTabs">
@@ -175,6 +195,7 @@
                             <li><a href="#bookingHistory">My Booking History</a></li>
                             <li><a href="#makeBooking">Create a Booking</a></li>
                             <li><a href="#modifyProfile">Modify Profile Details</a></li>
+                            <li><a href="#rateTourGuide">Rate a Tour Guide</a></li>
                         </ul>
                         <div id ="availableTours">
                             <h2>Available Tours</h2>
@@ -212,8 +233,21 @@
                             <asp:TextBox ID="newDescription" runat="server"></asp:TextBox>
                             <br />
                             <asp:Button ID="editProfile" runat="server" Text="Edit Details" OnClick="editProfile_Click"/>
+                        </div>
+
+                        <div id="rateTourGuide">
+                            <h2>Rate a TourGuide</h2>
+                            <asp:Label ID="rateTGName" runat="server" Text="Tour Guide ID"></asp:Label>
+                            <asp:TextBox ID="rateTourGuideID" runat="server"></asp:TextBox>
+                            <br />
+                            <label for="setRating">Stars</label>
+                            <input id="setRating" name="ratingValue" runat="server" />
+                            <br />
+                            <asp:Button ID="btnGiveRating" runat="server" Text="Give Rating" OnClick="giveRatingTourGuide_Click"/>
 
                         </div>
+
+
                     </div>
 
                     <div id ="personalMessagesTab">

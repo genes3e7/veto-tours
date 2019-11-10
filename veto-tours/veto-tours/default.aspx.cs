@@ -283,8 +283,29 @@ namespace vetoTours
             reader = cmd.ExecuteReader();
             createdToursView.DataSource = reader;
             createdToursView.DataBind();
+        }
 
+        public void fetchAvgUserRatings()
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+            con.Open();
+            string query = "SELECT AVG(stars) FROM ratings WHERE ratingTo='" + userID +"' AND type='tourguide';";
+            cmd = new SqlCommand(query, con);
+            reader = cmd.ExecuteReader();
+            if (reader.Read() && !reader.IsDBNull(0))
+                ratingTourGuide = reader.GetInt32(0);
+            else
+                ratingTourGuide = 0;
 
+            query = "SELECT AVG(stars) FROM ratings WHERE ratingTo='" + userID + "' AND type='tourist';";
+            cmd = new SqlCommand(query, con);
+            reader = cmd.ExecuteReader();
+            if (reader.Read() && !reader.IsDBNull(0))
+                ratingTourist = reader.GetInt32(0);
+            else
+                ratingTourist = 0;
         }
     }
 
@@ -467,6 +488,28 @@ namespace vetoTours
             con.Close();
 
         }
+
+        public int fetchTourGuideRating()
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+            con.Open();
+            string query = "SELECT AVG(stars) FROM ratings WHERE ratingTo='" + userID + "' AND type='tourguide';";
+            cmd = new SqlCommand(query, con);
+            reader = cmd.ExecuteReader();
+            if (reader.Read() && !reader.IsDBNull(0))
+            {
+                int ratingTourGuide = reader.GetInt32(0);
+                return ratingTourGuide;
+            }
+
+            else
+            {
+                return 0;
+            }
+            
+        }
     }
 
     public class booking
@@ -604,6 +647,11 @@ namespace vetoTours
             dateTime = DateTime.Now;
         }
 
+        public chat(string sender)
+        {
+            this.sender = sender;
+        }
+
         public void setChatID(int chatID)
         {
             this.chatID = chatID;
@@ -683,11 +731,115 @@ namespace vetoTours
 
         }
 
-        public List<chat> viewMessage()
+        public List<chat> viewMessage(string recipient)
         {
             List <chat> allMessages = new List<chat>();
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "SELECT *  FROM  chat WHERE recipient='" + recipient + "';";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                chat temp = new chat(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetDateTime(5));
+                allMessages.Add(temp);
+            }
+            reader.Close();
+
             return allMessages;
+
         }
+    }
+
+    public class rating
+    {
+        private int ratingID;
+        private string ratingTo;
+        private string ratingFrom;
+        private int stars;
+        private string type;
+
+        public rating(string ratingTo, string ratingFrom, int stars, string type)
+        {
+            this.ratingTo = ratingTo;
+            this.ratingFrom = ratingFrom;
+            this.stars = stars;
+            this.type = type;
+        }
+
+        public int getRatingID()
+        {
+            return ratingID;
+        }
+
+        public string getRatingTo()
+        {
+            return ratingTo;
+        }
+
+        public string getRatingFrom()
+        {
+            return ratingFrom;
+        }
+
+        public int getStars()
+        {
+            return stars;
+        }
+
+        public string getType()
+        {
+            return type;
+        }
+
+        public void setRatingTo(string ratingTo)
+        {
+            this.ratingTo = ratingTo;
+        }
+
+        public void setRatingFrom(string ratingFrom)
+        {
+            this.ratingFrom = ratingFrom;
+        }
+
+        public void setStars(int stars)
+        {
+            this.stars = stars;
+        }
+
+        public void setType(string type)
+        {
+            this.type = type;
+        }
+
+        public void createRating()
+        {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "INSERT INTO ratings (ratingTo, ratingFrom, stars, type) VALUES ('"
+                            + ratingTo + "', '" + ratingFrom + "', '" + stars + "', '" + type + "');"; ;
+
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            reader.Close();
+
+        }
+
+
+
     }
 
 

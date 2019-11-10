@@ -44,6 +44,7 @@ namespace vetoTours
                             {
                                 Tour_ID = a.getTourID(),
                                 Created_By = a.getUserID(),
+                                Rating = a.fetchTourGuideRating(),
                                 Tour_Name = a.getTourName(),
                                 Tour_Capacity = a.getCapacity(),
                                 Tour_Location = a.getLocation(),
@@ -54,6 +55,8 @@ namespace vetoTours
                                 Price = a.getPrice(),
                                 Status = a.getStatus()
                             };
+                
+
                 availableToursView.DataSource = _bind;
                 availableToursView.DataBind();
 
@@ -111,6 +114,7 @@ namespace vetoTours
 
         }
 
+        // Create tour
         protected void createTour_Click(object sender, EventArgs e)
         {
 
@@ -121,6 +125,7 @@ namespace vetoTours
 
         }
 
+        // Edit Tour
         protected void editTour_Click(object sender, EventArgs e)
         {
             
@@ -323,26 +328,9 @@ namespace vetoTours
 
         protected List<chat> fetchMessages()
         {
-            List<chat> allMessages = new List<chat>();
-            SqlConnection conn = null;
-            SqlCommand cmd = null;
-            SqlDataReader reader = null;
-
-            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
-
-            conn.Open();
-
-            string query = "SELECT *  FROM  chat WHERE recipient='" + currUser.getUserID() + "';";
-            cmd = new SqlCommand(query, conn);
-            reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                chat temp = new chat(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetDateTime(5));
-                allMessages.Add(temp);
-            }
-            reader.Close();
-
+           
+            chat temp = new chat(currUser.getUserID());
+            List<chat> allMessages = temp.viewMessage(currUser.getUserID());
             return allMessages;
         }
 
@@ -376,6 +364,38 @@ namespace vetoTours
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
             con.Close();
+
+            Response.Redirect("main.aspx");
+
+        }
+
+        protected void giveRatingTourGuide_Click(object sender, EventArgs e)
+        {
+
+            // Fetch tourGuide object that user wants to rate
+            user tourGuide = fetchUserObject(rateTourGuideID.Text);
+
+            // Create new rating object
+            rating newRating = new rating(tourGuide.getUserID(), currUser.getUserID(), int.Parse(setRating.Value), "tourguide");
+
+            // Execute write rating to database
+            newRating.createRating();
+
+            Response.Redirect("main.aspx");
+
+        }
+
+        protected void giveRatingTourist_Click(object sender, EventArgs e)
+        {
+
+            // Fetch tourist object that user wants to rate
+            user tourist = fetchUserObject(rateTouristID.Text);
+
+            // Create new rating object
+            rating newRating = new rating(tourist.getUserID(), currUser.getUserID(), int.Parse(setRatingTourist.Value), "tourist");
+
+            // Execute write rating to database
+            newRating.createRating();
 
             Response.Redirect("main.aspx");
 
