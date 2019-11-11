@@ -6,11 +6,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#errorDialog").dialog();
+            $("#successfulRegistration").dialog();
+        });
+    </script>
 </head>
 <body>
     <h1>Veto Tours Authentication System</h1>
     <br />
     <form id="form1" runat="server">
+        <div id="errorDialog" title="Error" visible="false" runat="server"></div>
+        <div id="successfulRegistration" title="Registration Success" visible="false" runat="server"></div>        
         <div>
             <asp:Label ID="Label1" runat="server" Text="UserName"></asp:Label>
             <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>

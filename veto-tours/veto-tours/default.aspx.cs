@@ -16,7 +16,8 @@ namespace vetoTours
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
+
 
         }
 
@@ -29,25 +30,25 @@ namespace vetoTours
             {
                 string uid = txtUserName.Text;
                 string pass = txtPassword.Text;
-				SqlDataReader sdr;
+                SqlDataReader sdr;
 
-				con.Open();
+                con.Open();
 
-				// If userType is regular user
-				if (userType.SelectedValue == "admin")
-				{
-					string query = "SELECT * from admins where userID='" + uid + "' and password='" + pass + "'";
-					SqlCommand cmd = new SqlCommand(query, con);
-					sdr = cmd.ExecuteReader();
+                // If userType is regular user
+                if (userType.SelectedValue == "admin")
+                {
+                    string query = "SELECT * from admins where userID='" + uid + "' and password='" + pass + "'";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    sdr = cmd.ExecuteReader();
 
-				}
+                }
 
-				else
-				{
-					string query = "SELECT * from users where userID='" + uid + "' and password='" + pass + "'";
-					SqlCommand cmd = new SqlCommand(query, con);
-					sdr = cmd.ExecuteReader();
-				}
+                else
+                {
+                    string query = "SELECT * from users where userID='" + uid + "' and password='" + pass + "'";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    sdr = cmd.ExecuteReader();
+                }
 
                 if (sdr.Read())
                 {
@@ -69,7 +70,7 @@ namespace vetoTours
                             Session["status"] = "suspended";
                     }
 
-					Response.Redirect("main.aspx");
+                    Response.Redirect("main.aspx");
                 }
                 else
                 {
@@ -85,16 +86,60 @@ namespace vetoTours
             }
         }
 
-		protected void btnRegister_Click(object sender, EventArgs e)
-		{
-            user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, 0);
-            newUser.createAccount();
-            Response.Redirect("default.aspx");
-			regStatus.Text = "Successfully Registered!";
-			
-		}
+        protected void btnRegister_Click(object sender, EventArgs e)
+        {
+            registrationErrorHandler regHandler = new registrationErrorHandler();
+            if (regUserName.Text == "")
+                regHandler.emptyUserName();
+            if (regPassword.Text == "")
+                regHandler.emptyPassword();
+            if (regRealName.Text == "")
+                regHandler.emptyRealName();
+            if (regEmail.Text == "")
+                regHandler.emptyEmail();
+            if (!regEmail.Text.Contains("@"))
+                regHandler.invalidEmail();
+            if (regPhone.Text == "")
+                regHandler.emptyPhoneNumber();
+            if (!regPhone.Text.All(char.IsDigit))
+                regHandler.invalidPhoneNumber();
+            if (regDescription.Text == "")
+                regHandler.emptyDescription();
 
-	}
+            // Check username exists
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+            con.Open();
+            string query = "SELECT * FROM users WHERE userID='" + regUserName.Text + "';";
+            cmd = new SqlCommand(query, con);
+            reader = cmd.ExecuteReader();
+            if(reader.Read())
+            {
+                if (reader.GetString(0) == regUserName.Text)
+                    regHandler.userNameExists();
+            }
+            con.Close();
+
+            if (regHandler.error == "")
+            {
+                user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, 0);
+                newUser.createAccount();
+                successfulRegistration.InnerHtml = "You have successfully registered!";
+                successfulRegistration.Visible = true;
+                Response.Redirect("default.aspx");
+                
+            }
+
+            else
+            {
+                errorDialog.InnerHtml = regHandler.error;
+                errorDialog.Visible = true;
+            }
+
+        }
+
+    }
 
     public class user
     {
@@ -123,12 +168,12 @@ namespace vetoTours
             this.password = password;
         }
 
-        public void setName(string name) 
+        public void setName(string name)
         {
             this.name = name;
         }
 
-        public void setEmail(string email) 
+        public void setEmail(string email)
         {
             this.email = email;
         }
@@ -210,7 +255,7 @@ namespace vetoTours
             SqlCommand cmd = null;
             SqlDataReader reader = null;
             con.Open();
-            string query = "INSERT INTO users VALUES('" + userID + "', '" + password + "', '" + name + "', '" + email + "', '" + phoneNumber  + "', '" + personalDescription + "', '" + status + "')";
+            string query = "INSERT INTO users VALUES('" + userID + "', '" + password + "', '" + name + "', '" + email + "', '" + phoneNumber + "', '" + personalDescription + "', '" + status + "')";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
             con.Close();
@@ -293,7 +338,7 @@ namespace vetoTours
             SqlCommand cmd = null;
             SqlDataReader reader = null;
             con.Open();
-            string query = "SELECT AVG(stars) FROM ratings WHERE ratingTo='" + userID +"' AND type='tourguide';";
+            string query = "SELECT AVG(stars) FROM ratings WHERE ratingTo='" + userID + "' AND type='tourguide';";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
             if (reader.Read() && !reader.IsDBNull(0))
@@ -324,7 +369,7 @@ namespace vetoTours
         private double price;
         private string status;
 
-        public tour (string userID, string tourName, int capacity, string location, string tourDescription, DateTime startDate, DateTime endDate, double price, string status)
+        public tour(string userID, string tourName, int capacity, string location, string tourDescription, DateTime startDate, DateTime endDate, double price, string status)
         {
             this.userID = userID;
             this.tourName = tourName;
@@ -376,18 +421,18 @@ namespace vetoTours
             this.startDate = startDate;
         }
 
-        public void setEndDate (DateTime endDate)
+        public void setEndDate(DateTime endDate)
         {
             this.endDate = endDate;
         }
 
 
-        public void setPrice (double price)
+        public void setPrice(double price)
         {
             this.price = price;
         }
 
-        public void setStatus (string status)
+        public void setStatus(string status)
         {
             this.status = status;
         }
@@ -451,7 +496,7 @@ namespace vetoTours
             con.Open();
             string format = "yyy-MM-dd HH:mm:ss";
             string query = "INSERT INTO tours (userID, tourName, capacity, location, description, startDate, endDate, price, status) VALUES ('"
-                            + userID + "', '" + tourName + "', '" + capacity + "', '" + location + "', '" + tourDescription + "', '" + startDate.ToString(format) + "', '" + endDate.ToString(format) + "', '"  + price.ToString() + "', '" + status + "');";
+                            + userID + "', '" + tourName + "', '" + capacity + "', '" + location + "', '" + tourDescription + "', '" + startDate.ToString(format) + "', '" + endDate.ToString(format) + "', '" + price.ToString() + "', '" + status + "');";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
             con.Close();
@@ -500,7 +545,7 @@ namespace vetoTours
             {
                 return 0;
             }
-            
+
         }
     }
 
@@ -582,7 +627,7 @@ namespace vetoTours
 
             conn.Open();
 
-            string query = "INSERT INTO users VALUES('" + newUser.getUserID() + "', '" + newUser.getPassword() + "', '" + newUser.getName() + "', '" + newUser.getEmail() + "', '" + newUser.getPhoneNumber() + "', '" 
+            string query = "INSERT INTO users VALUES('" + newUser.getUserID() + "', '" + newUser.getPassword() + "', '" + newUser.getName() + "', '" + newUser.getEmail() + "', '" + newUser.getPhoneNumber() + "', '"
                                 + newUser.getPersonalDescription() + "', '" + newUser.getStatus() + "')";
 
             cmd = new SqlCommand(query, conn);
@@ -601,7 +646,7 @@ namespace vetoTours
 
             conn.Open();
 
-            string query = "UPDATE users SET password= '" + targetUser.getPassword() + "', name='" + targetUser.getName() + "', email ='" + targetUser.getEmail() + "', phoneNumber=" + targetUser.getPhoneNumber() 
+            string query = "UPDATE users SET password= '" + targetUser.getPassword() + "', name='" + targetUser.getName() + "', email ='" + targetUser.getEmail() + "', phoneNumber=" + targetUser.getPhoneNumber()
                             + ", description ='" + targetUser.getPersonalDescription() + "', status=" + targetUser.getStatus() + " WHERE userID='" + targetUser.getUserID() + "';";
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
@@ -715,7 +760,7 @@ namespace vetoTours
             conn.Open();
 
             string query = "INSERT INTO chat (sender, recipient, subject, message, dateTime) VALUES ('"
-                            + sender + "', '" + recipient + "', '" + subject + "', '" + message + "', '"+ dateTime + "');"; ;
+                            + sender + "', '" + recipient + "', '" + subject + "', '" + message + "', '" + dateTime + "');"; ;
 
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
@@ -725,7 +770,7 @@ namespace vetoTours
 
         public List<chat> viewMessage(string recipient)
         {
-            List <chat> allMessages = new List<chat>();
+            List<chat> allMessages = new List<chat>();
             SqlConnection conn = null;
             SqlCommand cmd = null;
             SqlDataReader reader = null;
@@ -829,9 +874,63 @@ namespace vetoTours
             reader.Close();
 
         }
+    }
 
+    public class registrationErrorHandler
+    {
+        public string label;
+        public string error;
 
+        public registrationErrorHandler()
+        {
+            label = "The following errors were found during the registration process: </br>";
+            error = "";
+        }
 
+        public void emptyUserName()
+        {
+            error += "- Username Field Empty <br />";
+        }
+
+        public void emptyPassword()
+        {
+            error += "- Password Field Empty <br />";
+        }
+
+        public void emptyRealName()
+        {
+            error += "- Real Name Field Empty <br />";
+        }
+
+        public void emptyEmail()
+        {
+            error += "- Email Field Empty <br />";
+        }
+
+        public void invalidEmail()
+        {
+            error += "- Email does not contain @ sign <br />";
+        }
+
+        public void emptyPhoneNumber()
+        {
+            error += "- Phone Number Field Empty <br />";
+        }
+
+        public void invalidPhoneNumber()
+        {
+            error += "- Invalid Phone Number Entry <br />";
+        }
+
+        public void emptyDescription()
+        {
+            error += "- Description Field Empty <br />";
+        }
+
+        public void userNameExists()
+        {
+            error += "- The username has been taken <br />";
+        }
     }
 
 

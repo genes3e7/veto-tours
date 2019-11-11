@@ -459,6 +459,17 @@ namespace vetoTours
             Response.Redirect("main.aspx#touristTabs");
         }
 
+        protected void logout_Click(object sender, EventArgs e)
+        {
+            Session["userID"] = "";
+            Session["status"] = "";
+            Session["loggedIn"] = "false";
+            Session["userType"] = "";
+            Session["filterType"] = "Default";
+            Session["criteria"] = "Default";
+            Response.Redirect("default.aspx");
+        }
+
 
 
     }

@@ -79,6 +79,8 @@
         <% if(Session["loggedIn"] == "true" && Session["userType"] == "user" && Session["status"] == "normal")
             {%>
 
+                <asp:Button ID="btnUserLogout" runat="server" Text="Logout" OnClick="logout_Click"/>
+
                 <div id="dialog" title="Authentication">
                   <p>You have successfully logged into the server! Feel free to browse.</p>
                 </div>
@@ -91,6 +93,7 @@
                         <li><a href="#tourGuideTabs">Tour Guide Mode</a></li>
                         <li><a href="#touristTabs">Tourist Mode</a></li>
                         <li><a href="#personalMessagesTab">My Inbox</a></li>
+                        <li><a href="#modifyProfile">Edit Profile</a></li>
                     </ul>
                     <div id ="tourGuideTabs">
                         <h2>Tour Guide Mode</h2>
@@ -195,7 +198,6 @@
                             <li><a href="#bookedTours">My Upcoming Booked Tours</a></li>
                             <li><a href="#bookingHistory">My Booking History</a></li>
                             <li><a href="#makeBooking">Create a Booking</a></li>
-                            <li><a href="#modifyProfile">Modify Profile Details</a></li>
                             <li><a href="#rateTourGuide">Rate a Tour Guide</a></li>
                         </ul>
                         <div id ="availableTours">
@@ -236,20 +238,6 @@
                             <br />
                             <asp:Button ID="createBookingButton" runat="server" Text="Create Booking" OnClick="createBooking_Click"/>
 
-                        </div>
-
-                        <div id="modifyProfile">
-                            <h2>Current Profile Details</h2>
-                            <asp:GridView ID="myProfileView" runat="server"></asp:GridView>
-                            <br />
-                            <h2>Editable Fields</h2>
-                            <asp:Label ID="eDPhone" runat="server" Text="Phone Number"></asp:Label>
-                            <asp:TextBox ID="newPhoneNumber" runat="server"></asp:TextBox>
-                            <br />
-                            <asp:Label ID="eDDesc" runat="server" Text="Description"></asp:Label>
-                            <asp:TextBox ID="newDescription" runat="server"></asp:TextBox>
-                            <br />
-                            <asp:Button ID="editProfile" runat="server" Text="Edit Details" OnClick="editProfile_Click"/>
                         </div>
 
                         <div id="rateTourGuide">
@@ -293,6 +281,20 @@
                         </div>
                     </div>
 
+                    <div id="modifyProfile">
+                        <h2>Current Profile Details</h2>
+                        <asp:GridView ID="myProfileView" runat="server"></asp:GridView>
+                        <br />
+                        <h2>Editable Fields</h2>
+                        <asp:Label ID="eDPhone" runat="server" Text="Phone Number"></asp:Label>
+                        <asp:TextBox ID="newPhoneNumber" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="eDDesc" runat="server" Text="Description"></asp:Label>
+                        <asp:TextBox ID="newDescription" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Button ID="editProfile" runat="server" Text="Edit Details" OnClick="editProfile_Click"/>
+                    </div>
+
                 </div>
 
 
@@ -315,6 +317,8 @@
 		<% else if(Session["loggedIn"] == "true" && Session["userType"] == "admin")
             {%>
 				<h1> ADMIN PAGE</h1>
+                <br />
+                <asp:Button ID="btnAdminLogout" runat="server" Text="Logout" OnClick="logout_Click"/>
                 <div id ="adminTabs">
                     <ul>
                         <li><a href="#editUser">Edit User</a></li>
