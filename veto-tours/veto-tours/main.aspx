@@ -82,7 +82,8 @@
                 <div id="dialog" title="Authentication">
                   <p>You have successfully logged into the server! Feel free to browse.</p>
                 </div>
-              
+                <div id="test" runat="server"></div>      
+
                 <br />
                 <br />
                 <div id="viewTabs">
@@ -204,13 +205,13 @@
                             </div>
                             <asp:Label ID="filterTourslbl" runat="server" Text="Filter Tour"></asp:Label>
                             <asp:DropDownList ID="ddFilterTour" runat="server">
-                                <asp:ListItem Selected="True" Value="Price">By Price</asp:ListItem>
+                                <asp:ListItem Value="Price">By Price</asp:ListItem>
                                 <asp:ListItem Value="Rating">By Rating</asp:ListItem>
                             </asp:DropDownList>
                             <br />
                             <asp:Label ID="ascdsc" runat="server" Text="Criteria"></asp:Label>
                             <asp:DropDownList ID="ddFilterCriteria" runat="server">
-                                <asp:ListItem Selected="True" Value="Ascending">Ascending</asp:ListItem>
+                                <asp:ListItem Value="Ascending">Ascending</asp:ListItem>
                                 <asp:ListItem Value="Descending">Descending</asp:ListItem>
                             </asp:DropDownList>
                             <br />

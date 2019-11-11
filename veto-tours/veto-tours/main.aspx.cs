@@ -36,7 +36,7 @@ namespace vetoTours
                 conn.Close();
 
 
-                // resolve using session
+               
 
                 // Fetch available Tours
                 List<tour> availableTours = new List<tour>();
@@ -424,33 +424,39 @@ namespace vetoTours
 
         protected void filterTours_Click(object sender, EventArgs e)
         {
-            List<tour> availableTours = new List<tour>();
-            availableTours = fetchTours();
 
-            if(ddFilterTour.SelectedValue == "Price" && ddFilterCriteria.SelectedValue =="ASCENDING")
+            if(ddFilterTour.SelectedValue == "Price" && ddFilterCriteria.SelectedValue =="Ascending")
             {
                 Session["filterType"] = "Price";
                 Session["criteria"] = "Ascending";
             }
 
-            else if (ddFilterTour.SelectedValue == "Price" && ddFilterCriteria.SelectedValue == "DESCENDING")
+            else if (ddFilterTour.SelectedValue == "Price" && ddFilterCriteria.SelectedValue == "Descending")
             {
                 Session["filterType"] = "Price";
                 Session["criteria"] = "Descending";
             }
 
-            else if (ddFilterTour.SelectedValue == "Rating" && ddFilterCriteria.SelectedValue == "ASCENDING")
+            else if (ddFilterTour.SelectedValue == "Rating" && ddFilterCriteria.SelectedValue == "Ascending")
             {
                 Session["filterType"] = "Rating";
                 Session["criteria"] = "Ascending";
             }
 
-            else if (ddFilterTour.SelectedValue == "Rating" && ddFilterCriteria.SelectedValue == "DESCENDING")
+            else if (ddFilterTour.SelectedValue == "Rating" && ddFilterCriteria.SelectedValue == "Descending")
             {
                 Session["filterType"] = "Rating";
                 Session["criteria"] = "Descending";
             }
-        
+
+            else
+            {
+                Session["filterType"] = "Default";
+                Session["criteria"] = "Default";
+            }
+
+
+            Response.Redirect("main.aspx#touristTabs");
         }
 
 
