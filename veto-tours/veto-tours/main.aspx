@@ -99,7 +99,7 @@
                             <li><a href="#editTour">Modify existing Tour</a></li>
                             <li><a href="#rateTourist">Rate a Tourist</a></li>
                         </ul>
-                        <div id ="createdTours">
+                        <div id ="createdTours" style="max-height:500px; overflow-y:auto">
                             <h2>My Created Tours</h2>
                             <asp:GridView ID="createdToursView" runat="server"></asp:GridView>
                         </div>
@@ -118,20 +118,20 @@
                             <asp:Label ID="cTDescription" runat="server" Text="Description"></asp:Label>
                             <asp:TextBox ID="createDescription" runat="server"></asp:TextBox>
                             <br />
-                            <asp:Label ID="cTStartDate" runat="server" Text="Start Date (YYYY-MM-DD)"></asp:Label>
+                            <asp:Label ID="cTStartDate" runat="server" Text="Start Date (YYYY-MM-DD HH:MM:SS)"></asp:Label>
                             <asp:TextBox ID="createStartDate" runat="server"></asp:TextBox>
                             <br />
-                            <asp:Label ID="cTEndDate" runat="server" Text="End Date (YYYY-MM-DD)"></asp:Label>
+                            <asp:Label ID="cTEndDate" runat="server" Text="End Date (YYYY-MM-DD HH:MM:SS)"></asp:Label>
                             <asp:TextBox ID="createEndDate" runat="server"></asp:TextBox>
-                            <br />
-                            <asp:Label ID="cTDuration" runat="server" Text="Duration (HH:MM:SS)"></asp:Label>
-                            <asp:TextBox ID="createDuration" runat="server"></asp:TextBox>
                             <br />
                             <asp:Label ID="cTPrice" runat="server" Text="Price (eg. 14.50)"></asp:Label>
                             <asp:TextBox ID="createPrice" runat="server"></asp:TextBox>
                             <br />
                             <asp:Label ID="cTStatus" runat="server" Text="Status (open/closed)"></asp:Label>
-                            <asp:TextBox ID="createStatus" runat="server"></asp:TextBox>
+                            <asp:DropDownList ID="ddCreateStatus" runat="server">
+                                <asp:ListItem Selected="True" Value="open">Open</asp:ListItem>
+                                <asp:ListItem Value="closed">Closed</asp:ListItem>
+                            </asp:DropDownList>
                             <br />
                             <asp:Button ID="createTourButton" runat="server" Text="Create Tour" OnClick="createTour_Click"/>
                         </div>
@@ -154,20 +154,20 @@
                             <asp:Label ID="eDDescription" runat="server" Text="Description"></asp:Label>
                             <asp:TextBox ID="editDescription" runat="server"></asp:TextBox>
                             <br />
-                            <asp:Label ID="eDStartDate" runat="server" Text="Start Date (YYYY-MM-DD)"></asp:Label>
+                            <asp:Label ID="eDStartDate" runat="server" Text="Start Date (YYYY-MM-DD HH:MM:SS)"></asp:Label>
                             <asp:TextBox ID="editStartDate" runat="server"></asp:TextBox>
                             <br />
-                            <asp:Label ID="eDEndDate" runat="server" Text="End Date (YYYY-MM-DD)"></asp:Label>
+                            <asp:Label ID="eDEndDate" runat="server" Text="End Date (YYYY-MM-DD HH:MM:SS)"></asp:Label>
                             <asp:TextBox ID="editEndDate" runat="server"></asp:TextBox>
-                            <br />
-                            <asp:Label ID="eDDuration" runat="server" Text="Duration (HH:MM:SS)"></asp:Label>
-                            <asp:TextBox ID="editDuration" runat="server"></asp:TextBox>
                             <br />
                             <asp:Label ID="eDPrice" runat="server" Text="Price (eg. 14.50)"></asp:Label>
                             <asp:TextBox ID="editPrice" runat="server"></asp:TextBox>
                             <br />
                             <asp:Label ID="eDStatus" runat="server" Text="Status (open/closed)"></asp:Label>
-                            <asp:TextBox ID="editStatus" runat="server"></asp:TextBox>
+                            <asp:DropDownList ID="ddEditStatus" runat="server">
+                                <asp:ListItem Selected="True" Value="open">Open</asp:ListItem>
+                                <asp:ListItem Value="closed">Closed</asp:ListItem>
+                            </asp:DropDownList>
                             <br />
                             <asp:Button ID="editTourButton" runat="server" Text="Edit Tour" OnClick="editTour_Click"/>
                             <br />
@@ -199,7 +199,23 @@
                         </ul>
                         <div id ="availableTours">
                             <h2>Available Tours</h2>
-                            <asp:GridView ID="availableToursView" runat="server"></asp:GridView>
+                            <div style="max-height:500px; overflow-y:auto">
+                                <asp:GridView ID="availableToursView" runat="server"/>
+                            </div>
+                            <asp:Label ID="filterTourslbl" runat="server" Text="Filter Tour"></asp:Label>
+                            <asp:DropDownList ID="ddFilterTour" runat="server">
+                                <asp:ListItem Selected="True" Value="Price">By Price</asp:ListItem>
+                                <asp:ListItem Value="Rating">By Rating</asp:ListItem>
+                            </asp:DropDownList>
+                            <br />
+                            <asp:Label ID="ascdsc" runat="server" Text="Criteria"></asp:Label>
+                            <asp:DropDownList ID="ddFilterCriteria" runat="server">
+                                <asp:ListItem Selected="True" Value="Ascending">Ascending</asp:ListItem>
+                                <asp:ListItem Value="Descending">Descending</asp:ListItem>
+                            </asp:DropDownList>
+                            <br />
+                            <asp:Button ID="btnFilterTours" runat="server" Text="Filter" OnClick="filterTours_Click"/>
+
                         </div>
 
                         <div id ="bookedTours">
@@ -306,7 +322,9 @@
                         
                     </ul>
                     <div id ="editUser">
-                        <asp:GridView ID="editUserView" runat="server"></asp:GridView>
+                        <div style="max-height:500px; overflow-y:auto">
+                            <asp:GridView ID="editUserView" runat="server"></asp:GridView>
+                        </div>
                         <br />
                         <h2>Edit a User Profile</h2>
                         <asp:Label ID="eDUID" runat="server" Text="ID of User to Edit"></asp:Label>

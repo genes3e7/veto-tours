@@ -36,29 +36,48 @@ namespace vetoTours
                 conn.Close();
 
 
+                // resolve using session
+
                 // Fetch available Tours
                 List<tour> availableTours = new List<tour>();
                 availableTours = fetchTours();
-                var _bind = from a in availableTours
-                            select new
-                            {
-                                Tour_ID = a.getTourID(),
-                                Created_By = a.getUserID(),
-                                Rating = a.fetchTourGuideRating(),
-                                Tour_Name = a.getTourName(),
-                                Tour_Capacity = a.getCapacity(),
-                                Tour_Location = a.getLocation(),
-                                Tour_Description = a.getTourDescription(),
-                                Start_Date = a.getStartDate().Substring(0,10),
-                                End_Date = a.getEndDate().Substring(0,10),
-                                Duration = a.getDuration(),
-                                Price = a.getPrice(),
-                                Status = a.getStatus()
-                            };
-                
 
-                availableToursView.DataSource = _bind;
-                availableToursView.DataBind();
+                if (Session["filterType"] == "Price" && Session["criteria"] == "Ascending")
+                    availableTours.Sort((x, y) => x.getPrice().CompareTo(y.getPrice()));
+
+                else if (Session["filterType"] == "Price" && Session["criteria"] == "Descending")
+                    availableTours.Sort((x, y) => -1 * x.getPrice().CompareTo(y.getPrice()));
+
+                else if (Session["filterType"] == "Rating" && Session["criteria"] == "Ascending")
+                    availableTours.Sort((x, y) => x.fetchTourGuideRating().CompareTo(y.fetchTourGuideRating()));
+
+                else if (Session["filterType"] == "Rating" && Session["criteria"] == "Descending")
+                    availableTours.Sort((x, y) => -1 * x.fetchTourGuideRating().CompareTo(y.fetchTourGuideRating()));
+
+                var _bind = from a in availableTours
+                                select new
+                                {
+                                    Tour_ID = a.getTourID(),
+                                    Created_By = a.getUserID(),
+                                    Rating = a.fetchTourGuideRating(),
+                                    Tour_Name = a.getTourName(),
+                                    Tour_Capacity = a.getCapacity(),
+                                    Tour_Location = a.getLocation(),
+                                    Tour_Description = a.getTourDescription(),
+                                    Start_Date = a.getStartDate(),
+                                    End_Date = a.getEndDate(),
+                                    Price = a.getPrice(),
+                                    Status = a.getStatus()
+                                };
+
+
+
+                    availableToursView.DataSource = _bind;
+                    availableToursView.DataBind();
+
+
+
+               
 
                 // Pull all booked tours that have yet to start
                 currUser.getUpcomingBookings(bookedToursView);
@@ -117,8 +136,11 @@ namespace vetoTours
         // Create tour
         protected void createTour_Click(object sender, EventArgs e)
         {
-
-            tour newTour = new tour(currUser.getUserID(), createTourName.Text, int.Parse(createCapacity.Text), createLocation.Text, createDescription.Text, createStartDate.Text, createEndDate.Text, createDuration.Text, double.Parse(createPrice.Text), createStatus.Text);
+            string tempStart = createStartDate.Text;
+            string tempEnd = createEndDate.Text;
+            DateTime startDate = DateTime.ParseExact(tempStart, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            DateTime endDate = DateTime.ParseExact(tempEnd, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            tour newTour = new tour(currUser.getUserID(), createTourName.Text, int.Parse(createCapacity.Text), createLocation.Text, createDescription.Text, startDate, endDate, double.Parse(createPrice.Text), ddCreateStatus.SelectedValue);
             newTour.createTour();
             
             Response.Redirect("main.aspx");
@@ -139,11 +161,10 @@ namespace vetoTours
             editTour.setCapacity(int.Parse(editCapacity.Text));
             editTour.setLocation(editLocation.Text);
             editTour.setTourDescription(editDescription.Text);
-            editTour.setStartDate(editStartDate.Text);
-            editTour.setEndDate(editEndDate.Text);
-            editTour.setDuration(editDuration.Text);
+            editTour.setStartDate(DateTime.Parse(editStartDate.Text));
+            editTour.setEndDate(DateTime.Parse(editEndDate.Text));
             editTour.setPrice(double.Parse(editPrice.Text));
-            editTour.setStatus(editStatus.Text);
+            editTour.setStatus(ddEditStatus.SelectedValue);
 
             // Execute class function to modify tour
             editTour.modifyTour();
@@ -265,8 +286,8 @@ namespace vetoTours
             if (reader.Read())
             {
                 
-                tour temp = new tour(reader.GetInt32(0),reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6).ToString(), reader.GetDateTime(7).ToString(), reader.GetTimeSpan(8).ToString(), (double)reader.GetDecimal(9),
-                                        reader.GetString(10));
+                tour temp = new tour(reader.GetInt32(0),reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6), reader.GetDateTime(7), (double)reader.GetDecimal(8),
+                                        reader.GetString(9));
                 
                 reader.Close();
                 return temp;
@@ -292,8 +313,8 @@ namespace vetoTours
 
             while (reader.Read())
             {
-                tour temp = new tour(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6).ToString(), reader.GetDateTime(7).ToString(), reader.GetTimeSpan(8).ToString(), (double)reader.GetDecimal(9),
-                                        reader.GetString(10));
+                tour temp = new tour(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6), reader.GetDateTime(7), (double)reader.GetDecimal(8),
+                                        reader.GetString(9));
                 availableTours.Add(temp);
             }
             reader.Close();
@@ -400,6 +421,38 @@ namespace vetoTours
             Response.Redirect("main.aspx");
 
         }
+
+        protected void filterTours_Click(object sender, EventArgs e)
+        {
+            List<tour> availableTours = new List<tour>();
+            availableTours = fetchTours();
+
+            if(ddFilterTour.SelectedValue == "Price" && ddFilterCriteria.SelectedValue =="ASCENDING")
+            {
+                Session["filterType"] = "Price";
+                Session["criteria"] = "Ascending";
+            }
+
+            else if (ddFilterTour.SelectedValue == "Price" && ddFilterCriteria.SelectedValue == "DESCENDING")
+            {
+                Session["filterType"] = "Price";
+                Session["criteria"] = "Descending";
+            }
+
+            else if (ddFilterTour.SelectedValue == "Rating" && ddFilterCriteria.SelectedValue == "ASCENDING")
+            {
+                Session["filterType"] = "Rating";
+                Session["criteria"] = "Ascending";
+            }
+
+            else if (ddFilterTour.SelectedValue == "Rating" && ddFilterCriteria.SelectedValue == "DESCENDING")
+            {
+                Session["filterType"] = "Rating";
+                Session["criteria"] = "Descending";
+            }
+        
+        }
+
 
 
     }

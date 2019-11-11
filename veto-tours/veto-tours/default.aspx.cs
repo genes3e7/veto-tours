@@ -54,6 +54,8 @@ namespace vetoTours
                     lblStatus.Text = "Logged in successfully! ";
                     Session["loggedIn"] = "true";
                     Session["userID"] = uid;
+                    Session["filterType"] = "default";
+                    Session["criteria"] = "default";
 
                     if (userType.SelectedValue == "admin")
                         Session["userType"] = "admin";
@@ -234,7 +236,7 @@ namespace vetoTours
             SqlDataReader reader = null;
             con.Open();
             string query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
-                    "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE startDate < GETDATE() AND " +
+                    "startDate AS 'Start Date', endDate AS 'End Date', price AS Price, status AS Status  FROM  tours WHERE startDate < SYSDATETIME() AND " +
                     "tourID IN (SELECT tourID FROM bookings WHERE userID='" + userID + "');";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
@@ -250,8 +252,8 @@ namespace vetoTours
             SqlDataReader reader = null;
             con.Open();
             string query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
-                "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE startDate >= GETDATE() AND " +
-                "tourID IN (SELECT tourID FROM bookings WHERE userID='" + userID + "');";
+                    "startDate AS 'Start Date', endDate AS 'End Date', price AS Price, status AS Status  FROM  tours WHERE startDate >= SYSDATETIME() AND " +
+                    "tourID IN (SELECT tourID FROM bookings WHERE userID='" + userID + "');";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
             bookedToursView.DataSource = reader;
@@ -278,7 +280,7 @@ namespace vetoTours
             SqlDataReader reader = null;
             con.Open();
             string query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
-                    "FORMAT(startDate, 'd', 'en-gb') AS 'Start Date', FORMAT(endDate, 'd', 'en-gb') AS 'End Date', duration AS Duration, price AS Price, status AS Status  FROM  tours WHERE userID='" + userID + "';";
+                    "startDate AS 'Start Date', endDate AS 'End Date', price AS Price, status AS Status  FROM  tours WHERE userID='" + userID + "';";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
             createdToursView.DataSource = reader;
@@ -317,13 +319,12 @@ namespace vetoTours
         private int capacity;
         private string location;
         private string tourDescription;
-        private string startDate;
-        private string endDate;
-        private string duration;
+        private DateTime startDate;
+        private DateTime endDate;
         private double price;
         private string status;
 
-        public tour (string userID, string tourName, int capacity, string location, string tourDescription, string startDate, string endDate, string duration, double price, string status)
+        public tour (string userID, string tourName, int capacity, string location, string tourDescription, DateTime startDate, DateTime endDate, double price, string status)
         {
             this.userID = userID;
             this.tourName = tourName;
@@ -332,12 +333,11 @@ namespace vetoTours
             this.tourDescription = tourDescription;
             this.startDate = startDate;
             this.endDate = endDate;
-            this.duration = duration;
             this.price = price;
             this.status = status;
         }
 
-        public tour(int tourID, string userID, string tourName, int capacity, string location, string tourDescription, string startDate, string endDate, string duration, double price, string status)
+        public tour(int tourID, string userID, string tourName, int capacity, string location, string tourDescription, DateTime startDate, DateTime endDate, double price, string status)
         {
             this.tourID = tourID;
             this.userID = userID;
@@ -347,7 +347,6 @@ namespace vetoTours
             this.tourDescription = tourDescription;
             this.startDate = startDate;
             this.endDate = endDate;
-            this.duration = duration;
             this.price = price;
             this.status = status;
         }
@@ -372,20 +371,16 @@ namespace vetoTours
             this.tourDescription = tourDescription;
         }
 
-        public void setStartDate(string startDate)
+        public void setStartDate(DateTime startDate)
         {
             this.startDate = startDate;
         }
 
-        public void setEndDate (string endDate)
+        public void setEndDate (DateTime endDate)
         {
             this.endDate = endDate;
         }
 
-        public void setDuration (string duration)
-        {
-            this.duration = duration;
-        }
 
         public void setPrice (double price)
         {
@@ -427,20 +422,16 @@ namespace vetoTours
             return tourDescription;
         }
 
-        public string getStartDate()
+        public DateTime getStartDate()
         {
             return startDate;
         }
 
-        public string getEndDate()
+        public DateTime getEndDate()
         {
             return endDate;
         }
 
-        public string getDuration()
-        {
-            return duration;
-        }
 
         public double getPrice()
         {
@@ -458,8 +449,9 @@ namespace vetoTours
             SqlCommand cmd = null;
             SqlDataReader reader = null;
             con.Open();
-            string query = "INSERT INTO tours (userID, tourName, capacity, location, description, startDate, endDate, duration, price, status) VALUES ('"
-                            + userID + "', '" + tourName + "', '" + capacity + "', '" + location + "', '" + tourDescription + "', CAST('" + startDate.ToString() + "' AS date), CAST('" + endDate.ToString() + "' AS date), '" + duration + "', '" + price.ToString() + "', '" + status + "');";
+            string format = "yyy-MM-dd HH:mm:ss";
+            string query = "INSERT INTO tours (userID, tourName, capacity, location, description, startDate, endDate, price, status) VALUES ('"
+                            + userID + "', '" + tourName + "', '" + capacity + "', '" + location + "', '" + tourDescription + "', '" + startDate.ToString(format) + "', '" + endDate.ToString(format) + "', '"  + price.ToString() + "', '" + status + "');";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
             con.Close();
@@ -475,11 +467,11 @@ namespace vetoTours
             string query = "SELECT " + tourID + " FROM tours WHERE userID='" + userID + "';";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
-
+            string format = "yyy-MM-dd HH:mm:ss";
             if (reader.Read())
             {
-                query = "UPDATE tours SET tourName = '" + tourName + "', capacity = '" + capacity + "', location = '" + location + "', description = '" + tourDescription + "', startDate = CAST('" + startDate.ToString() + "' AS date), endDate = CAST('" + startDate.ToString() + "' AS date)," +
-                    "duration = '" + duration + "', price = '" + price + "', status = '" + status + "' WHERE tourID=" + tourID + ";";
+                query = "UPDATE tours SET tourName = '" + tourName + "', capacity = '" + capacity + "', location = '" + location + "', description = '" + tourDescription + "', startDate ='" + startDate.ToString(format) + "', endDate ='" + endDate.ToString(format) + "'," +
+                    "price = '" + price + "', status = '" + status + "' WHERE tourID=" + tourID + ";";
 
                 reader.Close();
                 cmd = new SqlCommand(query, con);

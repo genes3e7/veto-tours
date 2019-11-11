@@ -150,24 +150,6 @@ namespace vetoTours
         protected global::System.Web.UI.WebControls.TextBox createEndDate;
 
         /// <summary>
-        /// cTDuration control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label cTDuration;
-
-        /// <summary>
-        /// createDuration control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox createDuration;
-
-        /// <summary>
         /// cTPrice control.
         /// </summary>
         /// <remarks>
@@ -195,13 +177,13 @@ namespace vetoTours
         protected global::System.Web.UI.WebControls.Label cTStatus;
 
         /// <summary>
-        /// createStatus control.
+        /// ddCreateStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox createStatus;
+        protected global::System.Web.UI.WebControls.DropDownList ddCreateStatus;
 
         /// <summary>
         /// createTourButton control.
@@ -339,24 +321,6 @@ namespace vetoTours
         protected global::System.Web.UI.WebControls.TextBox editEndDate;
 
         /// <summary>
-        /// eDDuration control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label eDDuration;
-
-        /// <summary>
-        /// editDuration control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox editDuration;
-
-        /// <summary>
         /// eDPrice control.
         /// </summary>
         /// <remarks>
@@ -384,13 +348,13 @@ namespace vetoTours
         protected global::System.Web.UI.WebControls.Label eDStatus;
 
         /// <summary>
-        /// editStatus control.
+        /// ddEditStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox editStatus;
+        protected global::System.Web.UI.WebControls.DropDownList ddEditStatus;
 
         /// <summary>
         /// editTourButton control.
@@ -454,6 +418,51 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView availableToursView;
+
+        /// <summary>
+        /// filterTourslbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label filterTourslbl;
+
+        /// <summary>
+        /// ddFilterTour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddFilterTour;
+
+        /// <summary>
+        /// ascdsc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ascdsc;
+
+        /// <summary>
+        /// ddFilterCriteria control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddFilterCriteria;
+
+        /// <summary>
+        /// btnFilterTours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFilterTours;
 
         /// <summary>
         /// bookedToursView control.
