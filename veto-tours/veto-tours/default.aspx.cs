@@ -28,57 +28,75 @@ namespace vetoTours
         {
             try
             {
+                loginErrorHandler loginHandler = new loginErrorHandler();
                 string uid = txtUserName.Text;
                 string pass = txtPassword.Text;
-                SqlDataReader sdr;
 
-                con.Open();
+                if (txtUserName.Text == "")
+                    loginHandler.emptyUserName();
 
-                // If userType is regular user
-                if (userType.SelectedValue == "admin")
+                if (txtPassword.Text == "")
+                    loginHandler.emptyPassword();
+
+                if (loginHandler.error == "")
                 {
-                    string query = "SELECT * from admins where userID='" + uid + "' and password='" + pass + "'";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    sdr = cmd.ExecuteReader();
+                    SqlDataReader sdr;
+                    con.Open();
 
-                }
-
-                else
-                {
-                    string query = "SELECT * from users where userID='" + uid + "' and password='" + pass + "'";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    sdr = cmd.ExecuteReader();
-                }
-
-                if (sdr.Read())
-                {
-                    lblStatus.Text = "Logged in successfully! ";
-                    Session["loggedIn"] = "true";
-                    Session["userID"] = uid;
-                    Session["filterType"] = "default";
-                    Session["criteria"] = "default";
-
+                    // If userType is regular user
                     if (userType.SelectedValue == "admin")
-                        Session["userType"] = "admin";
-                    else
                     {
-                        Session["userType"] = "user";
+                        string query = "SELECT * from admins where userID='" + uid + "' and password='" + pass + "'";
+                        SqlCommand cmd = new SqlCommand(query, con);
+                        sdr = cmd.ExecuteReader();
 
-                        if (sdr.GetInt32(6) == 0)
-                            Session["status"] = "normal";
-                        else
-                            Session["status"] = "suspended";
                     }
 
-                    Response.Redirect("main.aspx");
+                    else
+                    {
+                        string query = "SELECT * from users where userID='" + uid + "' and password='" + pass + "'";
+                        SqlCommand cmd = new SqlCommand(query, con);
+                        sdr = cmd.ExecuteReader();
+                    }
+
+                    if (sdr.Read())
+                    {
+                        lblStatus.Text = "Logged in successfully! ";
+                        Session["loggedIn"] = "true";
+                        Session["userID"] = uid;
+                        Session["filterType"] = "default";
+                        Session["criteria"] = "default";
+
+                        if (userType.SelectedValue == "admin")
+                            Session["userType"] = "admin";
+                        else
+                        {
+                            Session["userType"] = "user";
+
+                            if (sdr.GetInt32(6) == 0)
+                                Session["status"] = "normal";
+                            else
+                                Session["status"] = "suspended";
+                        }
+
+                        Response.Redirect("main.aspx");
+                    }
+                    else
+                    {
+                        Session["loggedIn"] = "false";
+                        loginHandler.noSuchUser();
+                        loginErrorDialog.InnerHtml = loginHandler.error;
+                        loginErrorDialog.Visible = true;
+
+                    }
+                    con.Close();
                 }
+
                 else
                 {
-                    Session["loggedIn"] = "false";
-                    lblStatus.Text = "Username or password is invalid ";
-
+                    loginErrorDialog.InnerHtml = loginHandler.error;
+                    loginErrorDialog.Visible = true;
                 }
-                con.Close();
             }
             catch (Exception ex)
             {
@@ -883,7 +901,7 @@ namespace vetoTours
 
         public registrationErrorHandler()
         {
-            label = "The following errors were found during the registration process: </br>";
+            label = "The following errors were found during the registration process: <br />";
             error = "";
         }
 
@@ -933,5 +951,30 @@ namespace vetoTours
         }
     }
 
+    public class loginErrorHandler
+    {
+        public string label;
+        public string error;
 
+        public loginErrorHandler()
+        {
+            label = "The following errors were found during the login process: <br />";
+            error = "";
+        }
+
+        public void emptyUserName()
+        {
+            error += "- Username Field Empty <br />";
+        }
+
+        public void emptyPassword()
+        {
+            error += "- Password Field Empty <br />";
+        }
+
+        public void noSuchUser()
+        {
+            error += "- Username and password does not exist <br />";
+        }
+    }
 }

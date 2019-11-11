@@ -12,6 +12,7 @@
     <script>
         $(function () {
             $("#errorDialog").dialog();
+            $("#loginErrorDialog").dialog();
             $("#successfulRegistration").dialog();
         });
     </script>
@@ -20,7 +21,8 @@
     <h1>Veto Tours Authentication System</h1>
     <br />
     <form id="form1" runat="server">
-        <div id="errorDialog" title="Error" visible="false" runat="server"></div>
+        <div id="errorDialog" title="Registration Error" visible="false" runat="server"></div>
+        <div id="loginErrorDialog" title="Login Error" visible="false" runat="server"></div>
         <div id="successfulRegistration" title="Registration Success" visible="false" runat="server"></div>        
         <div>
             <asp:Label ID="Label1" runat="server" Text="UserName"></asp:Label>
