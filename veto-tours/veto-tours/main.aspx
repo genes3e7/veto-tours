@@ -1,7 +1,7 @@
 ﻿<!-- Nicholas Leung Jun Yen-->
 <!-- UOW ID: 5987325-->
 
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="main.aspx.cs" Inherits="vetoTours.main" %>
+<%@ Page Language="C#" MaintainScrollPositionOnPostBack="true" AutoEventWireup="true" CodeBehind="main.aspx.cs" Inherits="vetoTours.main" %>
 
 <!DOCTYPE html>
 
@@ -62,6 +62,8 @@
       $(function () {
           $("#dialog").dialog();
           $("#dialog_suspended").dialog();
+          $("#errorDialog").dialog();
+          $("#errorDialogAdmin").dialog();
       });
 
       $(function () {
@@ -84,7 +86,8 @@
                 <div id="dialog" title="Authentication">
                   <p>You have successfully logged into the server! Feel free to browse.</p>
                 </div>
-                <div id="test" runat="server"></div>      
+                <div id="test" runat="server"></div>
+                <div id="errorDialog" title="Error" visible="false" runat="server"></div>
 
                 <br />
                 <br />
@@ -316,6 +319,7 @@
 
 		<% else if(Session["loggedIn"] == "true" && Session["userType"] == "admin")
             {%>
+                <div id="errorDialogAdmin" title="Error" visible="false" runat="server"></div>
 				<h1> ADMIN PAGE</h1>
                 <br />
                 <asp:Button ID="btnAdminLogout" runat="server" Text="Logout" OnClick="logout_Click"/>

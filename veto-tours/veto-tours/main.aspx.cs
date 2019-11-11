@@ -195,31 +195,107 @@ namespace vetoTours
 
         protected void editUser_Click(object sender, EventArgs e)
         {
+            registrationErrorHandler editHandler = new registrationErrorHandler();
+
+            if (editUserID.Text == "")
+                editHandler.emptyUserName();
+            if (editPassword.Text == "")
+                editHandler.emptyPassword();
+            if (editRealName.Text == "")
+                editHandler.emptyRealName();
+            if (editEmail.Text == "")
+                editHandler.emptyEmail();
+            if (!editEmail.Text.Contains("@"))
+                editHandler.invalidEmail();
+            if (editPhone.Text == "")
+                editHandler.emptyPhoneNumber();
+            if (!editPhone.Text.All(char.IsDigit))
+                editHandler.invalidPhoneNumber();
+            if (editDesc.Text == "")
+                editHandler.emptyDescription();
+            if (editStat.Text == "")
+                editHandler.emptyStatus();
 
             // Fetch the user object from database 
             user targetUser = fetchUserObject(editUserID.Text);
 
-            // Edit the user object based on the provided fields
-            targetUser.setPassword(editPassword.Text);
-            targetUser.setName(editRealName.Text);
-            targetUser.setEmail(editEmail.Text);
-            targetUser.setPhoneNumber(int.Parse(editPhone.Text));
-            targetUser.setPersonalDescription(editDesc.Text);
-            targetUser.setStatus(int.Parse(editStat.Text));
+            if (targetUser == null)
+                editHandler.userNameNotExists();
 
-            currAdmin.editUser(targetUser);
 
-            Response.Redirect("main.aspx");
+            if (editHandler.error == "")
+            {
+                // Edit the user object based on the provided fields
+                targetUser.setPassword(editPassword.Text);
+                targetUser.setName(editRealName.Text);
+                targetUser.setEmail(editEmail.Text);
+                targetUser.setPhoneNumber(int.Parse(editPhone.Text));
+                targetUser.setPersonalDescription(editDesc.Text);
+                targetUser.setStatus(int.Parse(editStat.Text));
+
+                currAdmin.editUser(targetUser);
+
+                Response.Redirect("main.aspx");
+            }
+
+            else
+            {
+                errorDialogAdmin.InnerHtml = editHandler.error;
+                errorDialogAdmin.Visible = true;
+            }
 
         }
 
         protected void btnCreateUser_Click(object sender, EventArgs e)
         {
+            registrationErrorHandler regHandler = new registrationErrorHandler();
+            if (regUserName.Text == "")
+                regHandler.emptyUserName();
+            if (regPassword.Text == "")
+                regHandler.emptyPassword();
+            if (regRealName.Text == "")
+                regHandler.emptyRealName();
+            if (regEmail.Text == "")
+                regHandler.emptyEmail();
+            if (!regEmail.Text.Contains("@"))
+                regHandler.invalidEmail();
+            if (regPhone.Text == "")
+                regHandler.emptyPhoneNumber();
+            if (!regPhone.Text.All(char.IsDigit))
+                regHandler.invalidPhoneNumber();
+            if (regDescription.Text == "")
+                regHandler.emptyDescription();
+            if (regStatus.Text == "")
+                regHandler.emptyStatus();
 
-            user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, int.Parse(regStatus.Text));
-            currAdmin.createUser(newUser);
+            // Check username exists
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+            con.Open();
+            string query = "SELECT * FROM users WHERE userID='" + regUserName.Text + "';";
+            cmd = new SqlCommand(query, con);
+            reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader.GetString(0) == regUserName.Text)
+                    regHandler.userNameExists();
+            }
+            con.Close();
 
-            Response.Redirect("main.aspx");
+            if (regHandler.error == "")
+            {
+                user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, int.Parse(regStatus.Text));
+                currAdmin.createUser(newUser);
+                Response.Redirect("main.aspx");
+
+            }
+
+            else
+            {
+                errorDialogAdmin.InnerHtml = regHandler.error;
+                errorDialogAdmin.Visible = true;
+            }
 
         }
 
@@ -367,26 +443,43 @@ namespace vetoTours
 
         protected void btnSuspendUser_Click(object sender, EventArgs e)
         {
+            registrationErrorHandler suspendHandler = new registrationErrorHandler();
+
+            if (suspendUserField.Text == "")
+                suspendHandler.emptyUserName();
+
             // Fetch the user object that needs to be suspended
             user suspendedUser = fetchUserObject(suspendUserField.Text);
 
-            // Change user to suspended status
-            suspendedUser.setStatus(1);
+            if (suspendedUser == null)
+                suspendHandler.userNameNotExists();
 
-            // Write back the user object to database
-            currAdmin.editUser(suspendedUser);
+            if (suspendHandler.error == "")
+            {
+                // Change user to suspended status
+                suspendedUser.setStatus(1);
 
-            // Change all their tours to suspended status
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
-            SqlCommand cmd = null;
-            SqlDataReader reader = null;
-            con.Open();
-            string query = "UPDATE tours SET status= 'suspended' WHERE userID='" + suspendedUser.getUserID() + "';"; 
-            cmd = new SqlCommand(query, con);
-            reader = cmd.ExecuteReader();
-            con.Close();
+                // Write back the user object to database
+                currAdmin.editUser(suspendedUser);
 
-            Response.Redirect("main.aspx");
+                // Change all their tours to suspended status
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+                SqlCommand cmd = null;
+                SqlDataReader reader = null;
+                con.Open();
+                string query = "UPDATE tours SET status= 'suspended' WHERE userID='" + suspendedUser.getUserID() + "';";
+                cmd = new SqlCommand(query, con);
+                reader = cmd.ExecuteReader();
+                con.Close();
+
+                Response.Redirect("main.aspx");
+            }
+
+            else
+            {
+                errorDialogAdmin.InnerHtml = suspendHandler.error;
+                errorDialogAdmin.Visible = true;
+            }
 
         }
 

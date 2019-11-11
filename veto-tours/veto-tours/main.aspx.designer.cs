@@ -51,6 +51,15 @@ namespace vetoTours
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl test;
 
         /// <summary>
+        /// errorDialog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorDialog;
+
+        /// <summary>
         /// createdToursView control.
         /// </summary>
         /// <remarks>
@@ -688,6 +697,15 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button editProfile;
+
+        /// <summary>
+        /// errorDialogAdmin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorDialogAdmin;
 
         /// <summary>
         /// btnAdminLogout control.

@@ -901,7 +901,7 @@ namespace vetoTours
 
         public registrationErrorHandler()
         {
-            label = "The following errors were found during the registration process: <br />";
+            label = "The following errors were found during the process: <br />";
             error = "";
         }
 
@@ -949,6 +949,16 @@ namespace vetoTours
         {
             error += "- The username has been taken <br />";
         }
+
+        public void userNameNotExists()
+        {
+            error += "- No such username has been found <br />";
+        }
+
+        public void emptyStatus()
+        {
+            error += "- Status Field Empty <br />";
+        }
     }
 
     public class loginErrorHandler
@@ -958,7 +968,7 @@ namespace vetoTours
 
         public loginErrorHandler()
         {
-            label = "The following errors were found during the login process: <br />";
+            label = "The following errors were found during the process: <br />";
             error = "";
         }
 
