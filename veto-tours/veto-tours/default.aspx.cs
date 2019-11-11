@@ -987,4 +987,160 @@ namespace vetoTours
             error += "- Username and password does not exist <br />";
         }
     }
+
+    public class TourErrorHandler
+    {
+        public string label;
+        public string error;
+
+        public TourErrorHandler()
+        {
+            label = "The following errors were found during the process: <br />";
+            error = "";
+        }
+
+        public void emptyTourID()
+        {
+            error += "- Tour ID Field Empty <br />";
+        }
+
+        public void invalidTourID()
+        {
+            error += "- Invalid Tour ID <br />";
+        }
+
+        public void emptyTourName()
+        {
+            error += "- Tour Name Field Empty <br />";
+        }
+
+        public void emptyCapacity()
+        {
+            error += "- Capacity Field Empty <br />";
+        }
+
+        public void noSuchTourName()
+        {
+            error += "- Tour ID does not exist <br />";
+        }
+
+        public void emptyLocation()
+        {
+            error += "- Location Field Empty <br />";
+        }
+
+        public void emptyDescription()
+        {
+            error += "- Description Field Empty <br />";
+        }
+
+        public void emptyStartDate()
+        {
+            error += "- Start Date Field Empty <br />";
+        }
+
+        public void invalidStartDate()
+        {
+            error += "- Invalid Start Date Format <br />";
+        }
+
+        public void emptyEndDate()
+        {
+            error += "- End Date Field Empty <br />";
+        }
+
+        public void invalidEndDate()
+        {
+            error += "- Invalid End Date Format <br />";
+        }
+
+        public void emptyPrice()
+        {
+            error += "- Price Field Empty <br />";
+        }
+
+        public void invalidPrice()
+        {
+            error += "- Invalid Price <br />";
+        }
+
+        public void endBeforeStart()
+        {
+            error += "- End Date cannot be before Start Date <br />";
+        }
+    }
+
+    public class bookingErrorHandler
+    {
+        public string label;
+        public string error;
+
+        public bookingErrorHandler()
+        {
+            label = "The following errors were found during the process: <br />";
+            error = "";
+        }
+
+        public void emptyTourID()
+        {
+            error += "Tour ID Field Empty <br/>";
+        }
+
+        public void invalidTourID()
+        {
+            error += "Invalid Tour ID <br />";
+        }
+
+        public void noSuchTour()
+        {
+            error += "Tour ID does not exist <br />";
+        }
+
+        public void tourClosed()
+        {
+            error += "Tour has already been closed <br/>";
+        }
+
+        public void tourSuspended()
+        {
+            error += "Tour has been suspended <br/>";
+        }
+
+        public void fullyBooked()
+        {
+            error += "Tour has already been fully booked <br/>";
+        }
+    }
+
+    public class inboxErrorHandler
+    {
+        public string label;
+        public string error;
+
+        public inboxErrorHandler()
+        {
+            label = "The following errors were found during the process: <br />";
+            error = "";
+        }
+
+        public void noSuchUser()
+        {
+            error += "Invalid User ID <br/>";
+        }
+
+        public void emptyUserField()
+        {
+            error += "UserID Field Empty <br/>";
+        }
+
+        public void emptySubjectField()
+        {
+            error += "Subject Field Empty <br/>";
+        }
+
+        public void emptyMessageField()
+        {
+            error += "Message Field Empty <br/>";
+        }
+    }
 }

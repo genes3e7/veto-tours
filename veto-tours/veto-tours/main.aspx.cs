@@ -91,6 +91,7 @@ namespace vetoTours
                 // Fetch user Inbox
                 List<chat> allMessages = new List<chat>();
                 allMessages = fetchMessages();
+                pmInbox.InnerHtml = "";
 
                 foreach (chat msg in allMessages)
                 {
@@ -136,60 +137,234 @@ namespace vetoTours
         // Create tour
         protected void createTour_Click(object sender, EventArgs e)
         {
+            TourErrorHandler tourHandler = new TourErrorHandler();
             string tempStart = createStartDate.Text;
             string tempEnd = createEndDate.Text;
-            DateTime startDate = DateTime.ParseExact(tempStart, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            DateTime endDate = DateTime.ParseExact(tempEnd, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            tour newTour = new tour(currUser.getUserID(), createTourName.Text, int.Parse(createCapacity.Text), createLocation.Text, createDescription.Text, startDate, endDate, double.Parse(createPrice.Text), ddCreateStatus.SelectedValue);
-            newTour.createTour();
+            double test;
+            bool tryDouble = double.TryParse(createPrice.Text,out test);
             
-            Response.Redirect("main.aspx");
+            if (createTourName.Text == "")
+                tourHandler.emptyTourName();
+            if (createCapacity.Text == "")
+                tourHandler.emptyCapacity();
+            if (createLocation.Text == "")
+                tourHandler.emptyLocation();
+            if (createDescription.Text == "")
+                tourHandler.emptyDescription();
+            if (createStartDate.Text == "")
+                tourHandler.emptyStartDate();
+            if (!System.Text.RegularExpressions.Regex.IsMatch(tempStart, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
+                tourHandler.invalidStartDate();
+            if (createEndDate.Text == "")
+                tourHandler.emptyEndDate();
+            if (!System.Text.RegularExpressions.Regex.IsMatch(tempEnd, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
+                tourHandler.invalidEndDate();
+            if (createPrice.Text == "")
+                tourHandler.emptyPrice();
+            if (tryDouble == false)
+                tourHandler.invalidPrice();
+
+            if (tourHandler.error == "")
+            {
+                DateTime startDate = DateTime.ParseExact(tempStart, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                DateTime endDate = DateTime.ParseExact(tempEnd, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+                if (endDate < startDate)
+                    tourHandler.endBeforeStart();
+
+                if (tourHandler.error == "")
+                {
+                    tour newTour = new tour(currUser.getUserID(), createTourName.Text, int.Parse(createCapacity.Text), createLocation.Text, createDescription.Text, startDate, endDate, double.Parse(createPrice.Text), ddCreateStatus.SelectedValue);
+                    newTour.createTour();
+                    Response.Redirect("main.aspx");
+                }
+
+                else
+                {
+                    errorDialog.InnerHtml = tourHandler.error;
+                    errorDialog.Visible = true;
+                }
+
+            }
+
+            else
+            {
+                errorDialog.InnerHtml = tourHandler.error;
+                errorDialog.Visible = true;
+            }
 
         }
 
         // Edit Tour
         protected void editTour_Click(object sender, EventArgs e)
         {
+            TourErrorHandler tourHandler = new TourErrorHandler();
+            string tempStart = editStartDate.Text;
+            string tempEnd = editEndDate.Text;
+            double test;
+            int intTest;
+            bool tryDouble = double.TryParse(editPrice.Text, out test);
+            bool tryInt = int.TryParse(editID.Text, out intTest);
+
+            if (editID.Text == "")
+                tourHandler.emptyTourID();
+            if (tryInt == false)
+                tourHandler.invalidTourID();
+            if (editName.Text == "")
+                tourHandler.emptyTourName();
+            if (editCapacity.Text == "")
+                tourHandler.emptyCapacity();
+            if (editLocation.Text == "")
+                tourHandler.emptyLocation();
+            if (editDescription.Text == "")
+                tourHandler.emptyDescription();
+            if (editStartDate.Text == "")
+                tourHandler.emptyStartDate();
+            if (!System.Text.RegularExpressions.Regex.IsMatch(tempStart, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
+                tourHandler.invalidStartDate();
+            if (editEndDate.Text == "")
+                tourHandler.emptyEndDate();
+            if (!System.Text.RegularExpressions.Regex.IsMatch(tempEnd, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
+                tourHandler.invalidEndDate();
+            if (editPrice.Text == "")
+                tourHandler.emptyPrice();
+            if (tryDouble == false)
+                tourHandler.invalidPrice();
             
-            int tourID = int.Parse(editID.Text);
+            
 
-            // Query database to pull out tour information based on given tourID into a tour object
-            tour editTour = fetchTourObject(tourID);
+            if (tourHandler.error == "")
+            {
+                DateTime startDate = DateTime.ParseExact(tempStart, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                DateTime endDate = DateTime.ParseExact(tempEnd, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-            // Tweak Class variables using the mutator
-            editTour.setTourName(editName.Text);
-            editTour.setCapacity(int.Parse(editCapacity.Text));
-            editTour.setLocation(editLocation.Text);
-            editTour.setTourDescription(editDescription.Text);
-            editTour.setStartDate(DateTime.Parse(editStartDate.Text));
-            editTour.setEndDate(DateTime.Parse(editEndDate.Text));
-            editTour.setPrice(double.Parse(editPrice.Text));
-            editTour.setStatus(ddEditStatus.SelectedValue);
+                if (endDate < startDate)
+                    tourHandler.endBeforeStart();
 
-            // Execute class function to modify tour
-            editTour.modifyTour();
+                int tourID = int.Parse(editID.Text);
+                tour editTour = fetchTourObject(tourID);
 
-            Response.Redirect("main.aspx");
+                if (editTour == null)
+                    tourHandler.noSuchTourName();
+
+                if (tourHandler.error == "")
+                {
+                    // Tweak Class variables using the mutator
+                    editTour.setTourName(editName.Text);
+                    editTour.setCapacity(int.Parse(editCapacity.Text));
+                    editTour.setLocation(editLocation.Text);
+                    editTour.setTourDescription(editDescription.Text);
+                    editTour.setStartDate(DateTime.Parse(editStartDate.Text));
+                    editTour.setEndDate(DateTime.Parse(editEndDate.Text));
+                    editTour.setPrice(double.Parse(editPrice.Text));
+                    editTour.setStatus(ddEditStatus.SelectedValue);
+
+                    // Execute class function to modify tour
+                    editTour.modifyTour();
+
+                    Response.Redirect("main.aspx");
+                }
+
+                else
+                {
+                    errorDialog.InnerHtml = tourHandler.error;
+                    errorDialog.Visible = true;
+                }
+
+            }
+
+            else
+            {
+                errorDialog.InnerHtml = tourHandler.error;
+                errorDialog.Visible = true;
+            }
+
+
 
         }
 
         protected void createBooking_Click(object sender, EventArgs e)
         {
-            int tourID = int.Parse(createBooking.Text);
+            bookingErrorHandler bookingHandler = new bookingErrorHandler();
+            int intTest;
+            bool tryInt = int.TryParse(createBooking.Text, out intTest);
+            if (createBooking.Text == "")
+                bookingHandler.emptyTourID();
+            if (tryInt == false)
+                bookingHandler.invalidTourID();
 
-            booking newBooking = new booking(currUser.getUserID(), tourID);
-            newBooking.createBooking();
-            Response.Redirect("main.aspx");
+            if (bookingHandler.error == "")
+            {
+                int tourID = int.Parse(createBooking.Text);
+                tour targetTour = fetchTourObject(tourID);
+
+                if (targetTour != null)
+                {
+                    if (targetTour.getStatus() == "closed")
+                        bookingHandler.tourClosed();
+
+                    if (targetTour.getStatus() == "suspended")
+                        bookingHandler.tourSuspended();
+
+                    if (targetTour.getCapacity() < 1)
+                        bookingHandler.fullyBooked();
+
+                    if (bookingHandler.error == "")
+                    {
+                        int currCapacity = targetTour.getCapacity() - 1;
+                        targetTour.setCapacity(currCapacity);
+                        targetTour.modifyTour();
+                        booking newBooking = new booking(currUser.getUserID(), tourID);
+                        newBooking.createBooking();
+                        Response.Redirect("main.aspx");
+                    }
+
+                    else
+                    {
+                        errorDialog.InnerHtml = bookingHandler.error;
+                        errorDialog.Visible = true;
+                    }
+                }
+
+                else
+                {
+                    bookingHandler.invalidTourID();
+                    errorDialog.InnerHtml = bookingHandler.error;
+                    errorDialog.Visible = true;
+                }
+            }
+            else
+            {
+                errorDialog.InnerHtml = bookingHandler.error;
+                errorDialog.Visible = true;
+            }
 
         }
 
 
         protected void editProfile_Click(object sender, EventArgs e)
         {
-            int phone = int.Parse(newPhoneNumber.Text);
-            string description = newDescription.Text;
-            currUser.modifyAccount(phone, description);
-            Response.Redirect("main.aspx");
+            registrationErrorHandler editHandler = new registrationErrorHandler();
+            if (newPhoneNumber.Text == "")
+                editHandler.emptyPhoneNumber();
+            if (!newPhoneNumber.Text.All(char.IsDigit))
+                editHandler.invalidPhoneNumber();
+            if (newDescription.Text == "")
+                editHandler.emptyDescription();
+
+            if (editHandler.error == "")
+            {
+                int phone = int.Parse(newPhoneNumber.Text);
+                string description = newDescription.Text;
+                currUser.modifyAccount(phone, description);
+                Response.Redirect("main.aspx");
+            }
+
+            else
+            {
+                errorDialog.InnerHtml = editHandler.error;
+                errorDialog.Visible = true;
+            }
 
         }
 
@@ -433,11 +608,34 @@ namespace vetoTours
 
         protected void sendMsg_Click(object sender, EventArgs e)
         {
+            inboxErrorHandler inboxHandler = new inboxErrorHandler();
+            if (sendTo.Text == "")
+                inboxHandler.emptyUserField();
 
-            chat newChat = new chat(currUser.getUserID(),sendTo.Text, msgSubject.Text, msgField.Text);
-            newChat.sendMessage();
+            if (msgSubject.Text == "")
+                inboxHandler.emptySubjectField();
 
-            Response.Redirect("main.aspx");
+            if (msgField.Text == "")
+                inboxHandler.emptyMessageField();
+
+            user targetUser = fetchUserObject(sendTo.Text);
+
+            if (targetUser == null)
+                inboxHandler.noSuchUser();
+
+            if (inboxHandler.error == "")
+            {
+                chat newChat = new chat(currUser.getUserID(), sendTo.Text, msgSubject.Text, msgField.Text);
+                newChat.sendMessage();
+
+                Response.Redirect("main.aspx");
+            }
+
+            else
+            {
+                errorDialog.InnerHtml = inboxHandler.error;
+                errorDialog.Visible = true;
+            }
 
         }
 
