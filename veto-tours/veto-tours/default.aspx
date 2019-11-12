@@ -34,7 +34,7 @@
                 <asp:ListItem Text="Admin" Value="admin"/>
             </asp:DropDownList>
             <br />
-            <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click"/>
+            <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="loginController"/>
             <br />
             <asp:Label ID="lblStatus" runat="server" Text=""></asp:Label>
         </div>
@@ -64,7 +64,7 @@
             <asp:Label ID="regDesc" runat="server" Text="Description"></asp:Label>
             <asp:TextBox ID="regDescription" runat="server"></asp:TextBox>
             <br />
-            <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="btnRegister_Click"/>
+            <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="registrationController"/>
             <br />
             <asp:Label ID="regStatus" runat="server" Text=""></asp:Label>
         </div>

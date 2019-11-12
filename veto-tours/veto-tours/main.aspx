@@ -140,7 +140,7 @@
                                 <asp:ListItem Value="closed">Closed</asp:ListItem>
                             </asp:DropDownList>
                             <br />
-                            <asp:Button ID="createTourButton" runat="server" Text="Create Tour" OnClick="createTour_Click"/>
+                            <asp:Button ID="createTourButton" runat="server" Text="Create Tour" OnClick="tourCreationController"/>
                         </div>
 
                         <div id ="editTour">
@@ -176,7 +176,7 @@
                                 <asp:ListItem Value="closed">Closed</asp:ListItem>
                             </asp:DropDownList>
                             <br />
-                            <asp:Button ID="editTourButton" runat="server" Text="Edit Tour" OnClick="editTour_Click"/>
+                            <asp:Button ID="editTourButton" runat="server" Text="Edit Tour" OnClick="tourEditingController"/>
                             <br />
                             <asp:Label ID="outcome" runat="server" Text=""></asp:Label>
                         </div>
@@ -196,7 +196,7 @@
                                 <asp:ListItem Value="5">5</asp:ListItem>
                             </asp:DropDownList>
                             <br />
-                            <asp:Button ID="btnSetRatingTourist" runat="server" Text="Give Rating" OnClick="giveRatingTourist_Click"/>
+                            <asp:Button ID="btnSetRatingTourist" runat="server" Text="Give Rating" OnClick="giveRatingTouristController"/>
                         </div>
 
                     </div>
@@ -227,7 +227,7 @@
                                 <asp:ListItem Value="Descending">Descending</asp:ListItem>
                             </asp:DropDownList>
                             <br />
-                            <asp:Button ID="btnFilterTours" runat="server" Text="Filter" OnClick="filterTours_Click"/>
+                            <asp:Button ID="btnFilterTours" runat="server" Text="Filter" OnClick="filterToursController"/>
 
                         </div>
 
@@ -246,7 +246,7 @@
                             <asp:Label ID="cTBooking" runat="server" Text="ID of Tour"></asp:Label>
                             <asp:TextBox ID="createBooking" runat="server"></asp:TextBox>
                             <br />
-                            <asp:Button ID="createBookingButton" runat="server" Text="Create Booking" OnClick="createBooking_Click"/>
+                            <asp:Button ID="createBookingButton" runat="server" Text="Create Booking" OnClick="bookingController"/>
 
                         </div>
 
@@ -265,7 +265,7 @@
                                 <asp:ListItem Value="5">5</asp:ListItem>
                             </asp:DropDownList>
                             <br />
-                            <asp:Button ID="btnGiveRating" runat="server" Text="Give Rating" OnClick="giveRatingTourGuide_Click"/>
+                            <asp:Button ID="btnGiveRating" runat="server" Text="Give Rating" OnClick="giveRatingTourGuideController"/>
 
                         </div>
 
@@ -294,7 +294,7 @@
                             <br />
                             <asp:TextBox ID="msgField" runat="server" TextMode="MultiLine" Width="400px" Height="200px"></asp:TextBox>
                             <br />
-                            <asp:Button ID="sendMsgBtn" runat="server" Text="Send Message" OnClick="sendMsg_Click"/>
+                            <asp:Button ID="sendMsgBtn" runat="server" Text="Send Message" OnClick="sendMsgController"/>
                         </div>
                     </div>
 
@@ -309,7 +309,7 @@
                         <asp:Label ID="eDDesc" runat="server" Text="Description"></asp:Label>
                         <asp:TextBox ID="newDescription" runat="server"></asp:TextBox>
                         <br />
-                        <asp:Button ID="editProfile" runat="server" Text="Edit Details" OnClick="editProfile_Click"/>
+                        <asp:Button ID="editProfile" runat="server" Text="Edit Details" OnClick="editProfileController"/>
                     </div>
 
                 </div>
@@ -372,7 +372,7 @@
                         <asp:Label ID="eDST" runat="server" Text="Status(0/1)"></asp:Label>
                         <asp:TextBox ID="editStat" runat="server"></asp:TextBox>
                         <br />
-                        <asp:Button ID="editUserButton" runat="server" Text="Edit User Profile" OnClick="editUser_Click"/>
+                        <asp:Button ID="editUserButton" runat="server" Text="Edit User Profile" OnClick="adminEditUserController"/>
                         <br />
                     </div>
 
@@ -399,7 +399,7 @@
                         <asp:Label ID="regStat" runat="server" Text="Status(0/1)"></asp:Label>
                         <asp:TextBox ID="regStatus" runat="server"></asp:TextBox>
                         <br />
-                        <asp:Button ID="btnCreateUser" runat="server" Text="Create New User" OnClick="btnCreateUser_Click"/>
+                        <asp:Button ID="btnCreateUser" runat="server" Text="Create New User" OnClick="adminCreaterUserController"/>
                         <br />                       
                     </div>
 
@@ -408,7 +408,7 @@
                         <asp:Label ID="suspendUserLabel" runat="server" Text="Enter ID of user to suspend"></asp:Label>
                         <asp:TextBox ID="suspendUserField" runat="server"></asp:TextBox>
                         <br />
-                        <asp:Button ID="btnSuspend" runat="server" Text="Suspend User" OnClick="btnSuspendUser_Click"/>
+                        <asp:Button ID="btnSuspend" runat="server" Text="Suspend User" OnClick="adminSuspendUserController"/>
 
                     </div>
 

@@ -29,7 +29,7 @@ namespace vetoTours
 
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
 
-        protected void btnLogin_Click(object sender, EventArgs e)
+        protected void loginController(object sender, EventArgs e)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace vetoTours
             }
         }
 
-        protected void btnRegister_Click(object sender, EventArgs e)
+        protected void registrationController(object sender, EventArgs e)
         {
             registrationErrorHandler regHandler = new registrationErrorHandler();
             if (regUserName.Text == "")
@@ -1169,5 +1169,24 @@ namespace vetoTours
         {
             error += "Message Field Empty <br/>";
         }
+    }
+
+    public class ratingErrorHandler
+    {
+        public string label;
+        public string error;
+
+        public ratingErrorHandler()
+        {
+            label = "The following errors were found during the process: <br />";
+            error = "";
+        }
+
+        public void noSuchUser()
+        {
+            error += "Invalid User ID <br/>";
+        }
+
+
     }
 }

@@ -31,6 +31,13 @@ namespace vetoTours
                     Session["success"] = "";
                 }
 
+                else if (Session["success"] == "msgSent")
+                {
+                    general_dialog.InnerHtml = "You have successfully sent a message";
+                    general_dialog.Visible = true;
+                    Session["success"] = "";
+                }
+
 
                 SqlConnection conn = null;
                 SqlCommand cmd = null;
@@ -145,7 +152,7 @@ namespace vetoTours
         }
 
         // Create tour
-        protected void createTour_Click(object sender, EventArgs e)
+        protected void tourCreationController(object sender, EventArgs e)
         {
             TourErrorHandler tourHandler = new TourErrorHandler();
             string tempStart = createStartDate.Text;
@@ -207,7 +214,7 @@ namespace vetoTours
         }
 
         // Edit Tour
-        protected void editTour_Click(object sender, EventArgs e)
+        protected void tourEditingController(object sender, EventArgs e)
         {
             TourErrorHandler tourHandler = new TourErrorHandler();
             string tempStart = editStartDate.Text;
@@ -294,7 +301,7 @@ namespace vetoTours
 
         }
 
-        protected void createBooking_Click(object sender, EventArgs e)
+        protected void bookingController(object sender, EventArgs e)
         {
             bookingErrorHandler bookingHandler = new bookingErrorHandler();
             int intTest;
@@ -354,7 +361,7 @@ namespace vetoTours
         }
 
 
-        protected void editProfile_Click(object sender, EventArgs e)
+        protected void editProfileController(object sender, EventArgs e)
         {
             registrationErrorHandler editHandler = new registrationErrorHandler();
             if (newPhoneNumber.Text == "")
@@ -381,7 +388,7 @@ namespace vetoTours
 
         }
 
-        protected void editUser_Click(object sender, EventArgs e)
+        protected void adminEditUserController(object sender, EventArgs e)
         {
             registrationErrorHandler editHandler = new registrationErrorHandler();
 
@@ -434,7 +441,7 @@ namespace vetoTours
 
         }
 
-        protected void btnCreateUser_Click(object sender, EventArgs e)
+        protected void adminCreaterUserController(object sender, EventArgs e)
         {
             registrationErrorHandler regHandler = new registrationErrorHandler();
             if (regUserName.Text == "")
@@ -620,7 +627,7 @@ namespace vetoTours
             return allMessages;
         }
 
-        protected void sendMsg_Click(object sender, EventArgs e)
+        protected void sendMsgController(object sender, EventArgs e)
         {
             inboxErrorHandler inboxHandler = new inboxErrorHandler();
             if (sendTo.Text == "")
@@ -641,6 +648,7 @@ namespace vetoTours
             {
                 chat newChat = new chat(currUser.getUserID(), sendTo.Text, msgSubject.Text, msgField.Text);
                 newChat.sendMessage();
+                Session["success"] = "msgSent";
                 general_dialog.Visible = false;
                 Response.Redirect("main.aspx");
             }
@@ -653,7 +661,7 @@ namespace vetoTours
 
         }
 
-        protected void btnSuspendUser_Click(object sender, EventArgs e)
+        protected void adminSuspendUserController(object sender, EventArgs e)
         {
             registrationErrorHandler suspendHandler = new registrationErrorHandler();
 
@@ -686,43 +694,68 @@ namespace vetoTours
 
         }
 
-        protected void giveRatingTourGuide_Click(object sender, EventArgs e)
+        protected void giveRatingTourGuideController(object sender, EventArgs e)
         {
-
+            ratingErrorHandler ratingHandler = new ratingErrorHandler();
             // Fetch tourGuide object that user wants to rate
             user tourGuide = fetchUserObject(rateTourGuideID.Text);
 
-            // Create new rating object
-            rating newRating = new rating(tourGuide.getUserID(), currUser.getUserID(), int.Parse(ddTourGuideStars.SelectedValue), "tourguide");
+            if (tourGuide == null)
+                ratingHandler.noSuchUser();
 
-            // Execute write rating to database
-            newRating.createRating();
 
-            Session["success"] = "giveRating";
+            if (ratingHandler.error == "")
+            {
+                // Create new rating object
+                rating newRating = new rating(tourGuide.getUserID(), currUser.getUserID(), int.Parse(ddTourGuideStars.SelectedValue), "tourguide");
 
-            Response.Redirect("main.aspx");
+                // Execute write rating to database
+                newRating.createRating();
+
+                Session["success"] = "giveRating";
+                general_dialog.Visible = false;
+                Response.Redirect("main.aspx");
+            }
+
+            else
+            {
+                general_dialog.InnerHtml = ratingHandler.error;
+                general_dialog.Visible = true;
+            }
 
         }
 
-        protected void giveRatingTourist_Click(object sender, EventArgs e)
+        protected void giveRatingTouristController(object sender, EventArgs e)
         {
+            ratingErrorHandler ratingHandler = new ratingErrorHandler();
 
             // Fetch tourist object that user wants to rate
             user tourist = fetchUserObject(rateTouristID.Text);
 
-            // Create new rating object
-            rating newRating = new rating(tourist.getUserID(), currUser.getUserID(), int.Parse(ddTouristStars.SelectedValue), "tourist");
+            if (tourist == null)
+                ratingHandler.noSuchUser();
 
-            // Execute write rating to database
-            newRating.createRating();
+            if (ratingHandler.error == "")
+            {
+                // Create new rating object
+                rating newRating = new rating(tourist.getUserID(), currUser.getUserID(), int.Parse(ddTouristStars.SelectedValue), "tourist");
 
-            Session["success"] = "giveRating"; 
+                // Execute write rating to database
+                newRating.createRating();
 
-            Response.Redirect("main.aspx");
+                Session["success"] = "giveRating";
+                general_dialog.Visible = false;
+                Response.Redirect("main.aspx");
+            }
 
+            else
+            {
+                general_dialog.InnerHtml = ratingHandler.error;
+                general_dialog.Visible = true;
+            }
         }
 
-        protected void filterTours_Click(object sender, EventArgs e)
+        protected void filterToursController(object sender, EventArgs e)
         {
 
             if(ddFilterTour.SelectedValue == "Price" && ddFilterCriteria.SelectedValue =="Ascending")
