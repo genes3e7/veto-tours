@@ -16,7 +16,12 @@ namespace vetoTours
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["regSuccess"] == "true")
+            {
+                generalDialog.InnerHtml = "You have successfully registered";
+                generalDialog.Visible = true;
+                Session["regSuccess"] = "";
+            }
 
 
         }
@@ -85,8 +90,8 @@ namespace vetoTours
                     {
                         Session["loggedIn"] = "false";
                         loginHandler.noSuchUser();
-                        loginErrorDialog.InnerHtml = loginHandler.error;
-                        loginErrorDialog.Visible = true;
+                        generalDialog.InnerHtml = loginHandler.error;
+                        generalDialog.Visible = true;
 
                     }
                     con.Close();
@@ -94,8 +99,8 @@ namespace vetoTours
 
                 else
                 {
-                    loginErrorDialog.InnerHtml = loginHandler.error;
-                    loginErrorDialog.Visible = true;
+                    generalDialog.InnerHtml = loginHandler.error;
+                    generalDialog.Visible = true;
                 }
             }
             catch (Exception ex)
@@ -143,16 +148,15 @@ namespace vetoTours
             {
                 user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, 0);
                 newUser.createAccount();
-                successfulRegistration.InnerHtml = "You have successfully registered!";
-                successfulRegistration.Visible = true;
+                Session["regSuccess"] = "true";
                 Response.Redirect("default.aspx");
                 
             }
 
             else
             {
-                errorDialog.InnerHtml = regHandler.error;
-                errorDialog.Visible = true;
+                generalDialog.InnerHtml = regHandler.error;
+                generalDialog.Visible = true;
             }
 
         }
@@ -669,6 +673,29 @@ namespace vetoTours
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
             reader.Close();
+
+        }
+
+        public void suspendUser(user targetUser)
+        {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
+
+            conn.Open();
+
+            string query = "UPDATE users SET password= '" + targetUser.getPassword() + "', name='" + targetUser.getName() + "', email ='" + targetUser.getEmail() + "', phoneNumber=" + targetUser.getPhoneNumber()
+                            + ", description ='" + targetUser.getPersonalDescription() + "', status=" + targetUser.getStatus() + " WHERE userID='" + targetUser.getUserID() + "';";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            reader.Close();
+
+            query = "UPDATE tours SET status= 'suspended' WHERE userID='" + targetUser.getUserID() + "';";
+            cmd = new SqlCommand(query, conn);
+            reader = cmd.ExecuteReader();
+            conn.Close();
 
         }
 

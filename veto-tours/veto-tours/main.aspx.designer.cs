@@ -42,22 +42,13 @@ namespace vetoTours
         protected global::System.Web.UI.WebControls.Button btnUserLogout;
 
         /// <summary>
-        /// test control.
+        /// general_dialog control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl test;
-
-        /// <summary>
-        /// errorDialog control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorDialog;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl general_dialog;
 
         /// <summary>
         /// createdToursView control.
@@ -420,13 +411,22 @@ namespace vetoTours
         protected global::System.Web.UI.WebControls.TextBox rateTouristID;
 
         /// <summary>
-        /// setRatingTourist control.
+        /// starslbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText setRatingTourist;
+        protected global::System.Web.UI.WebControls.Label starslbl;
+
+        /// <summary>
+        /// ddTouristStars control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddTouristStars;
 
         /// <summary>
         /// btnSetRatingTourist control.
@@ -555,13 +555,22 @@ namespace vetoTours
         protected global::System.Web.UI.WebControls.TextBox rateTourGuideID;
 
         /// <summary>
-        /// setRating control.
+        /// tgStarslbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText setRating;
+        protected global::System.Web.UI.WebControls.Label tgStarslbl;
+
+        /// <summary>
+        /// ddTourGuideStars control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddTourGuideStars;
 
         /// <summary>
         /// btnGiveRating control.
@@ -699,13 +708,13 @@ namespace vetoTours
         protected global::System.Web.UI.WebControls.Button editProfile;
 
         /// <summary>
-        /// errorDialogAdmin control.
+        /// adminDialog control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorDialogAdmin;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl adminDialog;
 
         /// <summary>
         /// btnAdminLogout control.

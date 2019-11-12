@@ -60,12 +60,16 @@
       });
 
       $(function () {
-          $("#dialog").dialog();
           $("#dialog_suspended").dialog();
-          $("#errorDialog").dialog();
+          $("#general_dialog").dialog();
           $("#errorDialogAdmin").dialog();
+          $("#adminDialog").dialog();
+
       });
 
+      $(function () {
+          $("#successfulDialog").dialog();
+      });
       $(function () {
           $("#accordion").accordion();
       });
@@ -83,11 +87,7 @@
 
                 <asp:Button ID="btnUserLogout" runat="server" Text="Logout" OnClick="logout_Click"/>
 
-                <div id="dialog" title="Authentication">
-                  <p>You have successfully logged into the server! Feel free to browse.</p>
-                </div>
-                <div id="test" runat="server"></div>
-                <div id="errorDialog" title="Error" visible="false" runat="server"></div>
+                <div id="general_dialog" title="Notification" visible="false" runat="server"></div>
 
                 <br />
                 <br />
@@ -186,8 +186,15 @@
                             <asp:Label ID="touristlbl" runat="server" Text="Tourist ID"></asp:Label>
                             <asp:TextBox ID="rateTouristID" runat="server"></asp:TextBox>
                             <br />
-                            <label for="setRatingTourist">Stars</label>
-                            <input id="setRatingTourist" name="ratingValue" runat="server" />
+                            <asp:Label ID="starslbl" runat="server" Text="Stars"></asp:Label>
+                            <asp:DropDownList ID="ddTouristStars" runat="server">
+                                <asp:ListItem Selected="True" Value="0">0</asp:ListItem>
+                                <asp:ListItem Value="1">1</asp:ListItem>
+                                <asp:ListItem Value="2">2</asp:ListItem>
+                                <asp:ListItem Value="3">3</asp:ListItem>
+                                <asp:ListItem Value="4">4</asp:ListItem>
+                                <asp:ListItem Value="5">5</asp:ListItem>
+                            </asp:DropDownList>
                             <br />
                             <asp:Button ID="btnSetRatingTourist" runat="server" Text="Give Rating" OnClick="giveRatingTourist_Click"/>
                         </div>
@@ -248,8 +255,15 @@
                             <asp:Label ID="rateTGName" runat="server" Text="Tour Guide ID"></asp:Label>
                             <asp:TextBox ID="rateTourGuideID" runat="server"></asp:TextBox>
                             <br />
-                            <label for="setRating">Stars</label>
-                            <input id="setRating" name="ratingValue" runat="server" />
+                            <asp:Label ID="tgStarslbl" runat="server" Text="Stars"></asp:Label>
+                            <asp:DropDownList ID="ddTourGuideStars" runat="server">
+                                <asp:ListItem Selected="True" Value="0">0</asp:ListItem>
+                                <asp:ListItem Value="1">1</asp:ListItem>
+                                <asp:ListItem Value="2">2</asp:ListItem>
+                                <asp:ListItem Value="3">3</asp:ListItem>
+                                <asp:ListItem Value="4">4</asp:ListItem>
+                                <asp:ListItem Value="5">5</asp:ListItem>
+                            </asp:DropDownList>
                             <br />
                             <asp:Button ID="btnGiveRating" runat="server" Text="Give Rating" OnClick="giveRatingTourGuide_Click"/>
 
@@ -319,7 +333,7 @@
 
 		<% else if(Session["loggedIn"] == "true" && Session["userType"] == "admin")
             {%>
-                <div id="errorDialogAdmin" title="Error" visible="false" runat="server"></div>
+                <div id="adminDialog" title="Error" visible="false" runat="server"></div>
 				<h1> ADMIN PAGE</h1>
                 <br />
                 <asp:Button ID="btnAdminLogout" runat="server" Text="Logout" OnClick="logout_Click"/>

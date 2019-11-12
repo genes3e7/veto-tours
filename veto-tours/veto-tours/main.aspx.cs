@@ -22,6 +22,16 @@ namespace vetoTours
            {
                 currUser = fetchUserObject(Session["userID"].ToString());
                 nameLabel.Text = "Hello " + currUser.getName();
+
+                // Check if page refresh was due to a successful action
+                if(Session["success"] == "giveRating")
+                {
+                    general_dialog.InnerHtml = "You have successfully rated the user";
+                    general_dialog.Visible = true;
+                    Session["success"] = "";
+                }
+
+
                 SqlConnection conn = null;
                 SqlCommand cmd = null;
                 SqlDataReader reader = null;
@@ -176,21 +186,22 @@ namespace vetoTours
                 {
                     tour newTour = new tour(currUser.getUserID(), createTourName.Text, int.Parse(createCapacity.Text), createLocation.Text, createDescription.Text, startDate, endDate, double.Parse(createPrice.Text), ddCreateStatus.SelectedValue);
                     newTour.createTour();
+                    general_dialog.Visible = false;
                     Response.Redirect("main.aspx");
                 }
 
                 else
                 {
-                    errorDialog.InnerHtml = tourHandler.error;
-                    errorDialog.Visible = true;
+                    general_dialog.InnerHtml = tourHandler.error;
+                    general_dialog.Visible = true;
                 }
 
             }
 
             else
             {
-                errorDialog.InnerHtml = tourHandler.error;
-                errorDialog.Visible = true;
+                general_dialog.InnerHtml = tourHandler.error;
+                general_dialog.Visible = true;
             }
 
         }
@@ -261,22 +272,22 @@ namespace vetoTours
 
                     // Execute class function to modify tour
                     editTour.modifyTour();
-
+                    general_dialog.Visible = false;
                     Response.Redirect("main.aspx");
                 }
 
                 else
                 {
-                    errorDialog.InnerHtml = tourHandler.error;
-                    errorDialog.Visible = true;
+                    general_dialog.InnerHtml = tourHandler.error;
+                    general_dialog.Visible = true;
                 }
 
             }
 
             else
             {
-                errorDialog.InnerHtml = tourHandler.error;
-                errorDialog.Visible = true;
+                general_dialog.InnerHtml = tourHandler.error;
+                general_dialog.Visible = true;
             }
 
 
@@ -316,27 +327,28 @@ namespace vetoTours
                         targetTour.modifyTour();
                         booking newBooking = new booking(currUser.getUserID(), tourID);
                         newBooking.createBooking();
+                        general_dialog.Visible = false;
                         Response.Redirect("main.aspx");
                     }
 
                     else
                     {
-                        errorDialog.InnerHtml = bookingHandler.error;
-                        errorDialog.Visible = true;
+                        general_dialog.InnerHtml = bookingHandler.error;
+                        general_dialog.Visible = true;
                     }
                 }
 
                 else
                 {
                     bookingHandler.invalidTourID();
-                    errorDialog.InnerHtml = bookingHandler.error;
-                    errorDialog.Visible = true;
+                    general_dialog.InnerHtml = bookingHandler.error;
+                    general_dialog.Visible = true;
                 }
             }
             else
             {
-                errorDialog.InnerHtml = bookingHandler.error;
-                errorDialog.Visible = true;
+                general_dialog.InnerHtml = bookingHandler.error;
+                general_dialog.Visible = true;
             }
 
         }
@@ -357,13 +369,14 @@ namespace vetoTours
                 int phone = int.Parse(newPhoneNumber.Text);
                 string description = newDescription.Text;
                 currUser.modifyAccount(phone, description);
+                general_dialog.Visible = false;
                 Response.Redirect("main.aspx");
             }
 
             else
             {
-                errorDialog.InnerHtml = editHandler.error;
-                errorDialog.Visible = true;
+                general_dialog.InnerHtml = editHandler.error;
+                general_dialog.Visible = true;
             }
 
         }
@@ -409,14 +422,14 @@ namespace vetoTours
                 targetUser.setStatus(int.Parse(editStat.Text));
 
                 currAdmin.editUser(targetUser);
-
+                adminDialog.Visible = false;
                 Response.Redirect("main.aspx");
             }
 
             else
             {
-                errorDialogAdmin.InnerHtml = editHandler.error;
-                errorDialogAdmin.Visible = true;
+                adminDialog.InnerHtml = editHandler.error;
+                adminDialog.Visible = true;
             }
 
         }
@@ -462,14 +475,15 @@ namespace vetoTours
             {
                 user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, int.Parse(regStatus.Text));
                 currAdmin.createUser(newUser);
+                adminDialog.Visible = false;
                 Response.Redirect("main.aspx");
 
             }
 
             else
             {
-                errorDialogAdmin.InnerHtml = regHandler.error;
-                errorDialogAdmin.Visible = true;
+                adminDialog.InnerHtml = regHandler.error;
+                adminDialog.Visible = true;
             }
 
         }
@@ -627,14 +641,14 @@ namespace vetoTours
             {
                 chat newChat = new chat(currUser.getUserID(), sendTo.Text, msgSubject.Text, msgField.Text);
                 newChat.sendMessage();
-
+                general_dialog.Visible = false;
                 Response.Redirect("main.aspx");
             }
 
             else
             {
-                errorDialog.InnerHtml = inboxHandler.error;
-                errorDialog.Visible = true;
+                general_dialog.InnerHtml = inboxHandler.error;
+                general_dialog.Visible = true;
             }
 
         }
@@ -658,25 +672,16 @@ namespace vetoTours
                 suspendedUser.setStatus(1);
 
                 // Write back the user object to database
-                currAdmin.editUser(suspendedUser);
-
-                // Change all their tours to suspended status
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
-                SqlCommand cmd = null;
-                SqlDataReader reader = null;
-                con.Open();
-                string query = "UPDATE tours SET status= 'suspended' WHERE userID='" + suspendedUser.getUserID() + "';";
-                cmd = new SqlCommand(query, con);
-                reader = cmd.ExecuteReader();
-                con.Close();
-
+                currAdmin.suspendUser(suspendedUser);
+                adminDialog.Visible = false;
                 Response.Redirect("main.aspx");
+                
             }
 
             else
             {
-                errorDialogAdmin.InnerHtml = suspendHandler.error;
-                errorDialogAdmin.Visible = true;
+                adminDialog.InnerHtml = suspendHandler.error;
+                adminDialog.Visible = true;
             }
 
         }
@@ -688,10 +693,12 @@ namespace vetoTours
             user tourGuide = fetchUserObject(rateTourGuideID.Text);
 
             // Create new rating object
-            rating newRating = new rating(tourGuide.getUserID(), currUser.getUserID(), int.Parse(setRating.Value), "tourguide");
+            rating newRating = new rating(tourGuide.getUserID(), currUser.getUserID(), int.Parse(ddTourGuideStars.SelectedValue), "tourguide");
 
             // Execute write rating to database
             newRating.createRating();
+
+            Session["success"] = "giveRating";
 
             Response.Redirect("main.aspx");
 
@@ -704,10 +711,12 @@ namespace vetoTours
             user tourist = fetchUserObject(rateTouristID.Text);
 
             // Create new rating object
-            rating newRating = new rating(tourist.getUserID(), currUser.getUserID(), int.Parse(setRatingTourist.Value), "tourist");
+            rating newRating = new rating(tourist.getUserID(), currUser.getUserID(), int.Parse(ddTouristStars.SelectedValue), "tourist");
 
             // Execute write rating to database
             newRating.createRating();
+
+            Session["success"] = "giveRating"; 
 
             Response.Redirect("main.aspx");
 
@@ -746,7 +755,7 @@ namespace vetoTours
                 Session["criteria"] = "Default";
             }
 
-
+            general_dialog.Visible = false;
             Response.Redirect("main.aspx#touristTabs");
         }
 

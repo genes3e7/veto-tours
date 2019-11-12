@@ -11,9 +11,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function () {
-            $("#errorDialog").dialog();
-            $("#loginErrorDialog").dialog();
-            $("#successfulRegistration").dialog();
+            $("#generalDialog").dialog();
         });
     </script>
 </head>
@@ -21,9 +19,8 @@
     <h1>Veto Tours Authentication System</h1>
     <br />
     <form id="form1" runat="server">
-        <div id="errorDialog" title="Registration Error" visible="false" runat="server"></div>
-        <div id="loginErrorDialog" title="Login Error" visible="false" runat="server"></div>
-        <div id="successfulRegistration" title="Registration Success" visible="false" runat="server"></div>        
+        <div id="generalDialog" title="Notification" visible="false" runat="server"></div>
+      
         <div>
             <asp:Label ID="Label1" runat="server" Text="UserName"></asp:Label>
             <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>
