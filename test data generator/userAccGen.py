@@ -2,13 +2,20 @@
 
 # To install lorem package
 # python -m pip install lorem --user
+from classes import User, Tours, Ratings, Chat, Bookings
 import math
 import random
 import lorem
 import csv
+import time
+import datetime
 
-# Number of accounts generated
-ACCNUM = 500
+# Numbers to generate
+ACCNUM = 500  # Accounts
+TOURSNUM = 1000  # random 100 ppl approx 10 tours average
+BOOKINGSNUM = 1000  # random bookings from 200 ppl 5 tours avg
+RATINGSNUM = 1000  # All 500 ppl randomly rate 2 other ppl
+CHATNUM = 1000  # random 200 ppl 5 chat avg
 
 # Filenames
 SINGLE_NAME_INPUT = "singleName.txt"
@@ -21,78 +28,6 @@ TRANSACTION_DATA = "transactionData.txt"
 user_accounts = []
 single_name = {}
 
-
-class User:
-    def __init__(self, firstName, lastName):
-        # userID, password, name, email, phoneNumber, accountType, description, status
-        self.firstName = (str)(firstName)
-        self.lastName = (str)(lastName)
-        self.accType = "user"
-        self.userID = self.userIDGen()
-        self.email = self.emailGen()
-        self.phoneNumber = self.phoneNumberGen()
-        self.password = self.passwordGen()
-        self.descript = lorem.paragraph()
-        self.status = 0
-        self.data = {}
-        self.createDict()
-
-    def createDict(self):
-        self.data["userID"] = self.userID
-        self.data["password"] = self.password
-        self.data["firstName"] = self.firstName
-        self.data["lastName"] = self.lastName
-        self.data["email"] = self.email
-        self.data["phoneNumber"] = self.phoneNumber
-        self.data["accType"] = self.accType
-        self.data["descript"] = self.descript
-        self.data["status"] = self.status
-
-    def emailGen(self):
-        emailExtension = ["hotmail.com", "gmail.com", "yahoo.com",
-                          "outlook.com", "iCloud.com", "aol.com", "mail.com"]
-
-        return self.userID + "@{0}".format(random.choice(emailExtension))
-
-    def passwordGen(self):
-        pwlen = random.randint(8, 20)
-        ascii_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        specialSymbols = "@%+/!#$^?:{([~-_.])}"
-        password = ""
-
-        for i in range(0, pwlen - 2):
-            password += str(random.choice(ascii_letters))
-        password += str(random.randint(0, 99))
-        password += str(random.choice(specialSymbols))
-
-        return ''.join(random.sample(password, len(password)))
-
-    def userIDGen(self):
-        return self.firstName + (str)(random.randint(1, 999))
-
-    def phoneNumberGen(self):
-        return random.choice([9, 8, 7]) * 10000000 + random.randint(1, 9999999)
-
-    def insert_statement(self):
-        string = "INSERT INTO [dbo].[users] "
-        string += "([userID], [password], [name], [email], [phoneNumber], [accountType], [description], [status]) "
-        string += "VALUES ("
-        string += "N\'{0}\', ".format(self.userID)
-        string += "N\'{0}\', ".format(self.password)
-        string += "N\'{0} {1}\', ".format(self.firstName, self.lastName)
-        string += "N\'{0}\', ".format(self.email)
-        string += "{0}, ".format(self.phoneNumber)
-        string += "N\'{0}\', ".format(self.accType)
-        string += "N\'{0}\', ".format(self.descript)
-        string += "{0});".format(self.status)
-
-        return string
-
-
-class Transaction:
-    def __init__(self, toUser, fromUser):
-        self.touser = touser
-        self.fromUser = fromUser
 
 #############################################################################
 # create user accounts
