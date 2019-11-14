@@ -164,6 +164,8 @@ namespace vetoTours
                 tourHandler.emptyTourName();
             if (createCapacity.Text == "")
                 tourHandler.emptyCapacity();
+            if (!createCapacity.Text.All(char.IsDigit))
+                tourHandler.invalidCapacity();
             if (createLocation.Text == "")
                 tourHandler.emptyLocation();
             if (createDescription.Text == "")
@@ -186,7 +188,7 @@ namespace vetoTours
                 DateTime startDate = DateTime.ParseExact(tempStart, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                 DateTime endDate = DateTime.ParseExact(tempEnd, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-                if (endDate < startDate)
+                if (endDate <= startDate)
                     tourHandler.endBeforeStart();
 
                 if (tourHandler.error == "")
@@ -232,6 +234,8 @@ namespace vetoTours
                 tourHandler.emptyTourName();
             if (editCapacity.Text == "")
                 tourHandler.emptyCapacity();
+            if (!editCapacity.Text.All(char.IsDigit))
+                tourHandler.invalidCapacity();
             if (editLocation.Text == "")
                 tourHandler.emptyLocation();
             if (editDescription.Text == "")
@@ -256,7 +260,7 @@ namespace vetoTours
                 DateTime startDate = DateTime.ParseExact(tempStart, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                 DateTime endDate = DateTime.ParseExact(tempEnd, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-                if (endDate < startDate)
+                if (endDate <= startDate)
                     tourHandler.endBeforeStart();
 
                 int tourID = int.Parse(editID.Text);
@@ -410,6 +414,15 @@ namespace vetoTours
                 editHandler.emptyDescription();
             if (editStat.Text == "")
                 editHandler.emptyStatus();
+            if (!editStat.Text.All(char.IsDigit))
+                editHandler.invalidStatus();
+
+            if(editStat.Text.All(char.IsDigit))
+            {
+                int tryInt = int.Parse(editStat.Text);
+                if (tryInt < 0 || tryInt > 1)
+                    editHandler.invalidStatus();
+            }
 
             // Fetch the user object from database 
             user targetUser = fetchUserObject(editUserID.Text);
@@ -462,6 +475,16 @@ namespace vetoTours
                 regHandler.emptyDescription();
             if (regStatus.Text == "")
                 regHandler.emptyStatus();
+            if (!regStatus.Text.All(char.IsDigit))
+                regHandler.invalidStatus();
+
+            if (regStatus.Text.All(char.IsDigit))
+            {
+                int tryInt = int.Parse(editStat.Text);
+                if (tryInt < 0 || tryInt > 1)
+                    regHandler.invalidStatus();
+            }
+
 
             // Check username exists
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
@@ -702,6 +725,10 @@ namespace vetoTours
         protected void giveRatingTourGuideController(object sender, EventArgs e)
         {
             ratingErrorHandler ratingHandler = new ratingErrorHandler();
+
+            if (rateTourGuideID.Text == "")
+                ratingHandler.emptyIDField();
+
             // Fetch tourGuide object that user wants to rate
             user tourGuide = fetchUserObject(rateTourGuideID.Text);
 
@@ -733,6 +760,8 @@ namespace vetoTours
         protected void giveRatingTouristController(object sender, EventArgs e)
         {
             ratingErrorHandler ratingHandler = new ratingErrorHandler();
+            if (rateTouristID.Text == "")
+                ratingHandler.emptyIDField();
 
             // Fetch tourist object that user wants to rate
             user tourist = fetchUserObject(rateTouristID.Text);

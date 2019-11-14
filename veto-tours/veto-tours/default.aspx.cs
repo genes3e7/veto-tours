@@ -813,13 +813,13 @@ namespace vetoTours
             SqlConnection conn = null;
             SqlCommand cmd = null;
             SqlDataReader reader = null;
-
+            string format = "yyy-MM-dd HH:mm:ss";
             conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
 
             conn.Open();
 
             string query = "INSERT INTO chat (sender, recipient, subject, message, dateTime) VALUES ('"
-                            + sender + "', '" + recipient + "', '" + subject + "', '" + message + "', '" + dateTime + "');"; ;
+                            + sender + "', '" + recipient + "', '" + subject + "', '" + message + "', '" + dateTime.ToString(format) + "');"; ;
 
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
@@ -1003,6 +1003,11 @@ namespace vetoTours
         {
             error += "- Status Field Empty <br />";
         }
+
+        public void invalidStatus()
+        {
+            error += "- Invalid Status Field <br />";
+        }
     }
 
     public class loginErrorHandler
@@ -1061,6 +1066,11 @@ namespace vetoTours
         public void emptyCapacity()
         {
             error += "- Capacity Field Empty <br />";
+        }
+
+        public void invalidCapacity()
+        {
+            error += "- Invalid Capacity Input <br />";
         }
 
         public void noSuchTourName()
@@ -1202,6 +1212,11 @@ namespace vetoTours
         public void noSuchUser()
         {
             error += "Invalid User ID <br/>";
+        }
+
+        public void emptyIDField()
+        {
+            error += "User ID Field is empty <br/>";
         }
 
 
