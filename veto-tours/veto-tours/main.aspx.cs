@@ -422,17 +422,6 @@ namespace vetoTours
                 editHandler.invalidPhoneNumber();
             if (editDesc.Text == "")
                 editHandler.emptyDescription();
-            if (editStat.Text == "")
-                editHandler.emptyStatus();
-            if (!editStat.Text.All(char.IsDigit))
-                editHandler.invalidStatus();
-
-            if(editStat.Text.All(char.IsDigit))
-            {
-                int tryInt = int.Parse(editStat.Text);
-                if (tryInt < 0 || tryInt > 1)
-                    editHandler.invalidStatus();
-            }
 
             // Fetch the user object from database 
             user targetUser = fetchUserObject(editUserID.Text);
@@ -449,7 +438,7 @@ namespace vetoTours
                 targetUser.setEmail(editEmail.Text);
                 targetUser.setPhoneNumber(int.Parse(editPhone.Text));
                 targetUser.setPersonalDescription(editDesc.Text);
-                targetUser.setStatus(int.Parse(editStat.Text));
+                targetUser.setStatus(int.Parse(ddEditStat.SelectedValue));
 
                 currAdmin.editUser(targetUser);
                 adminDialog.Visible = false;
@@ -483,17 +472,6 @@ namespace vetoTours
                 regHandler.invalidPhoneNumber();
             if (regDescription.Text == "")
                 regHandler.emptyDescription();
-            if (regStatus.Text == "")
-                regHandler.emptyStatus();
-            if (!regStatus.Text.All(char.IsDigit))
-                regHandler.invalidStatus();
-
-            if (regStatus.Text.All(char.IsDigit))
-            {
-                int tryInt = int.Parse(editStat.Text);
-                if (tryInt < 0 || tryInt > 1)
-                    regHandler.invalidStatus();
-            }
 
 
             // Check username exists
@@ -513,7 +491,7 @@ namespace vetoTours
 
             if (regHandler.error == "")
             {
-                user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, int.Parse(regStatus.Text));
+                user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, int.Parse(ddRegStat.SelectedValue));
                 currAdmin.createUser(newUser);
                 adminDialog.Visible = false;
                 Response.Redirect("main.aspx");

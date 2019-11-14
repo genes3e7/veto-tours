@@ -708,7 +708,10 @@
                         <div class="form-group">
                                <asp:Label ID="eDST" Cssclass="col-sm-2 control-label" runat="server" Text="Status(0/1)"></asp:Label>
                             <div class="col-sm-10">
-                                <asp:TextBox CssClass="form-control" ID="editStat" runat="server"></asp:TextBox>
+                                 <asp:DropDownList Cssclass="col-sm-2 control-label" ID="ddEditStat" runat="server">
+                                     <asp:ListItem Selected="True" Value="0">0</asp:ListItem>
+                                     <asp:ListItem Value="1">1</asp:ListItem>
+                                 </asp:DropDownList>
                             </div>
                         </div>
                         <br />
@@ -776,7 +779,10 @@
                          <div class="form-group">
                             <asp:Label ID="regStat" Cssclass="col-sm-2 control-label" runat="server" Text="Status"></asp:Label>
                             <div class="col-sm-10">
-                                <asp:TextBox CssClass="form-control" ID="regStatus" runat="server"></asp:TextBox>
+                                <asp:DropDownList Cssclass="col-sm-2 control-label" ID="ddRegStat" runat="server">
+                                     <asp:ListItem Selected="True" Value="0">0</asp:ListItem>
+                                     <asp:ListItem Value="1">1</asp:ListItem>
+                                </asp:DropDownList>
                             </div>
                         </div><br />
                            <div class="hr-line-dashed"></div>

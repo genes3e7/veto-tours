@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace vetoTours {
-    
-    
-    public partial class main {
-        
+namespace vetoTours
+{
+
+
+    public partial class main
+    {
+
         /// <summary>
         /// form2 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form2;
-        
+
         /// <summary>
         /// general_dialog control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl general_dialog;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// Div2 control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div2;
-        
+
         /// <summary>
         /// LinkButton2 control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
-        
+
         /// <summary>
         /// LinkButton3 control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
-        
+
         /// <summary>
         /// Div3 control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div3;
-        
+
         /// <summary>
         /// createdToursView control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView createdToursView;
-        
+
         /// <summary>
         /// cTName control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label cTName;
-        
+
         /// <summary>
         /// createTourName control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox createTourName;
-        
+
         /// <summary>
         /// cTCapacity control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label cTCapacity;
-        
+
         /// <summary>
         /// createCapacity control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox createCapacity;
-        
+
         /// <summary>
         /// cTLocation control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label cTLocation;
-        
+
         /// <summary>
         /// createLocation control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox createLocation;
-        
+
         /// <summary>
         /// cTDescription control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label cTDescription;
-        
+
         /// <summary>
         /// createDescription control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox createDescription;
-        
+
         /// <summary>
         /// cTStartDate control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label cTStartDate;
-        
+
         /// <summary>
         /// createStartDate control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox createStartDate;
-        
+
         /// <summary>
         /// cTEndDate control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label cTEndDate;
-        
+
         /// <summary>
         /// createEndDate control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox createEndDate;
-        
+
         /// <summary>
         /// cTPrice control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label cTPrice;
-        
+
         /// <summary>
         /// createPrice control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox createPrice;
-        
+
         /// <summary>
         /// cTStatus control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label cTStatus;
-        
+
         /// <summary>
         /// ddCreateStatus control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddCreateStatus;
-        
+
         /// <summary>
         /// createTourButton control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button createTourButton;
-        
+
         /// <summary>
         /// eDID control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDID;
-        
+
         /// <summary>
         /// editID control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editID;
-        
+
         /// <summary>
         /// eDName control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDName;
-        
+
         /// <summary>
         /// editName control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editName;
-        
+
         /// <summary>
         /// eDCapacity control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDCapacity;
-        
+
         /// <summary>
         /// editCapacity control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editCapacity;
-        
+
         /// <summary>
         /// eDLocation control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDLocation;
-        
+
         /// <summary>
         /// editLocation control.
         /// </summary>
@@ -308,7 +310,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editLocation;
-        
+
         /// <summary>
         /// eDDescription control.
         /// </summary>
@@ -317,7 +319,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDDescription;
-        
+
         /// <summary>
         /// editDescription control.
         /// </summary>
@@ -326,7 +328,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editDescription;
-        
+
         /// <summary>
         /// eDStartDate control.
         /// </summary>
@@ -335,7 +337,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDStartDate;
-        
+
         /// <summary>
         /// editStartDate control.
         /// </summary>
@@ -344,7 +346,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editStartDate;
-        
+
         /// <summary>
         /// eDEndDate control.
         /// </summary>
@@ -353,7 +355,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDEndDate;
-        
+
         /// <summary>
         /// editEndDate control.
         /// </summary>
@@ -362,7 +364,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editEndDate;
-        
+
         /// <summary>
         /// eDPrice control.
         /// </summary>
@@ -371,7 +373,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDPrice;
-        
+
         /// <summary>
         /// editPrice control.
         /// </summary>
@@ -380,7 +382,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editPrice;
-        
+
         /// <summary>
         /// eDStatus control.
         /// </summary>
@@ -389,7 +391,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDStatus;
-        
+
         /// <summary>
         /// ddEditStatus control.
         /// </summary>
@@ -398,7 +400,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddEditStatus;
-        
+
         /// <summary>
         /// editTourButton control.
         /// </summary>
@@ -407,7 +409,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button editTourButton;
-        
+
         /// <summary>
         /// outcome control.
         /// </summary>
@@ -416,7 +418,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label outcome;
-        
+
         /// <summary>
         /// touristlbl control.
         /// </summary>
@@ -425,7 +427,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label touristlbl;
-        
+
         /// <summary>
         /// rateTouristID control.
         /// </summary>
@@ -434,7 +436,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox rateTouristID;
-        
+
         /// <summary>
         /// starslbl control.
         /// </summary>
@@ -443,7 +445,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label starslbl;
-        
+
         /// <summary>
         /// ddTouristStars control.
         /// </summary>
@@ -452,7 +454,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddTouristStars;
-        
+
         /// <summary>
         /// btnSetRatingTourist control.
         /// </summary>
@@ -461,7 +463,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSetRatingTourist;
-        
+
         /// <summary>
         /// availableToursView control.
         /// </summary>
@@ -470,7 +472,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView availableToursView;
-        
+
         /// <summary>
         /// filterTourslbl control.
         /// </summary>
@@ -479,7 +481,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label filterTourslbl;
-        
+
         /// <summary>
         /// ddFilterTour control.
         /// </summary>
@@ -488,7 +490,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddFilterTour;
-        
+
         /// <summary>
         /// ascdsc control.
         /// </summary>
@@ -497,7 +499,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ascdsc;
-        
+
         /// <summary>
         /// ddFilterCriteria control.
         /// </summary>
@@ -506,7 +508,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddFilterCriteria;
-        
+
         /// <summary>
         /// btnFilterTours control.
         /// </summary>
@@ -515,7 +517,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFilterTours;
-        
+
         /// <summary>
         /// bookedToursView control.
         /// </summary>
@@ -524,7 +526,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView bookedToursView;
-        
+
         /// <summary>
         /// bookingHistoryView control.
         /// </summary>
@@ -533,7 +535,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView bookingHistoryView;
-        
+
         /// <summary>
         /// cTBooking control.
         /// </summary>
@@ -542,7 +544,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label cTBooking;
-        
+
         /// <summary>
         /// createBooking control.
         /// </summary>
@@ -551,7 +553,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox createBooking;
-        
+
         /// <summary>
         /// createBookingButton control.
         /// </summary>
@@ -560,7 +562,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button createBookingButton;
-        
+
         /// <summary>
         /// rateTGName control.
         /// </summary>
@@ -569,7 +571,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label rateTGName;
-        
+
         /// <summary>
         /// rateTourGuideID control.
         /// </summary>
@@ -578,7 +580,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox rateTourGuideID;
-        
+
         /// <summary>
         /// tgStarslbl control.
         /// </summary>
@@ -587,7 +589,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label tgStarslbl;
-        
+
         /// <summary>
         /// ddTourGuideStars control.
         /// </summary>
@@ -596,7 +598,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddTourGuideStars;
-        
+
         /// <summary>
         /// btnGiveRating control.
         /// </summary>
@@ -605,7 +607,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGiveRating;
-        
+
         /// <summary>
         /// pmInbox control.
         /// </summary>
@@ -614,7 +616,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl pmInbox;
-        
+
         /// <summary>
         /// labelSendTo control.
         /// </summary>
@@ -623,7 +625,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelSendTo;
-        
+
         /// <summary>
         /// sendTo control.
         /// </summary>
@@ -632,7 +634,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox sendTo;
-        
+
         /// <summary>
         /// labelSubject control.
         /// </summary>
@@ -641,7 +643,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelSubject;
-        
+
         /// <summary>
         /// msgSubject control.
         /// </summary>
@@ -650,7 +652,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox msgSubject;
-        
+
         /// <summary>
         /// labelMsg control.
         /// </summary>
@@ -659,7 +661,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelMsg;
-        
+
         /// <summary>
         /// msgField control.
         /// </summary>
@@ -668,7 +670,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox msgField;
-        
+
         /// <summary>
         /// sendMsgBtn control.
         /// </summary>
@@ -677,7 +679,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button sendMsgBtn;
-        
+
         /// <summary>
         /// myProfileView control.
         /// </summary>
@@ -686,7 +688,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView myProfileView;
-        
+
         /// <summary>
         /// eDPhone control.
         /// </summary>
@@ -695,7 +697,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDPhone;
-        
+
         /// <summary>
         /// newPhoneNumber control.
         /// </summary>
@@ -704,7 +706,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox newPhoneNumber;
-        
+
         /// <summary>
         /// eDDesc control.
         /// </summary>
@@ -713,7 +715,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDDesc;
-        
+
         /// <summary>
         /// newDescription control.
         /// </summary>
@@ -722,7 +724,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox newDescription;
-        
+
         /// <summary>
         /// editProfile control.
         /// </summary>
@@ -731,7 +733,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button editProfile;
-        
+
         /// <summary>
         /// nameLabel control.
         /// </summary>
@@ -740,7 +742,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label nameLabel;
-        
+
         /// <summary>
         /// Div1 control.
         /// </summary>
@@ -749,7 +751,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
-        
+
         /// <summary>
         /// Div4 control.
         /// </summary>
@@ -758,7 +760,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div4;
-        
+
         /// <summary>
         /// LinkButton1 control.
         /// </summary>
@@ -767,7 +769,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
-        
+
         /// <summary>
         /// Button6 control.
         /// </summary>
@@ -776,7 +778,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton Button6;
-        
+
         /// <summary>
         /// adminDialog control.
         /// </summary>
@@ -785,7 +787,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl adminDialog;
-        
+
         /// <summary>
         /// eDUID control.
         /// </summary>
@@ -794,7 +796,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDUID;
-        
+
         /// <summary>
         /// editUserID control.
         /// </summary>
@@ -803,7 +805,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editUserID;
-        
+
         /// <summary>
         /// eDPW control.
         /// </summary>
@@ -812,7 +814,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDPW;
-        
+
         /// <summary>
         /// editPassword control.
         /// </summary>
@@ -821,7 +823,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editPassword;
-        
+
         /// <summary>
         /// eDRN control.
         /// </summary>
@@ -830,7 +832,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDRN;
-        
+
         /// <summary>
         /// editRealName control.
         /// </summary>
@@ -839,7 +841,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editRealName;
-        
+
         /// <summary>
         /// eDEM control.
         /// </summary>
@@ -848,7 +850,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDEM;
-        
+
         /// <summary>
         /// editEmail control.
         /// </summary>
@@ -857,7 +859,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editEmail;
-        
+
         /// <summary>
         /// eDPN control.
         /// </summary>
@@ -866,7 +868,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDPN;
-        
+
         /// <summary>
         /// editPhone control.
         /// </summary>
@@ -875,7 +877,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editPhone;
-        
+
         /// <summary>
         /// eDDE control.
         /// </summary>
@@ -884,7 +886,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDDE;
-        
+
         /// <summary>
         /// editDesc control.
         /// </summary>
@@ -893,7 +895,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox editDesc;
-        
+
         /// <summary>
         /// eDST control.
         /// </summary>
@@ -902,16 +904,16 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label eDST;
-        
+
         /// <summary>
-        /// editStat control.
+        /// ddEditStat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox editStat;
-        
+        protected global::System.Web.UI.WebControls.DropDownList ddEditStat;
+
         /// <summary>
         /// editUserButton control.
         /// </summary>
@@ -920,7 +922,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button editUserButton;
-        
+
         /// <summary>
         /// editUserView control.
         /// </summary>
@@ -929,7 +931,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView editUserView;
-        
+
         /// <summary>
         /// regName control.
         /// </summary>
@@ -938,7 +940,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label regName;
-        
+
         /// <summary>
         /// regUserName control.
         /// </summary>
@@ -947,7 +949,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regUserName;
-        
+
         /// <summary>
         /// regPw control.
         /// </summary>
@@ -956,7 +958,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label regPw;
-        
+
         /// <summary>
         /// regPassword control.
         /// </summary>
@@ -965,7 +967,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regPassword;
-        
+
         /// <summary>
         /// regRn control.
         /// </summary>
@@ -974,7 +976,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label regRn;
-        
+
         /// <summary>
         /// regRealName control.
         /// </summary>
@@ -983,7 +985,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regRealName;
-        
+
         /// <summary>
         /// regEm control.
         /// </summary>
@@ -992,7 +994,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label regEm;
-        
+
         /// <summary>
         /// regEmail control.
         /// </summary>
@@ -1001,7 +1003,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regEmail;
-        
+
         /// <summary>
         /// regPh control.
         /// </summary>
@@ -1010,7 +1012,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label regPh;
-        
+
         /// <summary>
         /// regPhone control.
         /// </summary>
@@ -1019,7 +1021,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regPhone;
-        
+
         /// <summary>
         /// regDesc control.
         /// </summary>
@@ -1028,7 +1030,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label regDesc;
-        
+
         /// <summary>
         /// regDescription control.
         /// </summary>
@@ -1037,7 +1039,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regDescription;
-        
+
         /// <summary>
         /// regStat control.
         /// </summary>
@@ -1046,16 +1048,16 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label regStat;
-        
+
         /// <summary>
-        /// regStatus control.
+        /// ddRegStat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox regStatus;
-        
+        protected global::System.Web.UI.WebControls.DropDownList ddRegStat;
+
         /// <summary>
         /// btnCreateUser control.
         /// </summary>
@@ -1064,7 +1066,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCreateUser;
-        
+
         /// <summary>
         /// suspendUserLabel control.
         /// </summary>
@@ -1073,7 +1075,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label suspendUserLabel;
-        
+
         /// <summary>
         /// suspendUserField control.
         /// </summary>
@@ -1082,7 +1084,7 @@ namespace vetoTours {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox suspendUserField;
-        
+
         /// <summary>
         /// btnSuspend control.
         /// </summary>
