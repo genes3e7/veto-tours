@@ -159,7 +159,8 @@ def booking_generator():
             tour = pick_Tour()
             if tour.userID != tourist.userID:
                 break
-        booking_list.append(Bookings(tourist.userID, tour.userID, tour.tourName))
+        booking_list.append(
+            Bookings(tourist.userID, tour.userID, tour.tourName))
 
     write_booking_list()
 
@@ -186,11 +187,13 @@ def write_ratings_list():
         for i in range(0, ACCNUM):
             writer.writerow(ratings_list[i].data)
 
+
 def setState():
-        if random.randint(0, 1) == 0:
-            return "tourist"
-        else:
-            return "tourguide"
+    if random.randint(0, 1) == 0:
+        return "tourist"
+    else:
+        return "tourguide"
+
 
 def ratings_generator():
     for i in range(0, RATINGSNUM):
@@ -212,6 +215,7 @@ def ratings_generator():
 ##############################################################################
 # Create chats
 
+
 def write_chat_list():
     # Write account into insert statements
     chat_sql_writer = open(CHAT_SQL, "w+")
@@ -230,6 +234,7 @@ def write_chat_list():
         for i in range(0, ACCNUM):
             writer.writerow(chat_list[i].data)
 
+
 def chat_generator():
     for i in range(0, CHATNUM):
         while True:
@@ -245,7 +250,8 @@ def chat_generator():
 
 def final_sql():
     writer = open(ALL_SQL, "w+")
-    writer .write("DELETE FROM [dbo].[chat];\nDELETE FROM [dbo].[ratings];\nDELETE FROM [dbo].[bookings];\nDELETE FROM [dbo].[tours];\nDELETE FROM [dbo].[users];\n")
+    # writer .write(
+    #    "DELETE FROM [dbo].[chat];\nDELETE FROM [dbo].[ratings];\nDELETE FROM [dbo].[bookings];\nDELETE FROM [dbo].[tours];\nDELETE FROM [dbo].[users];\n")
     for i in range(0, len(user_accounts)):
         writer.write(user_accounts[i].insert_statement() + "\n")
     for i in range(0, len(tour_list)):
@@ -257,6 +263,7 @@ def final_sql():
     for i in range(0, len(chat_list)):
         writer.write(chat_list[i].insert_statement() + "\n")
     writer.close()
+
 
 if __name__ == '__main__':
     user_acc_generator()

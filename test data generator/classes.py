@@ -154,6 +154,7 @@ class Ratings:
 
         return string
 
+
 class Chat:
     def __init__(self, sender, recipient):
         # sender, recipient, subject, message, dateTime
@@ -187,7 +188,8 @@ class Chat:
         string += "N\'{0}\', ".format(self.recipient)
         string += "N\'{0}\', ".format(self.subject)
         string += "N\'{0}\', ".format(self.message)
-        string += "N\'{0}\');".format(self.dateTime.strftime("%Y-%m-%d %H:%M:%S"))
+        string += "N\'{0}\');".format(
+            self.dateTime.strftime("%Y-%m-%d %H:%M:%S"))
 
         return string
 
@@ -211,8 +213,9 @@ class Bookings:
         string += "([userID], [tourID]) "
         string += "VALUES ("
         string += "N\'{0}\', ".format(self.userID)
-        #SELECT tourID FROM [dbo].[tours] WHERE (userID = 'Ophelia392'AND tourName = 'Dolore porro dolorem amet dolore.');
-        string += "(SELECT tourID FROM [dbo].[tours] WHERE (userID = \'{0}\' AND tourName = \'{1}\')));".format(self.tourID,self.tourName)
+        # SELECT tourID FROM [dbo].[tours] WHERE (userID = 'Ophelia392'AND tourName = 'Dolore porro dolorem amet dolore.');
+        string += "(SELECT tourID FROM [dbo].[tours] WHERE (userID = \'{0}\' AND tourName = \'{1}\')));".format(
+            self.tourID, self.tourName)
         #string += "N\'{0}\');".format(self.tourID)
 
         return string
