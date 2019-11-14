@@ -512,8 +512,10 @@ namespace vetoTours
             {
                 user temp = new user(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetInt32(6));
                 reader.Close();
+                conn.Close();
                 return temp;
             }
+            conn.Close();
 
             return null;
 
@@ -536,9 +538,11 @@ namespace vetoTours
             {
                 admin temp = new admin(reader.GetString(0), reader.GetString(1));
                 reader.Close();
+                conn.Close();
                 return temp;
             }
 
+            conn.Close();
             return null;
         }
 
@@ -562,9 +566,10 @@ namespace vetoTours
                                         reader.GetString(9));
                 
                 reader.Close();
+                conn.Close();
                 return temp;
             }
-
+            conn.Close();
             return null;
         }
 
@@ -590,7 +595,7 @@ namespace vetoTours
                 availableTours.Add(temp);
             }
             reader.Close();
-
+            conn.Close();
             return availableTours;
         }
 
@@ -615,7 +620,7 @@ namespace vetoTours
                 allUsers.Add(temp);
             }
             reader.Close();
-
+            conn.Close();
             return allUsers;
         }
 
