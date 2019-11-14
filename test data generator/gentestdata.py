@@ -10,12 +10,12 @@ import csv
 import time
 import datetime
 
-# Numbers to generate
-ACCNUM = 500  # Accounts
-TOURSNUM = 1000  # random 1000 acc picks to create tour
-BOOKINGSNUM = 1000  # random bookings from 200 ppl 5 tours avg
-RATINGSNUM = 1000  # All 500 ppl randomly rate 2 other ppl
-CHATNUM = 1000  # random 200 ppl 5 chat avg
+# Numbers to generate (CAN CHANGE)
+ACCNUM = 100  # Accounts
+TOURSNUM = 100  # created tours
+BOOKINGSNUM = 1000  # no of bookings
+RATINGSNUM = 1000  # no of ratings
+CHATNUM = 1000  # no of dialogs sent
 
 # Filenames
 SINGLE_NAME_INPUT = "singleName.txt"

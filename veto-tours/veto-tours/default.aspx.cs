@@ -54,7 +54,7 @@ namespace vetoTours
                         string query = "SELECT * from admins where userID='" + uid + "' and password='" + pass + "'";
                         SqlCommand cmd = new SqlCommand(query, con);
                         sdr = cmd.ExecuteReader();
-
+                        
                     }
 
                     else
@@ -62,6 +62,7 @@ namespace vetoTours
                         string query = "SELECT * from users where userID='" + uid + "' and password='" + pass + "'";
                         SqlCommand cmd = new SqlCommand(query, con);
                         sdr = cmd.ExecuteReader();
+                        
                     }
 
                     if (sdr.Read())
@@ -84,7 +85,7 @@ namespace vetoTours
                                 Session["status"] = "suspended";
                         }
 
-                        
+                        con.Close();
                         Response.Redirect("main.aspx");
                     }
                     else
@@ -93,6 +94,7 @@ namespace vetoTours
                         loginHandler.noSuchUser();
                         generalDialog.InnerHtml = loginHandler.error;
                         generalDialog.Visible = true;
+                        con.Close();
 
                     }
                     con.Close();
@@ -311,6 +313,7 @@ namespace vetoTours
             reader = cmd.ExecuteReader();
             bookingHistoryView.DataSource = reader;
             bookingHistoryView.DataBind();
+            con.Close();
         }
 
 
@@ -327,6 +330,7 @@ namespace vetoTours
             reader = cmd.ExecuteReader();
             bookedToursView.DataSource = reader;
             bookedToursView.DataBind();
+            con.Close();
         }
 
         public void getProfileDetails(GridView myProfileView)
@@ -340,6 +344,7 @@ namespace vetoTours
             reader = cmd.ExecuteReader();
             myProfileView.DataSource = reader;
             myProfileView.DataBind();
+            con.Close();
         }
 
         public void getCreatedTours(GridView createdToursView)
@@ -354,6 +359,7 @@ namespace vetoTours
             reader = cmd.ExecuteReader();
             createdToursView.DataSource = reader;
             createdToursView.DataBind();
+            con.Close();
         }
 
         public void fetchAvgUserRatings()
@@ -377,6 +383,7 @@ namespace vetoTours
                 ratingTourist = reader.GetInt32(0);
             else
                 ratingTourist = 0;
+            con.Close();
         }
     }
 
@@ -561,12 +568,15 @@ namespace vetoTours
             reader = cmd.ExecuteReader();
             if (reader.Read() && !reader.IsDBNull(0))
             {
+                
                 int ratingTourGuide = reader.GetInt32(0);
+                con.Close();
                 return ratingTourGuide;
             }
 
             else
             {
+                con.Close();
                 return 0;
             }
 
@@ -628,6 +638,7 @@ namespace vetoTours
             string query = "INSERT INTO bookings (userID, tourID) VALUES('" + userID + "', " + tourID + ");";
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
+            conn.Close();
         }
     }
 
@@ -657,6 +668,7 @@ namespace vetoTours
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
             reader.Close();
+            conn.Close();
 
         }
 
@@ -675,6 +687,7 @@ namespace vetoTours
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
             reader.Close();
+            conn.Close();
 
         }
 
@@ -801,17 +814,18 @@ namespace vetoTours
             SqlConnection conn = null;
             SqlCommand cmd = null;
             SqlDataReader reader = null;
-
+            string format = "yyy-MM-dd HH:mm:ss";
             conn = new SqlConnection(ConfigurationManager.ConnectionStrings["vetoTours"].ToString());
 
             conn.Open();
 
             string query = "INSERT INTO chat (sender, recipient, subject, message, dateTime) VALUES ('"
-                            + sender + "', '" + recipient + "', '" + subject + "', '" + message + "', '" + dateTime + "');"; ;
+                            + sender + "', '" + recipient + "', '" + subject + "', '" + message + "', '" + dateTime.ToString(format) + "');"; ;
 
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
             reader.Close();
+            conn.Close();
 
         }
 
@@ -836,6 +850,7 @@ namespace vetoTours
                 allMessages.Add(temp);
             }
             reader.Close();
+            conn.Close();
 
             return allMessages;
 
@@ -919,6 +934,7 @@ namespace vetoTours
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
             reader.Close();
+            conn.Close();
 
         }
     }
@@ -988,6 +1004,11 @@ namespace vetoTours
         {
             error += "- Status Field Empty <br />";
         }
+
+        public void invalidStatus()
+        {
+            error += "- Invalid Status Field <br />";
+        }
     }
 
     public class loginErrorHandler
@@ -1046,6 +1067,11 @@ namespace vetoTours
         public void emptyCapacity()
         {
             error += "- Capacity Field Empty <br />";
+        }
+
+        public void invalidCapacity()
+        {
+            error += "- Invalid Capacity Input <br />";
         }
 
         public void noSuchTourName()
@@ -1187,6 +1213,11 @@ namespace vetoTours
         public void noSuchUser()
         {
             error += "Invalid User ID <br/>";
+        }
+
+        public void emptyIDField()
+        {
+            error += "User ID Field is empty <br/>";
         }
 
 
