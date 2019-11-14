@@ -84,6 +84,7 @@ namespace vetoTours
                                 Session["status"] = "suspended";
                         }
 
+                        
                         Response.Redirect("main.aspx");
                     }
                     else
@@ -137,7 +138,7 @@ namespace vetoTours
             string query = "SELECT * FROM users WHERE userID='" + regUserName.Text + "';";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
-            if(reader.Read())
+            if (reader.Read())
             {
                 if (reader.GetString(0) == regUserName.Text)
                     regHandler.userNameExists();
@@ -149,8 +150,9 @@ namespace vetoTours
                 user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, 0);
                 newUser.createAccount();
                 Session["regSuccess"] = "true";
+
                 Response.Redirect("default.aspx");
-                
+
             }
 
             else

@@ -7,40 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace vetoTours
-{
-
-
-    public partial class _default
-    {
-
+namespace vetoTours {
+    
+    
+    public partial class _default {
+        
         /// <summary>
-        /// form1 control.
+        /// form2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
+        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+        
         /// <summary>
-        /// generalDialog control.
+        /// Div1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl generalDialog;
-
-        /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
+        
         /// <summary>
         /// txtUserName control.
         /// </summary>
@@ -49,16 +38,7 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtUserName;
-
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-
+        
         /// <summary>
         /// txtPassword control.
         /// </summary>
@@ -67,16 +47,7 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassword;
-
-        /// <summary>
-        /// Label3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
-
+        
         /// <summary>
         /// userType control.
         /// </summary>
@@ -85,16 +56,25 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList userType;
-
+        
         /// <summary>
-        /// btnLogin control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogin;
-
+        protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
+        /// generalDialog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl generalDialog;
+        
         /// <summary>
         /// lblStatus control.
         /// </summary>
@@ -103,16 +83,7 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblStatus;
-
-        /// <summary>
-        /// regName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label regName;
-
+        
         /// <summary>
         /// regUserName control.
         /// </summary>
@@ -121,16 +92,7 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regUserName;
-
-        /// <summary>
-        /// regPw control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label regPw;
-
+        
         /// <summary>
         /// regPassword control.
         /// </summary>
@@ -139,16 +101,7 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regPassword;
-
-        /// <summary>
-        /// regRn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label regRn;
-
+        
         /// <summary>
         /// regRealName control.
         /// </summary>
@@ -157,16 +110,7 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regRealName;
-
-        /// <summary>
-        /// regEm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label regEm;
-
+        
         /// <summary>
         /// regEmail control.
         /// </summary>
@@ -175,16 +119,7 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regEmail;
-
-        /// <summary>
-        /// regPh control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label regPh;
-
+        
         /// <summary>
         /// regPhone control.
         /// </summary>
@@ -193,16 +128,7 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regPhone;
-
-        /// <summary>
-        /// regDesc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label regDesc;
-
+        
         /// <summary>
         /// regDescription control.
         /// </summary>
@@ -211,16 +137,16 @@ namespace vetoTours
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox regDescription;
-
+        
         /// <summary>
-        /// btnRegister control.
+        /// Button2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRegister;
-
+        protected global::System.Web.UI.WebControls.Button Button2;
+        
         /// <summary>
         /// regStatus control.
         /// </summary>

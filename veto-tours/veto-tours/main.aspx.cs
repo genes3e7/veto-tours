@@ -132,7 +132,7 @@ namespace vetoTours
                 // Fetch all currently registered users
                 List<user> allUsers = new List<user>();
                 allUsers = fetchUsers();
-
+              
                 var _bind = from a in allUsers
                             select new
                             {
@@ -143,14 +143,24 @@ namespace vetoTours
                                 Personal_Description = a.getPersonalDescription(),
                                 status = a.getStatus()
                             };
+                foreach (GridViewRow row in this.editUserView.Rows)
+                {
 
+                    row.Style["color"] = "White";
+                    row.Style[" background-color"] = "Black";
+                    break;
+
+
+                }
                 editUserView.DataSource = _bind;
                editUserView.DataBind();
 
+                
             }
 
         }
 
+      
         // Create tour
         protected void tourCreationController(object sender, EventArgs e)
         {
