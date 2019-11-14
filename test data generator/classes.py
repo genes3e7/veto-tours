@@ -11,7 +11,6 @@ class User:
         # userID, password, name, email, phoneNumber, accountType, description, status
         self.firstName = (str)(firstName)
         self.lastName = (str)(lastName)
-        self.accType = "user"
         self.userID = self.userIDGen()
         self.email = self.emailGen()
         self.phoneNumber = self.phoneNumberGen()
@@ -28,7 +27,6 @@ class User:
         self.data["lastName"] = self.lastName
         self.data["email"] = self.email
         self.data["phoneNumber"] = self.phoneNumber
-        self.data["accType"] = self.accType
         self.data["descript"] = self.descript
         self.data["status"] = self.status
 
@@ -59,14 +57,13 @@ class User:
 
     def insert_statement(self):
         string = "INSERT INTO [dbo].[users] "
-        string += "([userID], [password], [name], [email], [phoneNumber], [accountType], [description], [status]) "
+        string += "([userID], [password], [name], [email], [phoneNumber], [description], [status]) "
         string += "VALUES ("
         string += "N\'{0}\', ".format(self.userID)
         string += "N\'{0}\', ".format(self.password)
         string += "N\'{0} {1}\', ".format(self.firstName, self.lastName)
         string += "N\'{0}\', ".format(self.email)
         string += "{0}, ".format(self.phoneNumber)
-        string += "N\'{0}\', ".format(self.accType)
         string += "N\'{0}\', ".format(self.descript)
         string += "{0});".format(self.status)
 
@@ -78,12 +75,12 @@ class Tours:
         # userID, tourName, capacity, location, description, startDate, endDate, price, status
         self.userID = userID
         self.tourName = lorem.sentence()
-        self.capacity = random.randint(1, 200)
+        self.capacity = random.randint(1, 20) * 10
         self.location = lorem.sentence()
-        self.description = lorem.paragraph()
+        self.description = lorem.sentence()
         self.startDate, self.endDate = self.generateDates()
         self.price = random.random() * 10000
-        if (random.random > 0.25):
+        if (random.random() > 0.25):
             self.status = 'open'
         else:
             self.status = 'close'
@@ -127,22 +124,18 @@ class Tours:
         string += "CAST({0} AS MONEY), ".format(self.price)
         string += "N\'{0}\');".format(self.status)
 
+        return string
+
 
 class Ratings:
     def __init__(self, toUser, fromUser, state):
         # ratingTo, ratingFrom, stars, type
         self.toUser = toUser
         self.fromUser = fromUser
-        self.state = self.setState()
+        self.state = state
         self.rating = random.randint(0, 5)
         self.data = {}
         self.createDict()
-
-    def setState(self):
-        if random.randint(0, 1) == 0:
-            return "tourist"
-        else:
-            return "tourguide"
 
     def createDict(self):
         self.data["ratingTo"] = self.toUser
@@ -159,15 +152,16 @@ class Ratings:
         string += "{0}, ".format(self.rating)
         string += "N\'{0}\');".format(self.state)
 
+        return string
 
 class Chat:
-    def __init__(self):
+    def __init__(self, sender, recipient):
         # sender, recipient, subject, message, dateTime
         self.sender = sender
         self.recipient = recipient
-        self.subject = lorem.sentence
-        self.message = lorem.paragraph
-        self.dateTime = generateDates()
+        self.subject = lorem.sentence()
+        self.message = lorem.paragraph()
+        self.dateTime = self.generateDates()
         self.data = {}
         self.createDict()
 
@@ -195,22 +189,30 @@ class Chat:
         string += "N\'{0}\', ".format(self.message)
         string += "N\'{0}\');".format(self.dateTime.strftime("%Y-%m-%d %H:%M:%S"))
 
+        return string
+
 
 class Bookings:
-    def __init__(self, userID, tourID):
+    def __init__(self, userID, tourID, tourName):
         # userID, tourID
         self.userID = userID
         self.tourID = tourID
+        self.tourName = tourName
         self.data = {}
         self.createDict()
 
     def createDict(self):
         self.data["userID"] = self.userID
         self.data["tourID"] = self.tourID
+        self.data["tourName"] = self.tourName
 
     def insert_statement(self):
         string = "INSERT INTO [dbo].[bookings] "
         string += "([userID], [tourID]) "
         string += "VALUES ("
         string += "N\'{0}\', ".format(self.userID)
-        string += "{0});".format(self.tourID)
+        #SELECT tourID FROM [dbo].[tours] WHERE (userID = 'Ophelia392'AND tourName = 'Dolore porro dolorem amet dolore.');
+        string += "(SELECT tourID FROM [dbo].[tours] WHERE (userID = \'{0}\' AND tourName = \'{1}\')));".format(self.tourID,self.tourName)
+        #string += "N\'{0}\');".format(self.tourID)
+
+        return string
