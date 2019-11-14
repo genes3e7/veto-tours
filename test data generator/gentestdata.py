@@ -10,7 +10,7 @@ import csv
 import time
 import datetime
 
-# Numbers to generate
+# Numbers to generate (CAN CHANGE)
 ACCNUM = 100  # Accounts
 TOURSNUM = 100  # created tours
 BOOKINGSNUM = 1000  # no of bookings
