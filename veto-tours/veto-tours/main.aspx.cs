@@ -38,6 +38,26 @@ namespace vetoTours
                     Session["success"] = "";
                 }
 
+                else if (Session["success"] == "tourEdited")
+                {
+                    general_dialog.InnerHtml = "You have successfully edited the tour";
+                    general_dialog.Visible = true;
+                    Session["success"] = "";
+                }
+
+                else if (Session["success"] == "tourCreated")
+                {
+                    general_dialog.InnerHtml = "You have successfully created the tour";
+                    general_dialog.Visible = true;
+                    Session["success"] = "";
+                }
+
+                else if (Session["success"] == "editProfile")
+                {
+                    general_dialog.InnerHtml = "You have successfully edited your profile";
+                    general_dialog.Visible = true;
+                    Session["success"] = "";
+                }
 
                 SqlConnection conn = null;
                 SqlCommand cmd = null;
@@ -128,6 +148,27 @@ namespace vetoTours
             else if (Session["loggedIn"] == "true" && Session["userType"] == "admin")
             {
                 currAdmin = fetchAdminObject(Session["userID"].ToString());
+                if (Session["success"] == "adminEditUser")
+                {
+                    general_dialog.InnerHtml = "You have successfully edited the user";
+                    general_dialog.Visible = true;
+                    Session["success"] = "";
+                }
+
+                if (Session["success"] == "adminCreateUser")
+                {
+                    general_dialog.InnerHtml = "You have successfully created the user";
+                    general_dialog.Visible = true;
+                    Session["success"] = "";
+                }
+
+                if (Session["success"] == "adminSuspendUser")
+                {
+                    general_dialog.InnerHtml = "You have successfully suspended the user";
+                    general_dialog.Visible = true;
+                    Session["success"] = "";
+                }
+
 
                 // Fetch all currently registered users
                 List<user> allUsers = new List<user>();
@@ -144,8 +185,7 @@ namespace vetoTours
                                 status = a.getStatus()
                             };
                 foreach (GridViewRow row in this.editUserView.Rows)
-                {
-
+                {               
                     row.Style["color"] = "White";
                     row.Style[" background-color"] = "Black";
                     break;
@@ -180,14 +220,17 @@ namespace vetoTours
                 tourHandler.emptyLocation();
             if (createDescription.Text == "")
                 tourHandler.emptyDescription();
+
             if (createStartDate.Text == "")
                 tourHandler.emptyStartDate();
-            if (!System.Text.RegularExpressions.Regex.IsMatch(tempStart, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(tempStart, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
                 tourHandler.invalidStartDate();
+
             if (createEndDate.Text == "")
                 tourHandler.emptyEndDate();
-            if (!System.Text.RegularExpressions.Regex.IsMatch(tempEnd, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(tempEnd, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
                 tourHandler.invalidEndDate();
+
             if (createPrice.Text == "")
                 tourHandler.emptyPrice();
             if (tryDouble == false)
@@ -206,6 +249,7 @@ namespace vetoTours
                     tour newTour = new tour(currUser.getUserID(), createTourName.Text, int.Parse(createCapacity.Text), createLocation.Text, createDescription.Text, startDate, endDate, double.Parse(createPrice.Text), ddCreateStatus.SelectedValue);
                     newTour.createTour();
                     general_dialog.Visible = false;
+                    Session["success"] = "tourCreated";
                     Response.Redirect("main.aspx");
                 }
 
@@ -238,7 +282,7 @@ namespace vetoTours
 
             if (editID.Text == "")
                 tourHandler.emptyTourID();
-            if (tryInt == false)
+            else if (tryInt == false)
                 tourHandler.invalidTourID();
             if (editName.Text == "")
                 tourHandler.emptyTourName();
@@ -294,6 +338,7 @@ namespace vetoTours
                     // Execute class function to modify tour
                     editTour.modifyTour();
                     general_dialog.Visible = false;
+                    Session["success"] = "tourEdited";
                     Response.Redirect("main.aspx");
                 }
 
@@ -322,7 +367,7 @@ namespace vetoTours
             bool tryInt = int.TryParse(createBooking.Text, out intTest);
             if (createBooking.Text == "")
                 bookingHandler.emptyTourID();
-            if (tryInt == false)
+            else if (tryInt == false)
                 bookingHandler.invalidTourID();
 
             if (bookingHandler.error == "")
@@ -391,6 +436,7 @@ namespace vetoTours
                 string description = newDescription.Text;
                 currUser.modifyAccount(phone, description);
                 general_dialog.Visible = false;
+                Session["success"] = "editProfile";
                 Response.Redirect("main.aspx");
             }
 
@@ -412,10 +458,12 @@ namespace vetoTours
                 editHandler.emptyPassword();
             if (editRealName.Text == "")
                 editHandler.emptyRealName();
+
             if (editEmail.Text == "")
                 editHandler.emptyEmail();
-            if (!editEmail.Text.Contains("@"))
+            else if (!editEmail.Text.Contains("@"))
                 editHandler.invalidEmail();
+
             if (editPhone.Text == "")
                 editHandler.emptyPhoneNumber();
             if (!editPhone.Text.All(char.IsDigit))
@@ -442,6 +490,7 @@ namespace vetoTours
 
                 currAdmin.editUser(targetUser);
                 adminDialog.Visible = false;
+                Session["success"] = "adminEditUser";
                 Response.Redirect("main.aspx");
             }
 
@@ -494,6 +543,7 @@ namespace vetoTours
                 user newUser = new user(regUserName.Text, regPassword.Text, regRealName.Text, regEmail.Text, int.Parse(regPhone.Text), regDescription.Text, int.Parse(ddRegStat.SelectedValue));
                 currAdmin.createUser(newUser);
                 adminDialog.Visible = false;
+                Session["success"] = "adminCreateUser";
                 Response.Redirect("main.aspx");
 
             }
@@ -687,8 +737,12 @@ namespace vetoTours
             // Fetch the user object that needs to be suspended
             user suspendedUser = fetchUserObject(suspendUserField.Text);
 
-            if (suspendedUser == null)
-                suspendHandler.userNameNotExists();
+            if (suspendUserField.Text != "")
+            {
+                if (suspendedUser == null)
+                    suspendHandler.userNameNotExists();
+            }
+            
 
             if (suspendHandler.error == "")
             {
@@ -698,6 +752,7 @@ namespace vetoTours
                 // Write back the user object to database
                 currAdmin.suspendUser(suspendedUser);
                 adminDialog.Visible = false;
+                Session["success"] = "adminSuspendUser";
                 Response.Redirect("main.aspx");
                 
             }
@@ -720,8 +775,11 @@ namespace vetoTours
             // Fetch tourGuide object that user wants to rate
             user tourGuide = fetchUserObject(rateTourGuideID.Text);
 
-            if (tourGuide == null)
-                ratingHandler.noSuchUser();
+            if (rateTourGuideID.Text != "")
+            {
+                if (tourGuide == null)
+                    ratingHandler.noSuchUser();
+            }
 
 
             if (ratingHandler.error == "")
@@ -754,8 +812,11 @@ namespace vetoTours
             // Fetch tourist object that user wants to rate
             user tourist = fetchUserObject(rateTouristID.Text);
 
-            if (tourist == null)
-                ratingHandler.noSuchUser();
+            if (rateTouristID.Text != "")
+            {
+                if (tourist == null)
+                    ratingHandler.noSuchUser();
+            }
 
             if (ratingHandler.error == "")
             {
