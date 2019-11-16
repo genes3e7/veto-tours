@@ -626,7 +626,7 @@ namespace vetoTours
             if (reader.Read())
             {
                 
-                tour temp = new tour(reader.GetInt32(0),reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6), reader.GetDateTime(7), (double)reader.GetDecimal(8),
+                tour temp = new tour(reader.GetInt32(0),reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6), reader.GetDateTime(7), (double)Decimal.Round(reader.GetDecimal(8), 2),
                                         reader.GetString(9));
                 
                 reader.Close();
@@ -648,13 +648,13 @@ namespace vetoTours
 
             conn.Open();
 
-            string query = "SELECT *  FROM  tours WHERE startDate >= GETDATE();";
+            string query = "SELECT * FROM tours WHERE startDate >= GETDATE();";
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                tour temp = new tour(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6), reader.GetDateTime(7), (double)reader.GetDecimal(8),
+                tour temp = new tour(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6), reader.GetDateTime(7), (double)Decimal.Round(reader.GetDecimal(8), 2),
                                         reader.GetString(9));
                 availableTours.Add(temp);
             }
@@ -674,7 +674,7 @@ namespace vetoTours
 
             conn.Open();
 
-            string query = "SELECT *  FROM  users;";
+            string query = "SELECT * FROM users;";
             cmd = new SqlCommand(query, conn);
             reader = cmd.ExecuteReader();
 

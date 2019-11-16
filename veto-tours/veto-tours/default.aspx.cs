@@ -309,7 +309,7 @@ namespace vetoTours
             SqlDataReader reader = null;
             con.Open();
             string query = "SELECT tours.tourID AS 'Tour ID', tours.userID AS 'Tour Guide Name', tours.tourName AS 'Tour Name', tours.capacity AS Capacity, tours.location AS Location, tours.description AS Description, " +
-                    "tours.startDate AS 'Start Date', tours.endDate AS 'End Date', tours.price AS Price, tours.status AS Status  FROM  tours, bookings WHERE " +
+                    "tours.startDate AS 'Start Date', tours.endDate AS 'End Date', CAST(tours.price as numeric(36,2)) AS Price, tours.status AS Status  FROM  tours, bookings WHERE " +
                     "tours.tourID = bookings.tourID AND bookings.userID='" + userID + "' AND tours.startDate < SYSDATETIME();";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
@@ -326,7 +326,7 @@ namespace vetoTours
             SqlDataReader reader = null;
             con.Open();
             string query = "SELECT tours.tourID AS 'Tour ID', tours.userID AS 'Tour Guide Name', tours.tourName AS 'Tour Name', tours.capacity AS Capacity, tours.location AS Location, tours.description AS Description, " +
-                    "tours.startDate AS 'Start Date', tours.endDate AS 'End Date', tours.price AS Price, tours.status AS Status  FROM  tours, bookings WHERE " +
+                    "tours.startDate AS 'Start Date', tours.endDate AS 'End Date', CAST(tours.price as numeric(36,2)) AS Price, tours.status AS Status  FROM  tours, bookings WHERE " +
                     "tours.tourID = bookings.tourID AND bookings.userID='" + userID + "' AND tours.startDate >= SYSDATETIME();";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
@@ -356,7 +356,7 @@ namespace vetoTours
             SqlDataReader reader = null;
             con.Open();
             string query = "SELECT tourID AS 'Tour ID', userID AS 'Tour Guide Name', tourName AS 'Tour Name', capacity AS Capacity, location AS Location, description AS Description, " +
-                    "startDate AS 'Start Date', endDate AS 'End Date', price AS Price, status AS Status  FROM  tours WHERE userID='" + userID + "';";
+                    "startDate AS 'Start Date', endDate AS 'End Date', CAST(price as numeric(36,2)) AS Price, status AS Status  FROM  tours WHERE userID='" + userID + "';";
             cmd = new SqlCommand(query, con);
             reader = cmd.ExecuteReader();
             createdToursView.DataSource = reader;
