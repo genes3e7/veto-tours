@@ -119,7 +119,7 @@
                         </div>
                     </li>
                     <li class="active">
-                        <a href="Admin-Dashboard.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+                        <a href="main.aspx"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
                         
                     </li>
                      <li>
@@ -593,7 +593,7 @@
                         </div>
                     </li>
                     <li class="active">
-                        <a href="Admin-Dashboard.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+                        <a href="main.aspx"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
                         
                     </li>
                      <li>

@@ -104,9 +104,9 @@
 	$("#form").submit(function(){
 		var loginAs=$('#loginAs').val();
 	if(loginAs=="Admin")	{
-		    $('#form').attr('action', "Admin-Dashboard.html").submit();
+		    $('#form').attr('action', "main.aspx").submit();
 		}else{
-		 $('#form').attr('action', "User-Dashboard.html").submit();
+		 $('#form').attr('action', "main.aspx").submit();
 		 }
 });
 </script>

@@ -83,7 +83,7 @@ class Tours:
         if (random.random() > 0.25):
             self.status = 'open'
         else:
-            self.status = 'close'
+            self.status = 'closed'
         self.data = {}
         self.createDict()
 

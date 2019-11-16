@@ -11,11 +11,11 @@ import time
 import datetime
 
 # Numbers to generate (CAN CHANGE)
-ACCNUM = 100  # Accounts
-TOURSNUM = 100  # created tours
-BOOKINGSNUM = 1000  # no of bookings
-RATINGSNUM = 1000  # no of ratings
-CHATNUM = 1000  # no of dialogs sent
+ACCNUM = 500  # Accounts
+TOURSNUM = 200  # created tours
+BOOKINGSNUM = 10000  # no of bookings
+RATINGSNUM = 10000  # no of ratings
+CHATNUM = 10000  # no of dialogs sent
 
 # Filenames
 SINGLE_NAME_INPUT = "singleName.txt"
@@ -113,7 +113,7 @@ def write_tour_list():
         writer = csv.DictWriter(tours_manual, fieldnames=fieldnames)
         writer.writeheader()
 
-        for i in range(0, ACCNUM):
+        for i in range(0, TOURSNUM):
             writer.writerow(tour_list[i].data)
 
 
@@ -148,7 +148,7 @@ def write_booking_list():
         writer = csv.DictWriter(booking_manual, fieldnames=fieldnames)
         writer.writeheader()
 
-        for i in range(0, ACCNUM):
+        for i in range(0, BOOKINGSNUM):
             writer.writerow(booking_list[i].data)
 
 
@@ -184,7 +184,7 @@ def write_ratings_list():
         writer = csv.DictWriter(rating_manual, fieldnames=fieldnames)
         writer.writeheader()
 
-        for i in range(0, ACCNUM):
+        for i in range(0, RATINGSNUM):
             writer.writerow(ratings_list[i].data)
 
 
@@ -231,7 +231,7 @@ def write_chat_list():
         writer = csv.DictWriter(chat_manual, fieldnames=fieldnames)
         writer.writeheader()
 
-        for i in range(0, ACCNUM):
+        for i in range(0, CHATNUM):
             writer.writerow(chat_list[i].data)
 
 
