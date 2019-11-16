@@ -150,22 +150,22 @@ namespace vetoTours
                 currAdmin = fetchAdminObject(Session["userID"].ToString());
                 if (Session["success"] == "adminEditUser")
                 {
-                    general_dialog.InnerHtml = "You have successfully edited the user";
-                    general_dialog.Visible = true;
+                    adminDialog.InnerHtml = "You have successfully edited the user";
+                    adminDialog.Visible = true;
                     Session["success"] = "";
                 }
 
                 if (Session["success"] == "adminCreateUser")
                 {
-                    general_dialog.InnerHtml = "You have successfully created the user";
-                    general_dialog.Visible = true;
+                    adminDialog.InnerHtml = "You have successfully created the user";
+                    adminDialog.Visible = true;
                     Session["success"] = "";
                 }
 
                 if (Session["success"] == "adminSuspendUser")
                 {
-                    general_dialog.InnerHtml = "You have successfully suspended the user";
-                    general_dialog.Visible = true;
+                    adminDialog.InnerHtml = "You have successfully suspended the user";
+                    adminDialog.Visible = true;
                     Session["success"] = "";
                 }
 
@@ -294,14 +294,17 @@ namespace vetoTours
                 tourHandler.emptyLocation();
             if (editDescription.Text == "")
                 tourHandler.emptyDescription();
+
             if (editStartDate.Text == "")
                 tourHandler.emptyStartDate();
-            if (!System.Text.RegularExpressions.Regex.IsMatch(tempStart, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(tempStart, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
                 tourHandler.invalidStartDate();
+
             if (editEndDate.Text == "")
                 tourHandler.emptyEndDate();
-            if (!System.Text.RegularExpressions.Regex.IsMatch(tempEnd, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(tempEnd, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"))
                 tourHandler.invalidEndDate();
+
             if (editPrice.Text == "")
                 tourHandler.emptyPrice();
             if (tryDouble == false)

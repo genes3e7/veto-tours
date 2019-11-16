@@ -636,7 +636,7 @@
         </nav>
         </div>
 
-            <div id="adminDialog" title="Error" visible="false" runat="server"></div>
+            <div id="adminDialog" title="Notification" visible="false" runat="server"></div>
 				
                 
         <div class="wrapper wrapper-content animated fadeInRight">
