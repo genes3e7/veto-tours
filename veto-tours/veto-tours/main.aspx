@@ -109,7 +109,7 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element"> 
-                            <a href="login.html">
+                            <a href="main.aspx">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">USER PAGE</strong>
                              </span></a>
                             
@@ -583,7 +583,7 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element"> 
-                            <a href="login.html">
+                            <a href="main.aspx">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">ADMIN PAGE</strong>
                              </span></a>
                             
